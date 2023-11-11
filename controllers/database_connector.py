@@ -4,7 +4,8 @@ from sqlite3 import Error
 
 class DatabaseConnector:
 
-    database_file = "testgpt.db"
+    # databases/testgpt.db werkt niet voor mij, verander dit naar je eigen path
+    database_file = "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
     connection = None
 
     def connect(self):
@@ -13,6 +14,8 @@ class DatabaseConnector:
             print("connection success!")
         except Error as error:
             print(error)
+
+        return self.connection
 
 
 if __name__ == "__main__":
