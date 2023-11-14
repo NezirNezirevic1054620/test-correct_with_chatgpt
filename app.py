@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from controllers.notes_controller import NotesController
 from flask import request
 from sqlite3 import Error
@@ -6,8 +6,6 @@ from sqlite3 import Error
 app = Flask(__name__)
 
 notes_controller = NotesController()
-select_notes = notes_controller.select_notes()
-notes_controller.select_notes()
 
 @app.route('/')
 def home():
@@ -25,7 +23,8 @@ def create_note():
             category_id = request.form["category_id"]
             note = request.form["note"]
 
-            notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public, teacher_id=teacher_id, category_id=category_id, note=note)
+            notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public,
+                                          teacher_id=teacher_id, category_id=category_id, note=note)
         except Error as error:
             print(error)
     return render_template("create_note.html.j2")
@@ -33,7 +32,7 @@ def create_note():
 
 @app.route("/notes")
 def notes():
-
+    select_notes = NotesController.select_notes()
     return render_template("notes.html.j2", notes=select_notes)
 
 
