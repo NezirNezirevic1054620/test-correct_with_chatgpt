@@ -1,6 +1,6 @@
 {% extends "index.html.j2" %}
 {% block content %}
-        <div class="container mx-auto px-4 sm:px-8 bg-gray-100">
+        <div class="container mx-auto px-4 sm:px-8">
         <div class="py-8">
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Notes</h2>
@@ -10,7 +10,7 @@
                     <div class="relative">
                         <label>
                             <select
-                                class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                class="appearance-none h-full rounded-s-lg border block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                 <option>5</option>
                                 <option>10</option>
                                 <option>20</option>
@@ -26,7 +26,7 @@
                     <div class="relative">
                         <label>
                             <select
-                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
                                 <option>All</option>
                                 <option>Active</option>
                                 <option>Inactive</option>
@@ -50,7 +50,7 @@
                     </span>
                     <label>
                         <input placeholder="Search"
-                            class="appearance-none rounded-lg border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                            class="appearance-none rounded-e-lg rounded-s-none border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                     </label>
                 </div>
             </div>
@@ -83,16 +83,16 @@
                         <tbody>
                         {% for note in notes %}
                             <tr>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                     <p class="text-gray-900 whitespace-no-wrap">{{ note[2] }}</p>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                     <p class="text-gray-900 whitespace-no-wrap">{{ note[3] }}</p>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                     <p class="text-gray-900 whitespace-no-wrap">{{ note[6] }}</p>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                     <p class="text-gray-900 whitespace-no-wrap">
                                         {{ note[7] }}
                                     </p>
@@ -116,11 +116,11 @@
                         </span>
                         <div class="inline-flex mt-2 xs:mt-0">
                             <button
-                                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                                Prev
+                                class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-s-lg">
+                                Previous
                             </button>
                             <button
-                                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                                class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
                                 Next
                             </button>
                         </div>

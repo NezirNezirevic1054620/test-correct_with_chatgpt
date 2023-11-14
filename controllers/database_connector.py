@@ -15,4 +15,3 @@ class DatabaseConnector:
             return self.connection
         except Error as error:
             print(error)
-
