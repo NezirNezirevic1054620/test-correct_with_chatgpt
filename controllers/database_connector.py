@@ -10,14 +10,9 @@ class DatabaseConnector:
 
     def connect(self):
         try:
-            self.connection = sqlite3.connect(self.database_file)
+            self.connection = sqlite3.connect(self.database_file, check_same_thread=False)
             print("connection success!")
+            return self.connection
         except Error as error:
             print(error)
 
-        return self.connection
-
-
-if __name__ == "__main__":
-    database = DatabaseConnector()
-    database.connect()

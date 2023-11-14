@@ -1,11 +1,41 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
+from controllers.notes_controller import NotesController
+from flask import request
+from sqlite3 import Error
+
 app = Flask(__name__)
 
+notes_controller = NotesController()
+select_notes = notes_controller.select_notes()
+notes_controller.select_notes()
 
 @app.route('/')
 def home():
     return render_template("index.html.j2")
 
 
-if __name__ == '__main__':
+@app.route("/create_note", methods=["POST", "GET"])
+def create_note():
+    if request.method == "POST":
+        try:
+            title = request.form["title"]
+            note_source = request.form["note_source"]
+            is_public = request.form["is_public"]
+            teacher_id = request.form["teacher_id"]
+            category_id = request.form["category_id"]
+            note = request.form["note"]
+
+            notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public, teacher_id=teacher_id, category_id=category_id, note=note)
+        except Error as error:
+            print(error)
+    return render_template("create_note.html.j2")
+
+
+@app.route("/notes")
+def notes():
+
+    return render_template("notes.html.j2", notes=select_notes)
+
+
+if __name__ == "__main__":
     app.run(debug=True)

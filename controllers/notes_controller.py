@@ -2,23 +2,32 @@ from sqlite3 import Error
 from controllers.database_connector import DatabaseConnector
 
 
-class NotesController(DatabaseConnector):
+class NotesController:
 
-    database = DatabaseConnector()
-    database.connect()
-
-    cursor = database.connection.cursor()
-
-    def select_notes(self):
-        sqlite_query = ''' SELECT * FROM notes'''
+    @staticmethod
+    def select_notes():
+        database = DatabaseConnector()
+        database.connect()
+        cursor = database.connection.cursor()
         try:
-            self.cursor.execute(sqlite_query)
-            self.database.connection.commit()
-            print(self.cursor.fetchall())
+            cursor.execute("SELECT * FROM notes")
+            database.connection.commit()
+            notes = cursor.fetchall()
+            print(notes)
+            return notes
         except Error as error:
             print(error)
 
-
-if __name__ == "__main__":
-    a = NotesController()
-    a.select_notes()
+    @staticmethod
+    def insert_notes(title, note_source, is_public, teacher_id, category_id, note):
+        database = DatabaseConnector()
+        database.connect()
+        cursor = database.connection.cursor()
+        try:
+            cursor.execute("INSERT INTO notes(title, note_source, is_public, teacher_id, category_id, "
+                           "note) VALUES(?, ?, ?, ?, ?, ?)", (title, note_source, is_public, teacher_id,
+                                                              category_id, note))
+            database.connection.commit()
+            return cursor.lastrowid
+        except Error as error:
+            print(error)
