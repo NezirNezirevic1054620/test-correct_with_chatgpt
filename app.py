@@ -3,7 +3,7 @@ from controllers.notes_controller import NotesController
 from flask import request
 from sqlite3 import Error
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 
 notes_controller = NotesController()
 
