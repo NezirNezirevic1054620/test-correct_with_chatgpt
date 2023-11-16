@@ -4,7 +4,6 @@ from sqlite3 import Error
 
 class DatabaseConnector:
 
-    # databases/testgpt.db werkt niet voor mij, verander dit naar je eigen path
     def __init__(self):
         self.connection = None
         self.database_file_path = "databases/testgpt.db"

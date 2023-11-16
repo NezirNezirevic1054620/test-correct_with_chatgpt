@@ -10,8 +10,9 @@ class NotesController(DatabaseConnector):
     def select_notes():
         NotesController.database.connect()
         try:
-            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id")
-            NotesController.database.connection.commit()
+            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = "
+                                           "categories.category_id")
+            NotesController.cursor.connection.commit()
             notes = NotesController.cursor.fetchall()
             print(notes)
             return notes
@@ -25,7 +26,7 @@ class NotesController(DatabaseConnector):
             NotesController.cursor.execute("INSERT INTO notes(title, note_source, is_public, teacher_id, category_id, "
                                            "note) VALUES(?, ?, ?, ?, ?, ?)", (title, note_source, is_public, teacher_id,
                                                                               category_id, note))
-            NotesController.database.connection.commit()
+            NotesController.cursor.connection.commit()
             return NotesController.cursor.lastrowid
         except Error as error:
             print(error)
