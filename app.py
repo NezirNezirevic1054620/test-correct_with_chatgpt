@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from controllers.notes_controller import NotesController
+from controllers.categories_controller import CategoriesController
 from flask import request
 from sqlite3 import Error
 
@@ -16,6 +17,7 @@ def home():
 
 @app.route("/create_note", methods=["POST", "GET"])
 def create_note():
+    select_categories = CategoriesController.select_categories()
     if request.method == "POST":
         try:
             title = request.form["title"]
@@ -29,7 +31,7 @@ def create_note():
                                           teacher_id=teacher_id, category_id=category_id, note=note)
         except Error as error:
             print(error)
-    return render_template("create_note.html.j2")
+    return render_template("create_note.html.j2", categories=select_categories)
 
 
 @app.route("/notes")
