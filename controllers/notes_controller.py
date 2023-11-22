@@ -30,3 +30,7 @@ class NotesController(DatabaseConnector):
             return NotesController.cursor.lastrowid
         except Error as error:
             print(error)
+
+    #@staticmethod
+  #  def delete_note:
+
