@@ -3,7 +3,6 @@ from controllers.database_connector import DatabaseConnector
 
 
 class CategoriesController(DatabaseConnector):
-
     database = DatabaseConnector()
     cursor = database.connect().cursor()
 
@@ -14,7 +13,8 @@ class CategoriesController(DatabaseConnector):
             CategoriesController.cursor.execute("SELECT * FROM categories")
             CategoriesController.cursor.connection.commit()
             categories = CategoriesController.cursor.fetchall()
+            print(categories)
             return categories
         except Error as error:
             print(error)
-            
+

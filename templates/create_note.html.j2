@@ -1,6 +1,6 @@
 {% extends "index.html.j2" %}
 {% block content %}
-<form action="{{ url_for('create_note') }}" method="POST">
+<form action="{{ url_for('notes.create_note') }}" method="POST">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -29,10 +29,14 @@
                     </div>
                 </div>
                 <div class="sm:col-span-3">
-                    <label for="teacher-id" class="block text-sm font-medium leading-6 text-gray-900">Teacher ID</label>
+                    <label for="teacher-id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
                     <div class="mt-2">
                         <label>
-                        <input type="number" name="teacher_id" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <select name="teacher_id"  class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% for teacher in teachers %}
+                                    <option value="{{ teacher[0] }}">{{ teacher[1] }}</option>
+                                {% endfor %}
+                            </select>
                         </label>
                     </div>
                 </div>
@@ -40,7 +44,7 @@
                     <label for="category_id" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
                     <div class="mt-2">
                         <label>
-                            <select type="number" name="category_id" placeholder="Programming essentials" class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <select name="category_id" class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 {% for category in categories %}
                                     <option value="{{ category[0] }}">{{ category[1] }}</option>
                                 {% endfor %}
