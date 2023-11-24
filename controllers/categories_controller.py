@@ -18,3 +18,12 @@ class CategoriesController(DatabaseConnector):
         except Error as error:
             print(error)
 
+    @staticmethod
+    def insert_category(omschrijving):
+        CategoriesController.database.connect()
+        try:
+            CategoriesController.cursor.execute("INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
+            CategoriesController.cursor.connection.commit()
+            return CategoriesController.cursor.lastrowid
+        except Error as error:
+            print(error)
