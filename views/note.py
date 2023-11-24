@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect, url_for
 from sqlite3 import Error
 
 from controllers.categories_controller import CategoriesController
@@ -29,6 +29,17 @@ def create_note():
             print(error)
     return render_template("create_note.html.j2", categories=select_categories, teachers=select_teachers)
 
+@notes_page.route("/delete_note", methods=["GET", "POST"])
+def delete_note():
+    if request.method == "POST":
+        try:
+            note_id = request.form["note_id"]
+            notes_controller.delete_note(note_id)
+
+        except Error as error:
+            print(error)
+
+    return redirect(url_for('notes.notes'))
 
 @notes_page.route("/notes")
 def notes():
