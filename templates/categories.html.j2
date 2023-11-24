@@ -82,12 +82,16 @@
                                 <p class="text-gray-900 whitespace-no-wrap">{{ category[2] }}</p>
                             </td>
                             <td class="px-5 py51 border-b border-gray-200 bg-white">
-                                <button
-                                    type="button"
-                                    class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                <form action="{{ url_for('category.delete_category') }}" method="POST">
+                                    <button
+                                        type="submit"
+                                        class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline"
                                     >
-                                Info
+                                        <input type="hidden" name="category_id" value={{ category[0] }}>
+                                        Delete
                                 </button>
+
+                                </form>
                             </td>
                         </tr>
                         {% endfor %}
