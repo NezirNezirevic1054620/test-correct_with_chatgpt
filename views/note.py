@@ -25,9 +25,11 @@ def create_note():
 
             notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public,
                                           teacher_id=teacher_id, category_id=category_id, note=note)
+            return redirect(url_for('notes.notes'))
         except Error as error:
             print(error)
     return render_template("create_note.html.j2", categories=select_categories, teachers=select_teachers)
+
 
 @notes_page.route("/delete_note", methods=["GET", "POST"])
 def delete_note():
@@ -40,6 +42,7 @@ def delete_note():
             print(error)
 
     return redirect(url_for('notes.notes'))
+
 
 @notes_page.route("/notes")
 def notes():
