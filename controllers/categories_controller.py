@@ -18,3 +18,22 @@ class CategoriesController(DatabaseConnector):
         except Error as error:
             print(error)
 
+    @staticmethod
+    def insert_category(omschrijving):
+        CategoriesController.database.connect()
+        try:
+            CategoriesController.cursor.execute("INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
+            CategoriesController.cursor.connection.commit()
+            return CategoriesController.cursor.lastrowid
+        except Error as error:
+            print(error)
+
+    @staticmethod
+    def delete_category(category_id):
+        CategoriesController.database.connect()
+        try:
+            CategoriesController.cursor.execute("DELETE FROM categories WHERE category_id="+category_id)
+            CategoriesController.cursor.connection.commit()
+        except Error as error:
+            print(error)
+
