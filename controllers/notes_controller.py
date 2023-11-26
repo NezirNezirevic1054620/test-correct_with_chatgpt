@@ -45,9 +45,7 @@ class NotesController(DatabaseConnector):
     def select_note(note_id):
         NotesController.database.connect()
         try:
-            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON"
-                                           "notes.category_id = categories.category_id INNER JOIN teachers ON"
-                                           "notes.teacher_id = teachers.teacher_id WHERE note_id=" + note_id)
+            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id INNER JOIN teachers ON notes.teacher_id = teachers.teacher_id WHERE note_id=" + note_id)
             NotesController.cursor.connection.commit()
             return NotesController.cursor.fetchall()
         except Error as error:

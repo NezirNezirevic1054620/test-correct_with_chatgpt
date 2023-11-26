@@ -46,6 +46,8 @@ def delete_note():
 
 @notes_page.route("/select_note", methods=["POST", "GET"])
 def select_note():
+    select_categories = CategoriesController.select_categories()
+    select_teachers = TeacherController.select_teachers()
     if request.method == "POST":
         try:
             note_id = request.form["note_id"]
@@ -53,7 +55,7 @@ def select_note():
             print(note)
         except Error as error:
             print(error)
-    return render_template("note.html.j2", note=note)
+    return render_template("note.html.j2", note=note, teachers=select_teachers, categories=select_categories)
 
 # @notes_page.route("/edit_note", methods=["POST", "GET"])
 # def edit_note():
