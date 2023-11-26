@@ -64,7 +64,7 @@
                                 Omschrijving
                             </th>
                             <th
-                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-40 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Created At
                             </th>
                             <th
@@ -81,10 +81,10 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ category[1] }}</p>
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                            <td class="px-40 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ category[2] }}</p>
                             </td>
-                            <td class="px-5 py51 border-b border-gray-200 bg-white">
+                            <td class="px-0 pr-0 py51 border-b border-gray-200 bg-white">
                                 <form action="{{ url_for('category.select_category') }}" method="POST">
                                     <button
                                         type="submit"
@@ -96,7 +96,7 @@
 
                                 </form>
                             </td>
-                            <td class="px-5 py51 border-b border-gray-200 bg-white">
+                            <td class="px-0 pr-10 py51 border-b border-gray-200 bg-white">
                                 <form action="{{ url_for('category.delete_category') }}" method="POST">
                                     <button
                                         type="submit"
