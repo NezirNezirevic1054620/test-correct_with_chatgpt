@@ -44,6 +44,24 @@ def delete_note():
     return redirect(url_for('notes.notes'))
 
 
+@notes_page.route("/edit_note", methods=["POST", "GET"])
+def edit_note():
+    if request.method == "POST":
+        try:
+            title = request.form["title"]
+            note_source = request.form["note_source"]
+            is_public = request.form["is_public"]
+            teacher_id = request.form["teacher_id"]
+            category_id = request.form["category_id"]
+            note = request.form["note"]
+            notes_controller.edit_note(title=title, note_source=note_source, is_public=is_public,
+                                          teacher_id=teacher_id, category_id=category_id, note=note)
+        except Error as error:
+            print(error)
+
+    return redirect(url_for('notes.notes'))
+
+
 @notes_page.route("/notes")
 def notes():
     select_notes = NotesController.select_notes()

@@ -41,3 +41,13 @@ class NotesController(DatabaseConnector):
         except Error as error:
             print(error)
 
+    @staticmethod
+    def edit_note(note_id):
+        NotesController.database.connect()
+        try:
+            NotesController.cursor.execute("DELETE FROM notes WHERE note_id=" + note_id)
+            NotesController.cursor.connection.commit()
+
+        except Error as error:
+            print(error)
+

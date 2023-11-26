@@ -85,6 +85,9 @@
                             <th
                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             </th>
+                            <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            </th>
 
 
                         </tr>
@@ -124,6 +127,18 @@
                                     <input type="hidden" value="{{ note[0] }}" name="note_id">
 
                                 Delete
+                                </button>
+                                </form>
+                            </td>
+                            <td class="">
+                                <form action="{{ url_for('notes.edit_note') }}" method="POST">
+                                    <button
+                                    type="submit"
+                                    class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+                                    >
+                                    <input type="hidden" value="{{ note[0] }}" name="note_id">
+
+                                Edit
                                 </button>
                                 </form>
                             </td>
