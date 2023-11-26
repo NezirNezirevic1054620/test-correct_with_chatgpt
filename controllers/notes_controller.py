@@ -30,3 +30,14 @@ class NotesController(DatabaseConnector):
             return NotesController.cursor.lastrowid
         except Error as error:
             print(error)
+
+    @staticmethod
+    def delete_note(note_id):
+        NotesController.database.connect()
+        try:
+            NotesController.cursor.execute("DELETE FROM notes WHERE note_id="+note_id)
+            NotesController.cursor.connection.commit()
+
+        except Error as error:
+            print(error)
+
