@@ -28,7 +28,6 @@ def categories():
 
 @category_page.route("/delete_category", methods=["POST", "GET"])
 def delete_category():
-    select_categories = CategoriesController.select_categories()
     if request.method == "POST":
         try:
             category_id = request.form["category_id"]
@@ -38,3 +37,28 @@ def delete_category():
             print(error)
     return redirect(url_for('category.categories'))
 
+
+@category_page.route("/select_category", methods=["POST", "GET"])
+def select_category():
+    if request.method == "POST":
+        try:
+            category_id = request.form["category_id"]
+            category = category_controller.select_category(category_id=category_id)
+            print(category)
+        except Error as error:
+            print(error)
+    return render_template("category.html.j2", category=category)
+
+
+@category_page.route("/update_category", methods=["POST", "GET"])
+def update_category():
+    if request.method == "POST":
+        try:
+            category_id = request.form["category_id"]
+            omschrijving = request.form["omschrijving"]
+
+            category_controller.update_category(category_id=category_id, omschrijving=omschrijving)
+            return redirect(url_for('category.categories'))
+        except Error as error:
+            print(error)
+    return render_template("category.html.j2")
