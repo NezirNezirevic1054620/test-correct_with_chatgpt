@@ -69,6 +69,7 @@ def edit_note():
             category_id = request.form["category_id"]
             note_id = request.form["note_id"]
             note = request.form["note"]
+            print(teacher_id)
             notes_controller.edit_note(title=title, note_source=note_source, is_public=is_public,
                                        teacher_id=teacher_id, category_id=category_id, note=note, note_id=note_id)
         except Error as error:

@@ -30,13 +30,13 @@
                     </div>
                 </div>
                 <div class="sm:col-span-3">
-                    <label for="teacher-id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
+                    <label for="teacher_id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
                     <div class="mt-2">
                         <label>
                             <select name="teacher_id"  class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 <option value="{{ note[4] }}">{{ note[12] }}</option>
                                 {% for teacher in teachers %}
-                                    <option value="{{ teacher[0] }}">{{ teacher[1] }}</option>
+                                    <option name="teacher_id" value="{{ teacher[0] }}">{{ teacher[1] }}</option>
                                 {% endfor %}
                             </select>
                         </label>
@@ -47,7 +47,7 @@
                     <div class="mt-2">
                         <label>
                             <select name="category_id" class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                <option value="{{ note[4] }}">{{ note[9] }}</option>
+                                <option value="{{ note[5] }}">{{ note[9] }}</option>
                                 {% for category in categories %}
                                     <option value="{{ category[0] }}">{{ category[1] }}</option>
                                 {% endfor %}
