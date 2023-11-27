@@ -111,12 +111,15 @@
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[10] }}</p>
                             </td>
                             <td class="px-5 py51 border-b border-gray-200 bg-white">
-                                <button
-                                    type="button"
+                                <form action="{{ url_for('notes.select_note') }}" method="POST">
+                                    <button
+                                    type="submit"
                                     class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
                                     >
+                                        <input type="hidden" name="note_id" value="{{ note[0] }}" >
                                 Info
                                 </button>
+                                </form>
                             </td>
                             <td class="">
                                 <form action="{{ url_for('notes.delete_note') }}" method="POST">
@@ -127,18 +130,6 @@
                                     <input type="hidden" value="{{ note[0] }}" name="note_id">
 
                                 Delete
-                                </button>
-                                </form>
-                            </td>
-                            <td class="">
-                                <form action="{{ url_for('notes.edit_note') }}" method="POST">
-                                    <button
-                                    type="submit"
-                                    class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
-                                    >
-                                    <input type="hidden" value="{{ note[0] }}" name="note_id">
-
-                                Edit
                                 </button>
                                 </form>
                             </td>
