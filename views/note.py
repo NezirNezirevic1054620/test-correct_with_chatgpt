@@ -57,22 +57,24 @@ def select_note():
             print(error)
     return render_template("note.html.j2", note=note, teachers=select_teachers, categories=select_categories)
 
-# @notes_page.route("/edit_note", methods=["POST", "GET"])
-# def edit_note():
-#     if request.method == "POST":
-#         try:
-#             title = request.form["title"]
-#             note_source = request.form["note_source"]
-#             is_public = request.form["is_public"]
-#             teacher_id = request.form["teacher_id"]
-#             category_id = request.form["category_id"]
-#             note = request.form["note"]
-#             notes_controller.edit_note(title=title, note_source=note_source, is_public=is_public,
-#                                           teacher_id=teacher_id, category_id=category_id, note=note)
-#         except Error as error:
-#             print(error)
-#
-#     return redirect(url_for('notes.notes'))
+
+@notes_page.route("/edit_note", methods=["POST", "GET"])
+def edit_note():
+    if request.method == "POST":
+        try:
+            title = request.form["title"]
+            note_source = request.form["note_source"]
+            is_public = request.form["is_public"]
+            teacher_id = request.form["teacher_id"]
+            category_id = request.form["category_id"]
+            note_id = request.form["note_id"]
+            note = request.form["note"]
+            notes_controller.edit_note(title=title, note_source=note_source, is_public=is_public,
+                                       teacher_id=teacher_id, category_id=category_id, note=note, note_id=note_id)
+        except Error as error:
+            print(error)
+
+    return redirect(url_for('notes.notes'))
 
 
 @notes_page.route("/notes")

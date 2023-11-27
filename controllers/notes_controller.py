@@ -51,13 +51,16 @@ class NotesController(DatabaseConnector):
         except Error as error:
             print(error)
 
-
     @staticmethod
-    def edit_note(note_id):
+    def edit_note(title, note_source, is_public, teacher_id, category_id, note, note_id):
         NotesController.database.connect()
         try:
-            NotesController.cursor.execute("UPDATE FROM notes WHERE note_id=" + note_id)
-            NotesController.cursor.connection.commit()
+            NotesController.cursor.execute("UPDATE notes SET title= " + title + "note_source=" + note_source +
+                                           "is_public=" + is_public + "teacher_id=" + teacher_id +
+                                           "category_id=" + category_id +
+                                           "note=" + note + "WHERE note_id=" + note_id)
 
+            NotesController.cursor.connection.commit()
+            return NotesController.cursor.fetchall()
         except Error as error:
             print(error)
