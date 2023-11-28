@@ -78,6 +78,20 @@ def edit_note():
     return redirect(url_for('notes.notes'))
 
 
+@notes_page.route("/search_note", methods=["POST", "GET"])
+def search_note():
+    note = 0
+    if request.method == "POST":
+        try:
+            search_value = request.form["search_value"]
+            note = notes_controller.search_note(search_value=search_value)
+            print(note)
+        except Error as error:
+            print(error)
+
+    return render_template("search_note.html.j2", result=note)
+
+
 @notes_page.route("/notes")
 def notes():
     select_notes = NotesController.select_notes()

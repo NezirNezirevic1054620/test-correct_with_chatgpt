@@ -1,0 +1,105 @@
+{% extends "index.html.j2" %}
+{% block content %}
+<form action="{{ url_for('notes.search_note') }}" method="POST">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="border-b border-gray-900/10 pb-12">
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="search_value" class="block font-medium leading-6 text-gray-900">Omschrijving</label>
+                    <div class="mt-2">
+                        <label>
+                        <input type="text" name="search_value" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search</button>
+        </div>
+    </div>
+</form>
+    {% if result != 0 %}
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+            <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                <table class="min-w-full leading-normal">
+                    <thead>
+                        <tr>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Title
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Note Source
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Note Text
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Category
+                            </th>
+                            <th
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Created at
+                            </th>
+                            <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            </th>
+                            <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            </th>
+                            <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in result %}
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[1] }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[2] }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[3] }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[4] }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[5] }}</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div
+                    class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+                    <span class="text-gray-900">
+                    Showing 1 to 4 of 50 Entries
+                    </span>
+                    <div class="inline-flex mt-2 xs:mt-0">
+                        <button
+                            class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-s-lg">
+                        Previous
+                        </button>
+                        <button
+                            class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
+                        Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        {% else %}
+    {% endif %}
+{% endblock %}
