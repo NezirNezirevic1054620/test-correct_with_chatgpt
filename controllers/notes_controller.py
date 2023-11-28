@@ -66,7 +66,7 @@ class NotesController(DatabaseConnector):
     def search_note(search_value):
         NotesController.database.connect()
         try:
-            NotesController.cursor.execute("SELECT * FROM notes WHERE title LIKE (?)", [search_value])
+            NotesController.cursor.execute("SELECT * FROM notes WHERE title LIKE (?)", ['%'+search_value+'%'])
             NotesController.cursor.connection.commit()
             note = NotesController.cursor.fetchall()
             print(note)

@@ -48,6 +48,10 @@
                         </path>
                     </svg>
                 </span>
+                <label>
+                <input placeholder="Search"
+                    class="appearance-none rounded-e-lg rounded-s-none border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                </label>
             </div>
         </div>
         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -76,16 +80,14 @@
                                 Created at
                             </th>
                             <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             </th>
                             <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             </th>
                             <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             </th>
-
-
                         </tr>
                     </thead>
                     <tbody>
@@ -109,24 +111,23 @@
                             <td class="px-5 py51 border-b border-gray-200 bg-white">
                                 <form action="{{ url_for('notes.select_note') }}" method="POST">
                                     <button
-                                    type="submit"
-                                    class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                                    >
-                                        <input type="hidden" name="note_id" value="{{ note[0] }}" >
-                                Info
-                                </button>
+                                        type="submit"
+                                        class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                        >
+                                    <input type="hidden" name="note_id" value="{{ note[0] }}" >
+                                    Info
+                                    </button>
                                 </form>
                             </td>
                             <td class="">
                                 <form action="{{ url_for('notes.delete_note') }}" method="POST">
                                     <button
-                                    type="submit"
-                                    class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline"
-                                    >
+                                        type="submit"
+                                        class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline"
+                                        >
                                     <input type="hidden" value="{{ note[0] }}" name="note_id">
-
-                                Delete
-                                </button>
+                                    Delete
+                                    </button>
                                 </form>
                             </td>
                         </tr>

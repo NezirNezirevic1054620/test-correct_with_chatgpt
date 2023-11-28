@@ -1,7 +1,7 @@
 {% extends "index.html.j2" %}
 {% block content %}
 {% for category in category %}
-    <form action="{{ url_for('category.update_category') }}"  method="POST">
+<form action="{{ url_for('category.update_category') }}"  method="POST">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <label>
-                        <input type="hidden" name="category_id" value="{{ category[0] }}" >
+                <input type="hidden" name="category_id" value="{{ category[0] }}" >
                 </label>
             </div>
         </div>
