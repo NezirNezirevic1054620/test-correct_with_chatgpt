@@ -22,6 +22,7 @@ def create_note():
             teacher_id = request.form["teacher_id"]
             category_id = request.form["category_id"]
             note = request.form["note"]
+            print(title)
 
             notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public,
                                           teacher_id=teacher_id, category_id=category_id, note=note)

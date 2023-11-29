@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for
 from sqlite3 import Error
 
 from controllers.categories_controller import CategoriesController
+from views.forms.category_form import CategoryForm
 
 category_page = Blueprint("category", __name__, url_prefix="/category", template_folder="templates", static_folder="static")
 category_controller = CategoriesController()
@@ -9,15 +10,14 @@ category_controller = CategoriesController()
 
 @category_page.route("/create_category", methods=["GET", "POST"])
 def create_category():
-    if request.method == "POST":
-        try:
-            omschrijving = request.form["omschrijving"]
-
-            category_controller.insert_category(omschrijving=omschrijving)
-            return redirect(url_for('category.categories'))
-        except Error as error:
-            print(error)
-    return render_template("create_category.html.j2")
+    category_form = CategoryForm()
+    if category_form.validate_on_submit():
+        omschrijving = category_form.omschrijving.data
+        category_controller.insert_category(omschrijving=omschrijving)
+        return redirect(url_for('category.categories'))
+    else:
+        print(category_form.errors)
+    return render_template("create_category.html.j2", form=category_form)
 
 
 @category_page.route("/categories")
