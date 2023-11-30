@@ -1,7 +1,7 @@
 {% extends "index.html.j2" %}
 {% block content %}
 <form action="{{ url_for('notes.create_note') }}" method="POST">
-{{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -14,9 +14,9 @@
                     </div>
                     {% if form.title.errors %}
                     {% for error in form.title.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
                 <div class="sm:col-span-3">
                     <label for="note_source" class="block text-sm font-medium leading-6 text-gray-900">Note Source</label>
@@ -27,9 +27,9 @@
                     </div>
                     {% if form.note_source.errors %}
                     {% for error in form.note_source.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
                 <div class="sm:col-span-3">
                     <label for="is_public" class="block text-sm font-medium leading-6 text-gray-900">Is Public</label>
@@ -40,9 +40,9 @@
                     </div>
                     {% if form.is_public.errors %}
                     {% for error in form.is_public.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
                 <div class="sm:col-span-3">
                     <label for="teacher-id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
@@ -55,11 +55,11 @@
                             </select>
                         </label>
                     </div>
-                {% if form.teacher_id.errors %}
+                    {% if form.teacher_id.errors %}
                     {% for error in form.teacher_id.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
                 <div class="sm:col-span-3">
                     <label for="category_id" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
@@ -72,11 +72,11 @@
                             </select>
                         </label>
                     </div>
-                {% if form.category_id.errors %}
+                    {% if form.category_id.errors %}
                     {% for error in form.category_id.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
                 <div class="sm:col-span-3">
                     <label for="note" class="block text-sm font-medium leading-6 text-gray-900">Note</label>
@@ -87,9 +87,9 @@
                     </div>
                     {% if form.note.errors %}
                     {% for error in form.note.errors %}
-                        <p class="text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
-                {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
