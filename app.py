@@ -3,15 +3,21 @@ from flask import Flask, render_template
 from views.category import category_page
 from views.note import notes_page
 
+SECRET_KEY = "babababa"
+
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(notes_page)
 app.register_blueprint(category_page)
+
 
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template("index.html.j2")
+
+
+app.config['SECRET_KEY'] = SECRET_KEY
 
 
 if __name__ == "__main__":
