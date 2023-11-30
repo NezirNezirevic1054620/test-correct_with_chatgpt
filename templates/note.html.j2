@@ -1,6 +1,7 @@
 {% extends "index.html.j2" %}
 {% block content %}
-<form action="{{ url_for('notes.create_note') }}" method="POST">
+{% for note in note %}
+<form action="{{ url_for('notes.edit_note') }}"  method="POST">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="border-b border-gray-900/10 pb-12">
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -8,7 +9,7 @@
                     <label for="title" class="block font-medium leading-6 text-gray-900">Title</label>
                     <div class="mt-2">
                         <label>
-                        <input type="text" name="title" placeholder="Summary of python OOP" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input type="text" name="title" value="{{ note[1] }}"  class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </label>
                     </div>
                 </div>
@@ -16,7 +17,7 @@
                     <label for="note_source" class="block text-sm font-medium leading-6 text-gray-900">Note Source</label>
                     <div class="mt-2">
                         <label>
-                        <input type="text" name="note_source" placeholder="eg: www.w3schools.com" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input type="text" name="note_source" value="{{ note[2] }}" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </label>
                     </div>
                 </div>
@@ -24,17 +25,18 @@
                     <label for="is_public" class="block text-sm font-medium leading-6 text-gray-900">Is Public</label>
                     <div class="mt-2">
                         <label>
-                        <input name="is_public" placeholder="Yes" type="number" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input name="is_public" value="{{ note[3] }}" type="number" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </label>
                     </div>
                 </div>
                 <div class="sm:col-span-3">
-                    <label for="teacher-id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
+                    <label for="teacher_id" class="block text-sm font-medium leading-6 text-gray-900">Teacher</label>
                     <div class="mt-2">
                         <label>
                             <select name="teacher_id"  class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="{{ note[4] }}">{{ note[12] }}</option>
                                 {% for teacher in teachers %}
-                                <option value="{{ teacher[0] }}">{{ teacher[1] }}</option>
+                                <option name="teacher_id" value="{{ teacher[0] }}">{{ teacher[1] }}</option>
                                 {% endfor %}
                             </select>
                         </label>
@@ -45,6 +47,7 @@
                     <div class="mt-2">
                         <label>
                             <select name="category_id" class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="{{ note[5] }}">{{ note[9] }}</option>
                                 {% for category in categories %}
                                 <option value="{{ category[0] }}">{{ category[1] }}</option>
                                 {% endfor %}
@@ -56,10 +59,13 @@
                     <label for="note" class="block text-sm font-medium leading-6 text-gray-900">Note</label>
                     <div class="mt-2">
                         <label>
-                        <textarea name="note" placeholder="Object-oriented programming (OOP) is a method of structuring a program by bundling related properties and behaviors into individual objects. In this tutorial, you’ll learn the basics of object-oriented programming in Python." class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                        <input name="note" value="{{ note[6] }}"class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></input>
                         </label>
                     </div>
                 </div>
+                <label>
+                <input type="hidden" name="note_id" value="{{ note[0] }}" >
+                </label>
             </div>
         </div>
         <div class="mt-6 flex items-center justify-end gap-x-6">
@@ -67,4 +73,5 @@
         </div>
     </div>
 </form>
+{% endfor %}
 {% endblock %}

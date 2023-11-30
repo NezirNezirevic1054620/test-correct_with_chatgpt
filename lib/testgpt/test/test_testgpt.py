@@ -1,12 +1,9 @@
 import sys
 from pathlib import Path
-
-import openai
+from lib.testgpt.testgpt import TestGPT
 import pytest
 
-
 sys.path.append(str(Path(__file__).parent.parent))
-from testgpt import TestGPT
 
 
 def test_init():
