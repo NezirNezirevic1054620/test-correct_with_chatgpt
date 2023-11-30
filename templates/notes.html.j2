@@ -109,7 +109,7 @@
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[10] }}</p>
                             </td>
                             <td class="px-5 py51 border-b border-gray-200 bg-white">
-                                <form action="{{ url_for('notes.select_note') }}" method="POST">
+                                <form action="{{ url_for('notes.note', note_id=note[0]) }}" method="POST">
                                     <button
                                         type="submit"
                                         class="border border-green-500 bg-green-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
