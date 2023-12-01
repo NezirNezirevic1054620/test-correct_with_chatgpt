@@ -92,7 +92,7 @@ def search_note():
     return render_template("search_note.html.j2", result=note)
 
 
-@notes_page.route("/notes")
+@notes_page.route("/")
 def notes():
     select_notes = NotesController.select_notes()
     return render_template("notes.html.j2", notes=select_notes)
