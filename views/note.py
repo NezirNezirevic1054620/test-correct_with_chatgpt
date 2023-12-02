@@ -6,7 +6,7 @@ from controllers.notes_controller import NotesController
 from controllers.teacher_controller import TeacherController
 from views.forms.note_form import NoteForm
 
-notes_page = Blueprint("notes", __name__, url_prefix="/notes", template_folder="templates", static_folder="static")
+notes_page = Blueprint("notes", __name__, url_prefix="/notes", template_folder="templates/note", static_folder="static")
 
 notes_controller = NotesController()
 
@@ -27,7 +27,7 @@ def create_note():
         notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public,
                                       teacher_id=teacher_id, category_id=category_id, note=note_text)
         return redirect(url_for('notes.notes'))
-    return render_template("create_note.html.j2", categories=select_categories, teachers=select_teachers, form=note_form)
+    return render_template("note/create_note.html.j2", categories=select_categories, teachers=select_teachers, form=note_form)
 
 
 @notes_page.route("/delete_note", methods=["GET", "POST"])
@@ -55,7 +55,7 @@ def note(note_id):
             print(note)
         except Error as error:
             print(error)
-    return render_template("note.html.j2", note=select_note, teachers=select_teachers, categories=select_categories, note_id=note_id)
+    return render_template("note/note.html.j2", note=select_note, teachers=select_teachers, categories=select_categories, note_id=note_id)
 
 
 @notes_page.route("/edit_note", methods=["POST", "GET"])
@@ -80,19 +80,21 @@ def edit_note():
 
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
-    note = 0
+    select_notes = NotesController.select_notes()
     if request.method == "POST":
         try:
             search_value = request.form["search_value"]
-            note = notes_controller.search_note(search_value=search_value)
-            print(note)
+
+            result = notes_controller.search_note(search_value=search_value)
+            print(search_value)
         except Error as error:
             print(error)
 
-    return render_template("search_note.html.j2", result=note)
+    return render_template("note/notes.html.j2", result=result, notes=select_notes)
+
 
 
 @notes_page.route("/")
 def notes():
     select_notes = NotesController.select_notes()
-    return render_template("notes.html.j2", notes=select_notes)
+    return render_template("note/notes.html.j2", notes=select_notes)
