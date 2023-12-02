@@ -4,7 +4,7 @@ from sqlite3 import Error
 from controllers.categories_controller import CategoriesController
 from views.forms.category_form import CategoryForm
 
-category_page = Blueprint("category", __name__, url_prefix="/category", template_folder="templates", static_folder="static")
+category_page = Blueprint("category", __name__, url_prefix="/categories", template_folder="templates/category", static_folder="static")
 category_controller = CategoriesController()
 
 
@@ -17,13 +17,14 @@ def create_category():
         return redirect(url_for('category.categories'))
     else:
         print(category_form.errors)
-    return render_template("create_category.html.j2", form=category_form)
+    return render_template("category/create_category.html.j2", form=category_form)
 
 
-@category_page.route("/categories")
+@category_page.route("/")
 def categories():
+
     select_categories = CategoriesController.select_categories()
-    return render_template("categories.html.j2", categories=select_categories)
+    return render_template("category/categories.html.j2", categories=select_categories)
 
 
 @category_page.route("/delete_category", methods=["POST", "GET"])
@@ -38,16 +39,17 @@ def delete_category():
     return redirect(url_for('category.categories'))
 
 
-@category_page.route("/select_category", methods=["POST", "GET"])
-def select_category():
+@category_page.route("/category/<int:category_id>", methods=["POST", "GET"])
+def category(category_id):
+    select_category = None
     if request.method == "POST":
         try:
             category_id = request.form["category_id"]
-            category = category_controller.select_category(category_id=category_id)
+            select_category = category_controller.select_category(category_id=category_id)
             print(category)
         except Error as error:
             print(error)
-    return render_template("category.html.j2", category=category)
+    return render_template("category/category.html.j2", category=select_category, category_id=category_id)
 
 
 @category_page.route("/update_category", methods=["POST", "GET"])
@@ -61,4 +63,19 @@ def update_category():
             return redirect(url_for('category.categories'))
         except Error as error:
             print(error)
-    return render_template("category.html.j2")
+    return render_template("category/category.html.j2")
+
+
+@category_page.route("/search_category", methods=["POST", "GET"])
+def search_category():
+    select_categories = CategoriesController.select_categories()
+    if request.method == "POST":
+        try:
+            search_value = request.form["search_value"]
+
+            result = category_controller.search_category(search_value=search_value)
+            print(search_value)
+        except Error as error:
+            print(error)
+
+    return render_template("category/categories.html.j2", result=result, categories=select_categories)
