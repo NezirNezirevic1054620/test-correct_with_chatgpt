@@ -22,6 +22,7 @@ def create_category():
 
 @category_page.route("/")
 def categories():
+
     select_categories = CategoriesController.select_categories()
     return render_template("categories.html.j2", categories=select_categories)
 
@@ -48,7 +49,7 @@ def category(category_id):
             print(category)
         except Error as error:
             print(error)
-    return render_template("category.html.j2", category=select_category, catgeory_id=category_id)
+    return render_template("category.html.j2", category=select_category, category_id=category_id)
 
 
 @category_page.route("/update_category", methods=["POST", "GET"])
@@ -63,3 +64,18 @@ def update_category():
         except Error as error:
             print(error)
     return render_template("category.html.j2")
+
+
+@category_page.route("/search_category", methods=["POST", "GET"])
+def search_category():
+    select_categories = CategoriesController.select_categories()
+    if request.method == "POST":
+        try:
+            search_value = request.form["search_value"]
+
+            result = category_controller.search_category(search_value=search_value)
+            print(search_value)
+        except Error as error:
+            print(error)
+
+    return render_template("categories.html.j2", result=result, categories=select_categories)
