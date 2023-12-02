@@ -95,8 +95,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if result == 0 %}
-                        {% for result in categories %}
+                        {% if result | length != 0 %}
+                        {% for category in result %}
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ category[1] }}</p>
@@ -133,7 +133,7 @@
                         </tr>
                         {% endfor %}
                         {% else %}
-                        {% for category in result %}
+                        {% for category in categories %}
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ category[1] }}</p>
