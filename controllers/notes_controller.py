@@ -77,3 +77,15 @@ class NotesController(DatabaseConnector):
             return note
         except Error as error:
             print(error)
+
+    @staticmethod
+    def filter_notes(filter_value):
+        NotesController.database.connect()
+        try:
+            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE notes.category_id = " + filter_value)
+            NotesController.cursor.connection.commit()
+            note = NotesController.cursor.fetchall()
+            print(note)
+            return note
+        except Error as error:
+            print(error)
