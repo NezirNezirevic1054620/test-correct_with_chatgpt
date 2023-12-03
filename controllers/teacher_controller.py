@@ -17,3 +17,15 @@ class TeacherController(DatabaseConnector):
             return teachers
         except Error as error:
             print(error)
+
+    @staticmethod
+    def login(username, password):
+        TeacherController.database.connect()
+        try:
+            TeacherController.cursor.execute("SELECT * FROM teachers WHERE username = (?) AND teacher_password = (?)", [username, password])
+            TeacherController.cursor.connection.commit()
+            teacher = TeacherController.cursor.fetchall()
+            print(teacher)
+            return teacher
+        except Error as error:
+            print(error)

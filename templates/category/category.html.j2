@@ -1,4 +1,4 @@
-{% extends "index.html.j2" %}
+{% extends "dashboard/index.html.j2" %}
 {% block content %}
 {% for category in category %}
 <form action="{{ url_for('category.update_category') }}"  method="POST">
