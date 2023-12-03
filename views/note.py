@@ -14,6 +14,7 @@ notes_controller = NotesController()
 @notes_page.route("/create_note", methods=["POST", "GET"])
 def create_note():
     if "user" in session:
+        username = session["user"]
         note_form = NoteForm()
         select_categories = CategoriesController.select_categories()
         select_teachers = TeacherController.select_teachers()
@@ -29,9 +30,9 @@ def create_note():
                                           teacher_id=teacher_id, category_id=category_id, note=note_text)
             return redirect(url_for('notes.notes'))
         return render_template("note/create_note.html.j2", categories=select_categories, teachers=select_teachers,
-                               form=note_form)
+                               form=note_form, username=username)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/delete_note", methods=["GET", "POST"])
@@ -47,12 +48,13 @@ def delete_note():
 
         return redirect(url_for('notes.notes'))
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/note/<int:note_id>", methods=["POST", "GET"])
 def note(note_id):
     if "user" in session:
+        username = session["user"]
         select_note = None
         select_categories = CategoriesController.select_categories()
         select_teachers = TeacherController.select_teachers()
@@ -64,9 +66,9 @@ def note(note_id):
             except Error as error:
                 print(error)
         return render_template("note/note.html.j2", note=select_note, teachers=select_teachers,
-                               categories=select_categories, note_id=note_id)
+                               categories=select_categories, note_id=note_id, username=username)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/edit_note", methods=["POST", "GET"])
@@ -89,12 +91,13 @@ def edit_note():
 
         return redirect(url_for('notes.notes'))
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
     if "user" in session:
+        username = session["user"]
         select_notes = NotesController.select_notes()
         select_categories = CategoriesController.select_categories()
         if request.method == "POST":
@@ -106,14 +109,15 @@ def search_note():
             except Error as error:
                 print(error)
 
-        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories, username=username)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/filter_notes", methods=["POST", "GET"])
 def filter_note():
     if "user" in session:
+        username = session["user"]
         select_notes = NotesController.select_notes()
         select_categories = CategoriesController.select_categories()
         if request.method == "POST":
@@ -124,16 +128,17 @@ def filter_note():
                 print(filter_value)
             except Error as error:
                 print(error)
-        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories, username=username)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/")
 def notes():
     if "user" in session:
+        username = session["user"]
         select_notes = NotesController.select_notes()
         select_categories = CategoriesController.select_categories()
-        return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories)
+        return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories, username=username)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))

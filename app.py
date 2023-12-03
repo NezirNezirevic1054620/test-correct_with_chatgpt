@@ -15,7 +15,7 @@ teacher_controller = TeacherController()
 
 @app.route("/",  methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
-def home():
+def login():
     session.pop("user", None)
     if request.method == "POST":
         username = request.form["username"]
@@ -25,12 +25,17 @@ def home():
         if result:
             session["user"] = username
             print(session["user"])
-            return redirect(url_for("notes.notes"))
+            return redirect(url_for("dashboard"))
         else:
-            return redirect(url_for("home"))
+            return redirect(url_for("login"))
 
     return render_template("login.html.j2")
 
+
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
+    username = session["user"]
+    return render_template("index.html.j2", username=username)
 
 app.config['SECRET_KEY'] = SECRET_KEY
 
