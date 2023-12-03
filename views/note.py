@@ -81,6 +81,7 @@ def edit_note():
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
     select_notes = NotesController.select_notes()
+    select_categories = CategoriesController.select_categories()
     if request.method == "POST":
         try:
             search_value = request.form["search_value"]
@@ -90,11 +91,26 @@ def search_note():
         except Error as error:
             print(error)
 
-    return render_template("note/notes.html.j2", result=result, notes=select_notes)
+    return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories)
 
+
+@notes_page.route("/filter_notes", methods=["POST", "GET"])
+def filter_note():
+    select_notes = NotesController.select_notes()
+    select_categories = CategoriesController.select_categories()
+    if request.method == "POST":
+        try:
+            filter_value = request.form["filter_value"]
+
+            result = notes_controller.filter_notes(filter_value=filter_value)
+            print(filter_value)
+        except Error as error:
+            print(error)
+    return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories)
 
 
 @notes_page.route("/")
 def notes():
     select_notes = NotesController.select_notes()
-    return render_template("note/notes.html.j2", notes=select_notes)
+    select_categories = CategoriesController.select_categories()
+    return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories)

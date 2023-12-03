@@ -8,20 +8,33 @@
         <div class="my-2 flex sm:flex-row flex-col">
             <div class="flex flex-row mb-1 sm:mb-0">
                 <div class="relative">
-                    <label>
-                        <select
-                            class="appearance-none h-full rounded-s-lg border block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
-                    </label>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                        </svg>
-                    </div>
+                    <form action="{{ url_for('notes.filter_note') }}" method="POST">
+                        <label>
+                            <select
+                                name="filter_value"
+                                class="appearance-none h-full rounded-s-lg border block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                {% for category in categories %}
+                                <option value="{{ category[0] }}">{{ category[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
+                            </svg>
+                        </div>
+                        <span class="h-full absolute inset-y-0 right-0 flex items-center">
+                            <button
+                                type="submit"
+                                class="border-green-500 bg-green-500 rounded-s-none text-white rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"></path>
+                                </svg>
+                            </button>
+                        </span>
+                    </form>
                 </div>
                 <div class="relative">
                     <label>
@@ -110,7 +123,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% if result | length != 0 %}
+                        {% if result | length != 0 %}
                         {% for note in result %}
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
@@ -120,7 +133,7 @@
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[2] }}</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
-                                <p class="text-gray-900 whitespace-no-wrap">{{ note[6] }}</p>
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[6][:20] }}</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[9] }}</p>
@@ -156,8 +169,8 @@
                             </td>
                         </tr>
                         {% endfor %}
-                    {% else %}
-                    {% for note in notes %}
+                        {% else %}
+                        {% for note in notes %}
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[1] }}</p>
@@ -166,7 +179,7 @@
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[2] }}</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
-                                <p class="text-gray-900 whitespace-no-wrap">{{ note[6] }}</p>
+                                <p class="text-gray-900 whitespace-no-wrap">{{ note[6][:20]}}</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">{{ note[9] }}</p>
@@ -202,7 +215,7 @@
                             </td>
                         </tr>
                         {% endfor %}
-                    {% endif %}
+                        {% endif %}
                     </tbody>
                 </table>
                 <div
