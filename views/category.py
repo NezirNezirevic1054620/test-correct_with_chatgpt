@@ -11,6 +11,7 @@ category_controller = CategoriesController()
 @category_page.route("/create_category", methods=["GET", "POST"])
 def create_category():
     if "user" in session:
+        username = session["user"]
         category_form = CategoryForm()
         if category_form.validate_on_submit():
             omschrijving = category_form.omschrijving.data
@@ -18,7 +19,7 @@ def create_category():
             return redirect(url_for('category.categories'))
         else:
             print(category_form.errors)
-        return render_template("category/create_category.html.j2", form=category_form)
+        return render_template("category/create_category.html.j2", form=category_form, username=username)
     else:
         return redirect(url_for("login"))
 
@@ -26,8 +27,9 @@ def create_category():
 @category_page.route("/")
 def categories():
     if "user" in session:
+        username = session["user"]
         select_categories = CategoriesController.select_categories()
-        return render_template("category/categories.html.j2", categories=select_categories)
+        return render_template("category/categories.html.j2", categories=select_categories, username=username)
     else:
         return redirect(url_for("login"))
 
@@ -47,10 +49,10 @@ def delete_category():
         return redirect(url_for("login"))
 
 
-
 @category_page.route("/category/<int:category_id>", methods=["POST", "GET"])
 def category(category_id):
     if "user" in session:
+        username = session["user"]
         select_category = None
         if request.method == "POST":
             try:
@@ -59,19 +61,21 @@ def category(category_id):
                 print(category)
             except Error as error:
                 print(error)
-        return render_template("category/category.html.j2", category=select_category, category_id=category_id)
+        return render_template("category/category.html.j2", category=select_category, category_id=category_id, username=username)
     else:
         return redirect(url_for("login"))
+
 
 @category_page.route("/update_category", methods=["POST", "GET"])
 def update_category():
     if "user" in session:
+        username = session["user"]
         if request.method == "POST":
             try:
                 category_id = request.form["category_id"]
                 omschrijving = request.form["omschrijving"]
 
-                category_controller.update_category(category_id=category_id, omschrijving=omschrijving)
+                category_controller.update_category(category_id=category_id, omschrijving=omschrijving, username=username)
                 return redirect(url_for('category.categories'))
             except Error as error:
                 print(error)
@@ -83,6 +87,7 @@ def update_category():
 @category_page.route("/search_category", methods=["POST", "GET"])
 def search_category():
     if "user" in session:
+        username = session["user"]
         select_categories = CategoriesController.select_categories()
         if request.method == "POST":
             try:
@@ -93,6 +98,6 @@ def search_category():
             except Error as error:
                 print(error)
 
-        return render_template("category/categories.html.j2", result=result, categories=select_categories)
+        return render_template("category/categories.html.j2", result=result, categories=select_categories, username=username)
     else:
         return redirect(url_for("login"))
