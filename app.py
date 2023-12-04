@@ -32,6 +32,12 @@ def login():
     return render_template("login.html.j2")
 
 
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("login"))
+
+
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user" in session:
