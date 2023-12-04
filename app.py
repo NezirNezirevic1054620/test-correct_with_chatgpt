@@ -34,8 +34,11 @@ def login():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    username = session["user"]
-    return render_template("index.html.j2", username=username)
+    if "user" in session:
+        username = session["user"]
+        return render_template("index.html.j2", username=username)
+    else:
+        return redirect(url_for("login"))
 
 app.config['SECRET_KEY'] = SECRET_KEY
 
