@@ -156,7 +156,7 @@ def generate_question_server(note_id):
     if "user" in session:
         if request.method == "POST":
             try:
-                note = notes_controller.select_note(note_id=note_id)
+                note = request.form["note"]
                 generated_question = process_note_to_question(note)
                 return json.dumps({"question": generated_question})
             except Error as error:
