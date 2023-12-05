@@ -36,7 +36,8 @@ class TestGPT:
                 f"Question type {question_type} not found in config file {self.config_file}"
             )
         if not note:
-            raise ValueError("The given note was empty, we can't ask empty questions")
+            raise ValueError(
+                "The given note was empty, we can't ask empty questions")
         parameters = {
             "model": self.initial_parameters["model"],
             "messages": self.initial_parameters["prompts"][question_type]["messages"],
@@ -70,7 +71,7 @@ class FakeTestGPT(TestGPT):
 
 
 if __name__ == "__main__":
-    api_key = "sk-xxxxx"
+    api_key = "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"
     test_gpt = TestGPT(api_key)
     test_text = """
 De grutto is een oer-Hollandse weidevogel. Je vindt deze grote, slanke steltloper op erven en graslanden van
@@ -85,12 +86,12 @@ De grutto is een oer-Hollandse weidevogel. Je vindt deze grote, slanke steltlope
     except Exception as e:
         print(e)
 
-    # Hier testen we nog een keer, maar met de "FakeTestGPT" class, die geen echte openai calls doet
-    try:
-        test_gpt = FakeTestGPT(api_key)
-        test_result = test_gpt.generate_open_question(test_text)
-        print(test_result)
-        test_result = test_gpt.generate_multiple_choice_question(test_text)
-        print(test_result)
-    except Exception as e:
-        print(e)
+    # # Hier testen we nog een keer, maar met de "FakeTestGPT" class, die geen echte openai calls doet
+    # try:
+    #     test_gpt = FakeTestGPT(api_key)
+    #     test_result = test_gpt.generate_open_question(test_text)
+    #     print(test_result)
+    #     test_result = test_gpt.generate_multiple_choice_question(test_text)
+    #     print(test_result)
+    # except Exception as e:
+    #     print(e)
