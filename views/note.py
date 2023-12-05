@@ -8,6 +8,7 @@ from views.forms.note_form import NoteForm
 
 from lib.testgpt.testgpt import TestGPT
 import openai
+import json
 
 notes_page = Blueprint("notes", __name__, url_prefix="/notes",
                        template_folder="templates/note", static_folder="static")
@@ -150,20 +151,19 @@ def notes():
         return redirect(url_for("login"))
 
 
-@notes_page.route("/generate_question", methods=["POST"])
-def generate_question():
+@notes_page.route("/generate_question/<int:note_id>", methods=["POST"])
+def generate_question_server(note_id):
     if "user" in session:
         if request.method == "POST":
             try:
-                note_id = request.form["note_id"]
                 note = notes_controller.select_note(note_id=note_id)
                 generated_question = process_note_to_question(note)
-                return generated_question
+                return json.dumps({"question": generated_question})
             except Error as error:
                 print(error)
-        return "Error: Unable to generate a question"
+        return json.dumps({"error": "Unable to generate a question"})
     else:
-        return redirect(url_for("login"))
+        return json.dumps({"error": "User not authenticated"}), 401
 
 
 def process_note_to_question(note):
