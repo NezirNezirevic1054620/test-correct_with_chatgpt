@@ -154,8 +154,8 @@ def notes():
         return redirect(url_for("login"))
 
 
-@notes_page.route("/update_question", methods=["POST"])
-def update_question():
+@notes_page.route("/generate_question", methods=["POST"])
+def generate_question():
     if "user" in session:
         if request.method == "POST":
             try:
@@ -168,7 +168,7 @@ def update_question():
                     generated_question)
 
                 # Update the question in the database using the QuestionsController
-                QuestionsController.update_question(
+                QuestionsController.generate_question(
                     note_id=note_id, question=open_question)
 
                 # Redirect to the note page or any desired page after successful update

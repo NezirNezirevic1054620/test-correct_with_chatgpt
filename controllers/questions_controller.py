@@ -41,7 +41,7 @@ class QuestionsController(DatabaseConnector):
             print(error)
 
     @staticmethod
-    def update_question(note_id, question):
+    def generate_question(note_id, question):
         QuestionsController.database.connect()
         try:
             QuestionsController.cursor.execute("UPDATE questions SET exam_question = '" + question + "' WHERE " +
