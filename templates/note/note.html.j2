@@ -73,7 +73,7 @@
         </div>
     </div>
 </form>
-<form action="{{ url_for('notes.update_question') }}" method="POST">
+<form action="{{ url_for('notes.generate_question') }}" method="POST">
         <input type="hidden" name="note_id" value="{{ note_id }}">
         <input type="hidden" name="note" value="{{ note[6] }}">
         
