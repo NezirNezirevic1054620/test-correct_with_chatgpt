@@ -57,3 +57,15 @@ class CategoriesController(DatabaseConnector):
             return CategoriesController.cursor.fetchone()
         except Error as error:
             print(error)
+
+    @staticmethod
+    def search_category(search_value):
+        CategoriesController.database.connect()
+        try:
+            CategoriesController.cursor.execute("SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
+            CategoriesController.cursor.connection.commit()
+            category = CategoriesController.cursor.fetchall()
+            print(category)
+            return category
+        except Error as error:
+            print(error)
