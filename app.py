@@ -4,11 +4,14 @@ from views.category import category_page
 from views.note import notes_page
 
 from controllers.teacher_controller import TeacherController
+from views.teacher import teachers_page
+
 SECRET_KEY = "babababa"
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(notes_page)
 app.register_blueprint(category_page)
+app.register_blueprint(teachers_page)
 
 teacher_controller = TeacherController()
 
@@ -24,6 +27,8 @@ def login():
         result = teacher_controller.login(username=username, password=password)
         if result:
             session["user"] = username
+            session["is_admin"] = result[0][5]
+            print(session["is_admin"])
             print(session["user"])
             return redirect(url_for("dashboard"))
         else:
