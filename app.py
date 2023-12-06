@@ -32,6 +32,12 @@ def login():
     return render_template("login.html.j2")
 
 
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.pop("user", None)
+    return redirect(url_for("login"))
+
+
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user" in session:
@@ -39,6 +45,16 @@ def dashboard():
         return render_template("index.html.j2", username=username)
     else:
         return redirect(url_for("login"))
+
+
+@app.route("/admin_dashboard", methods=["GET", "POST"])
+def admin_dashboard():
+    if "user" in session:
+        username = session["user"]
+        return render_template("beheer.html.j2", username=username)
+    else:
+        return redirect(url_for("login"))
+
 
 app.config['SECRET_KEY'] = SECRET_KEY
 

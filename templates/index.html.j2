@@ -25,6 +25,9 @@
                         <p  class="relative text-md p-1 text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             Welcome <p class="text-blue-500">{{ username }}</p>
                         </p>
+                        <p  class="relative text-md p-1 text-red-500 no-underline hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            <a href="{{ url_for("logout") }}">Logout</a>
+                        </p>
                         <!-- Profile dropdown -->
                         <div class="relative ml-3">
                             <div>
