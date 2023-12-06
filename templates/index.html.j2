@@ -18,6 +18,10 @@
                                 <a href="{{ url_for('dashboard') }}" class="text-blue-700 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 font-medium">Dashboard</a>
                                 <a href="{{ url_for('notes.notes') }}" class="text-blue-700 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 font-medium">Notes</a>
                                 <a href="{{ url_for('category.categories') }}" class="text-blue-700 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 font-medium">Categories</a>
+                                {% if session["is_admin"] == 1 %}
+                                    <a href="{{ url_for('teachers.teachers') }}" class="text-blue-700 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 font-medium">Teachers</a>
+                                {% else %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

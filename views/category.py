@@ -75,11 +75,11 @@ def update_category():
                 category_id = request.form["category_id"]
                 omschrijving = request.form["omschrijving"]
 
-                category_controller.update_category(category_id=category_id, omschrijving=omschrijving, username=username)
+                category_controller.update_category(category_id=category_id, omschrijving=omschrijving)
                 return redirect(url_for('category.categories'))
             except Error as error:
                 print(error)
-        return render_template("category/category.html.j2")
+        return render_template("category/category.html.j2", username=username)
     else:
         return redirect(url_for("login"))
 
