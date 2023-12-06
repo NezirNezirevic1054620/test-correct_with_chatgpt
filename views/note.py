@@ -6,7 +6,12 @@ from controllers.notes_controller import NotesController
 from controllers.teacher_controller import TeacherController
 from views.forms.note_form import NoteForm
 
-notes_page = Blueprint("notes", __name__, url_prefix="/notes", template_folder="templates/note", static_folder="static")
+from lib.testgpt.testgpt import TestGPT
+import openai
+import json
+
+notes_page = Blueprint("notes", __name__, url_prefix="/notes",
+                       template_folder="templates/note", static_folder="static")
 
 notes_controller = NotesController()
 
@@ -104,7 +109,8 @@ def search_note():
             try:
                 search_value = request.form["search_value"]
 
-                result = notes_controller.search_note(search_value=search_value)
+                result = notes_controller.search_note(
+                    search_value=search_value)
                 print(search_value)
             except Error as error:
                 print(error)
@@ -124,7 +130,8 @@ def filter_note():
             try:
                 filter_value = request.form["filter_value"]
 
-                result = notes_controller.filter_notes(filter_value=filter_value)
+                result = notes_controller.filter_notes(
+                    filter_value=filter_value)
                 print(filter_value)
             except Error as error:
                 print(error)
@@ -142,3 +149,27 @@ def notes():
         return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories, username=username)
     else:
         return redirect(url_for("login"))
+
+
+@notes_page.route("/generate_question/<int:note_id>", methods=["POST"])
+def generate_question_server(note_id):
+    if "user" in session:
+        if request.method == "POST":
+            try:
+                note = notes_controller.select_note(note_id=note_id)
+                generated_question = process_note_to_question(note)
+                return json.dumps({"question": generated_question})
+            except Error as error:
+                print(error)
+        return json.dumps({"error": "Unable to generate a question"})
+    else:
+        return json.dumps({"error": "User not authenticated"}), 401
+
+
+def process_note_to_question(note):
+    note_text = note[0][6]
+    api_key = "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"
+    test_gpt = TestGPT(api_key)
+    open_question = test_gpt.generate_open_question(note_text)
+
+    return open_question
