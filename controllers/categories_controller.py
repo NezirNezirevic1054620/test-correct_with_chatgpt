@@ -22,7 +22,8 @@ class CategoriesController(DatabaseConnector):
     def insert_category(omschrijving):
         CategoriesController.database.connect()
         try:
-            CategoriesController.cursor.execute("INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
+            CategoriesController.cursor.execute(
+                "INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
             CategoriesController.cursor.connection.commit()
             return CategoriesController.cursor.lastrowid
         except Error as error:
@@ -32,7 +33,8 @@ class CategoriesController(DatabaseConnector):
     def delete_category(category_id):
         CategoriesController.database.connect()
         try:
-            CategoriesController.cursor.execute("DELETE FROM categories WHERE category_id=" + category_id)
+            CategoriesController.cursor.execute(
+                "DELETE FROM categories WHERE category_id=" + category_id)
             CategoriesController.cursor.connection.commit()
         except Error as error:
             print(error)
@@ -41,7 +43,8 @@ class CategoriesController(DatabaseConnector):
     def select_category(category_id):
         CategoriesController.database.connect()
         try:
-            CategoriesController.cursor.execute("SELECT * FROM categories WHERE category_id=" + category_id)
+            CategoriesController.cursor.execute(
+                "SELECT * FROM categories WHERE category_id=" + category_id)
             CategoriesController.cursor.connection.commit()
             return CategoriesController.cursor.fetchall()
         except Error as error:
@@ -62,7 +65,8 @@ class CategoriesController(DatabaseConnector):
     def search_category(search_value):
         CategoriesController.database.connect()
         try:
-            CategoriesController.cursor.execute("SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
+            CategoriesController.cursor.execute(
+                "SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
             CategoriesController.cursor.connection.commit()
             category = CategoriesController.cursor.fetchall()
             print(category)
