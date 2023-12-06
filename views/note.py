@@ -154,34 +154,34 @@ def notes():
         return redirect(url_for("login"))
 
 
-@notes_page.route("/generate_question", methods=["POST"])
-def generate_question():
-    if "user" in session:
-        if request.method == "POST":
-            try:
-                note_id = request.form["note_id"]  # Retrieve note_id
-                # Retrieve the generated question
-                generated_question = request.form["note"]
-                api_key = "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"
-                test_gpt = TestGPT(api_key)
-                open_question = test_gpt.generate_open_question(
-                    generated_question)
-
-                # Update the question in the database using the QuestionsController
-                QuestionsController.generate_question(
-                    note_id=note_id, question=open_question)
-
-                # Redirect to the note page or any desired page after successful update
-                return redirect(url_for('notes.note', note_id=note_id))
-
-            except Error as error:
-                print(error)
-                # Redirect to an error page or handle the error as needed
-
-        # Redirect to the notes page if not a POST request or if user not in session
-        return redirect(url_for('notes.notes'))
-    else:
-        return redirect(url_for("login"))
+# @notes_page.route("/generate_question", methods=["POST"])
+# def generate_question():
+#     if "user" in session:
+#         if request.method == "POST":
+#             try:
+#                 note_id = request.form["note_id"]  # Retrieve note_id
+#                 # Retrieve the generated question
+#                 generated_question = request.form["note"]
+#                 api_key = "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"
+#                 test_gpt = TestGPT(api_key)
+#                 open_question = test_gpt.generate_open_question(
+#                     generated_question)
+#
+#                 # Update the question in the database using the QuestionsController
+#                 QuestionsController.generate_question(
+#                     note_id=note_id, question=open_question)
+#
+#                 # Redirect to the note page or any desired page after successful update
+#                 return redirect(url_for('notes.note', note_id=note_id))
+#
+#             except Error as error:
+#                 print(error)
+#                 # Redirect to an error page or handle the error as needed
+#
+#         # Redirect to the notes page if not a POST request or if user not in session
+#         return redirect(url_for('notes.notes'))
+#     else:
+#         return redirect(url_for("login"))
 
 # @notes_page.route("/generate_question/<int:note_id>", methods=["POST"])
 # def generate_question_server(note_id):
