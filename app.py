@@ -46,6 +46,7 @@ def dashboard():
     else:
         return redirect(url_for("login"))
 
+
 app.config['SECRET_KEY'] = SECRET_KEY
 
 
