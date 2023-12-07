@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from views.category import category_page
 from views.note import notes_page
 
+
 from controllers.teacher_controller import TeacherController
 from views.teacher import teachers_page
 
