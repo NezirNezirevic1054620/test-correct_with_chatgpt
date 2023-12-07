@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 from views.category import category_page
 from views.note import notes_page
+from flask_bcrypt import Bcrypt
 
 
 from controllers.teacher_controller import TeacherController
@@ -21,19 +22,18 @@ teacher_controller = TeacherController()
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.pop("user", None)
+    bcrypt = Bcrypt()
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
-        result = teacher_controller.login(username=username, password=password)
+        result = teacher_controller.login(username=username)
         if result:
-            session["user"] = username
-            session["is_admin"] = result[0][5]
-            print(session["is_admin"])
-            print(session["user"])
-            return redirect(url_for("dashboard"))
-        else:
-            return redirect(url_for("login"))
+            if bcrypt.check_password_hash(result[0][3], password):
+                session["user"] = username
+                session["is_admin"] = result[0][5]
+                return redirect(url_for("dashboard"))
+            else:
+                return redirect(url_for("login"))
 
     return render_template("login.html.j2")
 

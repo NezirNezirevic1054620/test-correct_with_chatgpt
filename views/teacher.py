@@ -12,9 +12,9 @@ def teachers():
     if session["is_admin"] == 1:
         teacher_controller = TeacherController()
         username = session["user"]
-        teachers = teacher_controller.select_teachers()
+        select_teachers = teacher_controller.select_teachers()
 
-        return render_template("teacher/teachers.html.j2", teachers=teachers, username=username)
+        return render_template("teacher/teachers.html.j2", teachers=select_teachers, username=username)
     else:
         return redirect(url_for("dashboard"))
 
