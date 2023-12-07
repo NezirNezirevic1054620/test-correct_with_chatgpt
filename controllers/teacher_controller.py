@@ -29,3 +29,15 @@ class TeacherController(DatabaseConnector):
             return teacher
         except Error as error:
             print(error)
+
+    @staticmethod
+    def insert_teacher(display_name, username, teacher_password, is_admin):
+        TeacherController.database.connect()
+        try:
+            TeacherController.cursor.execute("INSERT INTO teachers (display_name, username, teacher_password, is_admin) VALUES (?, ?, ?, ?)", (display_name, username, teacher_password, is_admin))
+            TeacherController.cursor.connection.commit()
+            result = TeacherController.cursor.fetchall()
+            print(result)
+            return result
+        except Error as error:
+            print(error)
