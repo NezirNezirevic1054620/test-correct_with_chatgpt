@@ -7,8 +7,6 @@ from controllers.teacher_controller import TeacherController
 from controllers.questions_controller import QuestionsController
 from views.forms.note_form import NoteForm
 from lib.testgpt.testgpt import TestGPT
-import openai
-import json
 
 notes_page = Blueprint("notes", __name__, url_prefix="/notes",
                        template_folder="templates/note", static_folder="static")
@@ -171,7 +169,6 @@ def generate_question():
             except Error as error:
                 print(error)
 
-        # Redirect to the notes page if not a POST request or if user not in session
         return render_template("note/note.html.j2")
     else:
         return redirect(url_for("login"))

@@ -11,7 +11,7 @@ class QuestionsController(DatabaseConnector):
         QuestionsController.database.connect()
         try:
             QuestionsController.cursor.execute(
-                "SELECT * FROM questions")
+                "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id")
             QuestionsController.cursor.connection.commit()
             questions = QuestionsController.cursor.fetchall()
             print(questions)
