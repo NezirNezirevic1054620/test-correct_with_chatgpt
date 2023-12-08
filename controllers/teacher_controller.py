@@ -19,10 +19,10 @@ class TeacherController(DatabaseConnector):
             print(error)
 
     @staticmethod
-    def login(username, password):
+    def login(username):
         TeacherController.database.connect()
         try:
-            TeacherController.cursor.execute("SELECT * FROM teachers WHERE username = (?) AND teacher_password = (?)", [username, password])
+            TeacherController.cursor.execute("SELECT * FROM teachers WHERE username = (?)", [username])
             TeacherController.cursor.connection.commit()
             teacher = TeacherController.cursor.fetchall()
             print(teacher)
@@ -34,7 +34,9 @@ class TeacherController(DatabaseConnector):
     def insert_teacher(display_name, username, teacher_password, is_admin):
         TeacherController.database.connect()
         try:
-            TeacherController.cursor.execute("INSERT INTO teachers (display_name, username, teacher_password, is_admin) VALUES (?, ?, ?, ?)", (display_name, username, teacher_password, is_admin))
+            TeacherController.cursor.execute(
+                "INSERT INTO teachers (display_name, username, teacher_password, is_admin) VALUES (?, ?, ?, ?)",
+                (display_name, username, teacher_password, is_admin))
             TeacherController.cursor.connection.commit()
             result = TeacherController.cursor.fetchall()
             print(result)

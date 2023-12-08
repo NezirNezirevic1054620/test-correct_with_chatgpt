@@ -4,7 +4,8 @@ from sqlite3 import Error
 from controllers.categories_controller import CategoriesController
 from views.forms.category_form import CategoryForm
 
-category_page = Blueprint("category", __name__, url_prefix="/categories", template_folder="templates/category", static_folder="static")
+category_page = Blueprint("category", __name__, url_prefix="/categories", template_folder="templates/category",
+                          static_folder="static")
 category_controller = CategoriesController()
 
 
@@ -61,7 +62,8 @@ def category(category_id):
                 print(category)
             except Error as error:
                 print(error)
-        return render_template("category/category.html.j2", category=select_category, category_id=category_id, username=username)
+        return render_template("category/category.html.j2", category=select_category, category_id=category_id,
+                               username=username)
     else:
         return redirect(url_for("login"))
 
@@ -98,6 +100,7 @@ def search_category():
             except Error as error:
                 print(error)
 
-        return render_template("category/categories.html.j2", result=result, categories=select_categories, username=username)
+        return render_template("category/categories.html.j2", result=result, categories=select_categories,
+                               username=username)
     else:
         return redirect(url_for("login"))

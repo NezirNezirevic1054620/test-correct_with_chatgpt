@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, session, redirect, url_for
 
 from views.category import category_page
 from views.note import notes_page
+from flask_bcrypt import Bcrypt
 
 from controllers.teacher_controller import TeacherController
+from views.question import questions_page
 from views.teacher import teachers_page
 
 SECRET_KEY = "babababa"
@@ -12,27 +14,27 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(notes_page)
 app.register_blueprint(category_page)
 app.register_blueprint(teachers_page)
+app.register_blueprint(questions_page)
 
 teacher_controller = TeacherController()
 
 
-@app.route("/",  methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.pop("user", None)
+    bcrypt = Bcrypt()
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
-        result = teacher_controller.login(username=username, password=password)
+        result = teacher_controller.login(username=username)
         if result:
-            session["user"] = username
-            session["is_admin"] = result[0][5]
-            print(session["is_admin"])
-            print(session["user"])
-            return redirect(url_for("dashboard"))
-        else:
-            return redirect(url_for("login"))
+            if bcrypt.check_password_hash(result[0][3], password):
+                session["user"] = username
+                session["is_admin"] = result[0][5]
+                return redirect(url_for("dashboard"))
+            else:
+                return redirect(url_for("login"))
 
     return render_template("login.html.j2")
 
@@ -62,7 +64,6 @@ def admin_dashboard():
 
 
 app.config['SECRET_KEY'] = SECRET_KEY
-
 
 if __name__ == "__main__":
     app.run(debug=True)
