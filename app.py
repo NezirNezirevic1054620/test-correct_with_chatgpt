@@ -49,7 +49,7 @@ def logout():
 def dashboard():
     if "user" in session:
         username = session["user"]
-        return render_template("index.html.j2", username=username)
+        return render_template("beheer.html.j2", username=username)
     else:
         return redirect(url_for("login"))
 
