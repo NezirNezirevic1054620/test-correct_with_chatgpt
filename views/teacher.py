@@ -3,8 +3,8 @@ from flask_bcrypt import Bcrypt
 from controllers.teacher_controller import TeacherController
 from views.forms.teacher_form import TeacherForm
 
-
-teachers_page = Blueprint("teachers", __name__, url_prefix="/teachers", template_folder="templates/teacher", static_folder="static")
+teachers_page = Blueprint("teachers", __name__, url_prefix="/teachers", template_folder="templates/teacher",
+                          static_folder="static")
 
 
 @teachers_page.route("/", methods=["GET", "POST"])
@@ -34,7 +34,8 @@ def create_teacher():
 
             hashed_password = bcrypt.generate_password_hash(teacher_password)
 
-            teacher_controller.insert_teacher(display_name=display_name, username=username, teacher_password=hashed_password, is_admin=is_admin)
+            teacher_controller.insert_teacher(display_name=display_name, username=username,
+                                              teacher_password=hashed_password, is_admin=is_admin)
 
             return redirect(url_for("teachers.teachers"))
         else:
@@ -42,5 +43,3 @@ def create_teacher():
         return render_template("teacher/create_teacher.html.j2", username=username, form=teacher_form)
     else:
         return redirect(url_for("dashboard"))
-
-

@@ -4,8 +4,8 @@ from views.category import category_page
 from views.note import notes_page
 from flask_bcrypt import Bcrypt
 
-
 from controllers.teacher_controller import TeacherController
+from views.question import questions_page
 from views.teacher import teachers_page
 
 SECRET_KEY = "babababa"
@@ -14,11 +14,12 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(notes_page)
 app.register_blueprint(category_page)
 app.register_blueprint(teachers_page)
+app.register_blueprint(questions_page)
 
 teacher_controller = TeacherController()
 
 
-@app.route("/",  methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.pop("user", None)
@@ -63,7 +64,6 @@ def admin_dashboard():
 
 
 app.config['SECRET_KEY'] = SECRET_KEY
-
 
 if __name__ == "__main__":
     app.run(debug=True)

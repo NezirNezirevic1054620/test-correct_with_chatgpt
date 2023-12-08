@@ -7,11 +7,11 @@ class QuestionsController(DatabaseConnector):
     cursor = database.connect().cursor()
 
     @staticmethod
-    def select_question(note_id):
+    def select_questions():
         QuestionsController.database.connect()
         try:
             QuestionsController.cursor.execute(
-                "SELECT * FROM questions WHERE note_id = " + note_id)
+                "SELECT * FROM questions")
             QuestionsController.cursor.connection.commit()
             questions = QuestionsController.cursor.fetchall()
             print(questions)
@@ -20,11 +20,11 @@ class QuestionsController(DatabaseConnector):
             print(error)
 
     @staticmethod
-    def insert_question(question):
+    def insert_question(note_id, exam_question):
         QuestionsController.database.connect()
         try:
             QuestionsController.cursor.execute(
-                "INSERT INTO questions VALUES(?)", [question])
+                "INSERT INTO questions (note_id, exam_question) VALUES(?,?)", [note_id, exam_question])
             QuestionsController.cursor.connection.commit()
             return QuestionsController.cursor.lastrowid
         except Error as error:

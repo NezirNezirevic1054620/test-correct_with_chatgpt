@@ -67,14 +67,11 @@ def note(note_id):
             try:
                 note_id = request.form["note_id"]
                 select_note = notes_controller.select_note(note_id=note_id)
-                select_question = QuestionsController.select_question(
-                    note_id=note_id)
-                print(select_question)
-                print(select_question)
             except Error as error:
                 print(error)
         return render_template("note/note.html.j2", note=select_note, teachers=select_teachers,
-                               categories=select_categories, note_id=note_id, username=username, question=select_question)
+                               categories=select_categories, note_id=note_id, username=username,
+                               )
     else:
         return redirect(url_for("login"))
 
@@ -118,7 +115,8 @@ def search_note():
             except Error as error:
                 print(error)
 
-        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories, username=username)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
+                               username=username)
     else:
         return redirect(url_for("login"))
 
@@ -138,7 +136,8 @@ def filter_note():
                 print(filter_value)
             except Error as error:
                 print(error)
-        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories, username=username)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
+                               username=username)
     else:
         return redirect(url_for("login"))
 
@@ -149,59 +148,30 @@ def notes():
         username = session["user"]
         select_notes = NotesController.select_notes()
         select_categories = CategoriesController.select_categories()
-        return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories, username=username)
+        return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories,
+                               username=username)
     else:
         return redirect(url_for("login"))
 
 
-# @notes_page.route("/generate_question", methods=["POST"])
-# def generate_question():
-#     if "user" in session:
-#         if request.method == "POST":
-#             try:
-#                 note_id = request.form["note_id"]  # Retrieve note_id
-#                 # Retrieve the generated question
-#                 generated_question = request.form["note"]
-#                 api_key = "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"
-#                 test_gpt = TestGPT(api_key)
-#                 open_question = test_gpt.generate_open_question(
-#                     generated_question)
-#
-#                 # Update the question in the database using the QuestionsController
-#                 QuestionsController.generate_question(
-#                     note_id=note_id, question=open_question)
-#
-#                 # Redirect to the note page or any desired page after successful update
-#                 return redirect(url_for('notes.note', note_id=note_id))
-#
-#             except Error as error:
-#                 print(error)
-#                 # Redirect to an error page or handle the error as needed
-#
-#         # Redirect to the notes page if not a POST request or if user not in session
-#         return redirect(url_for('notes.notes'))
-#     else:
-#         return redirect(url_for("login"))
+@notes_page.route("/generate_question", methods=["POST"])
+def generate_question():
+    if "user" in session:
+        question_controller = QuestionsController()
+        if request.method == "POST":
+            try:
+                selected_note = request.form["note"]
+                note_id = request.form["note_id"]
+                api_key = "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"
+                test_gpt = TestGPT(api_key)
+                open_question = test_gpt.generate_open_question(selected_note)
+                print(open_question)
+                question_controller.insert_question(note_id=note_id, exam_question=open_question)
+                return redirect(url_for("questions.questions"))
+            except Error as error:
+                print(error)
 
-# @notes_page.route("/generate_question/<int:note_id>", methods=["POST"])
-# def generate_question_server(note_id):
-#     if "user" in session:
-#         if request.method == "POST":
-#             try:
-#                 note = request.form["note"]
-#                 generated_question = process_note_to_question(note)
-#                 return json.dumps({"question": generated_question})
-#             except Error as error:
-#                 print(error)
-#         return json.dumps({"error": "Unable to generate a question"})
-#     else:
-#         return json.dumps({"error": "User not authenticated"}), 401
-
-
-# def process_note_to_question(note):
-#     note_text = note[0][6]
-#     api_key = "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"
-#     test_gpt = TestGPT(api_key)
-#     open_question = test_gpt.generate_open_question(note_text)
-
-#     return open_question
+        # Redirect to the notes page if not a POST request or if user not in session
+        return render_template("note/note.html.j2")
+    else:
+        return redirect(url_for("login"))

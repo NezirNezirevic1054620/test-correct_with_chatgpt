@@ -34,7 +34,9 @@ class TeacherController(DatabaseConnector):
     def insert_teacher(display_name, username, teacher_password, is_admin):
         TeacherController.database.connect()
         try:
-            TeacherController.cursor.execute("INSERT INTO teachers (display_name, username, teacher_password, is_admin) VALUES (?, ?, ?, ?)", (display_name, username, teacher_password, is_admin))
+            TeacherController.cursor.execute(
+                "INSERT INTO teachers (display_name, username, teacher_password, is_admin) VALUES (?, ?, ?, ?)",
+                (display_name, username, teacher_password, is_admin))
             TeacherController.cursor.connection.commit()
             result = TeacherController.cursor.fetchall()
             print(result)
