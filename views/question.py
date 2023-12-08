@@ -8,9 +8,10 @@ questions_page = Blueprint("questions", __name__, url_prefix="/questions", templ
 @questions_page.route("/", methods=["GET", "POST"])
 def questions():
     if "user" in session:
+        username = session["user"]
         question_controller = QuestionsController()
         questions = question_controller.select_questions()
 
-        return render_template("question/questions.html.j2", questions=questions)
+        return render_template("question/questions.html.j2", questions=questions, username=username)
     else:
         redirect(url_for("login"))
