@@ -25,7 +25,17 @@
                     <label for="is_public" class="block text-sm font-medium leading-6 text-gray-900">Is Public</label>
                     <div class="mt-2">
                         <label>
-                        <input name="is_public" value="{{ note[3] }}" type="number" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <select name="is_public"  class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <option value="{{ note[3] }}">
+                                    {% if note[3] == 1 %}
+                                    Yes
+                                    {% else %}
+                                    No
+                                    {% endif %}
+                                </option>
+                                <option value="{{ 1 }}">Yes</option>
+                                <option value="{{ 0 }}">No</option>
+                            </select>
                         </label>
                     </div>
                 </div>
