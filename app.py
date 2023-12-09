@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 
-from views.category import category_page
-from views.note import notes_page
+from controllers.category_controller import category_page
+from controllers.note_controller import notes_page
 from flask_bcrypt import Bcrypt
 
-from controllers.teacher_controller import TeacherController
-from views.question import questions_page
-from views.teacher import teachers_page
+from models.teacher_model import TeacherModel
+from controllers.question_controller import questions_page
+from controllers.teacher_controller import teachers_page
 
 SECRET_KEY = "babababa"
 
@@ -16,12 +16,11 @@ app.register_blueprint(category_page)
 app.register_blueprint(teachers_page)
 app.register_blueprint(questions_page)
 
-teacher_controller = TeacherController()
-
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    teacher_controller = TeacherModel()
     session.pop("user", None)
     session.pop("teacher_id", None)
     session.pop("is_admin", None)

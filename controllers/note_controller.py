@@ -1,26 +1,25 @@
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from sqlite3 import Error
 
-from controllers.categories_controller import CategoriesController
-from controllers.notes_controller import NotesController
-from controllers.teacher_controller import TeacherController
-from controllers.questions_controller import QuestionsController
-from views.forms.note_form import NoteForm
+from models.category_model import CategoryModel
+from models.note_model import NoteModel
+from models.teacher_model import TeacherModel
+from models.question_model import QuestionModel
+from forms.note_form import NoteForm
 from lib.testgpt.testgpt import TestGPT
 
 notes_page = Blueprint("notes", __name__, url_prefix="/notes",
                        template_folder="templates/note", static_folder="static")
 
-notes_controller = NotesController()
-
 
 @notes_page.route("/create_note", methods=["POST", "GET"])
 def create_note():
     if "user" in session:
+        note_model = NoteModel()
         username = session["user"]
         note_form = NoteForm()
-        select_categories = CategoriesController.select_categories()
-        select_teachers = TeacherController.select_teachers()
+        select_categories = CategoryModel.select_categories()
+        select_teachers = TeacherModel.select_teachers()
         if note_form.validate_on_submit():
             title = note_form.title.data
             note_source = note_form.note_source.data
@@ -29,8 +28,8 @@ def create_note():
             category_id = note_form.category_id.data
             note_text = note_form.note.data
 
-            notes_controller.insert_notes(title=title, note_source=note_source, is_public=is_public,
-                                          teacher_id=teacher_id, category_id=category_id, note=note_text)
+            note_model.insert_notes(title=title, note_source=note_source, is_public=is_public,
+                                    teacher_id=teacher_id, category_id=category_id, note=note_text)
             return redirect(url_for('notes.notes'))
         return render_template("note/create_note.html.j2", categories=select_categories, teachers=select_teachers,
                                form=note_form, username=username)
@@ -41,10 +40,11 @@ def create_note():
 @notes_page.route("/delete_note", methods=["GET", "POST"])
 def delete_note():
     if "user" in session:
+        note_model = NoteModel()
         if request.method == "POST":
             try:
                 note_id = request.form["note_id"]
-                notes_controller.delete_note(note_id)
+                note_model.delete_note(note_id)
 
             except Error as error:
                 print(error)
@@ -57,14 +57,15 @@ def delete_note():
 @notes_page.route("/note/<int:note_id>", methods=["POST", "GET"])
 def note(note_id):
     if "user" in session:
+        note_model = NoteModel()
         username = session["user"]
         select_note = None
-        select_categories = CategoriesController.select_categories()
-        select_teachers = TeacherController.select_teachers()
+        select_categories = CategoryModel.select_categories()
+        select_teachers = TeacherModel.select_teachers()
         if request.method == "POST":
             try:
                 note_id = request.form["note_id"]
-                select_note = notes_controller.select_note(note_id=note_id)
+                select_note = note_model.select_note(note_id=note_id)
             except Error as error:
                 print(error)
         return render_template("note/note.html.j2", note=select_note, teachers=select_teachers,
@@ -77,6 +78,7 @@ def note(note_id):
 @notes_page.route("/edit_note", methods=["POST", "GET"])
 def edit_note():
     if "user" in session:
+        note_model = NoteModel()
         if request.method == "POST":
             try:
                 title = request.form["title"]
@@ -85,10 +87,10 @@ def edit_note():
                 teacher_id = request.form["teacher_id"]
                 category_id = request.form["category_id"]
                 note_id = request.form["note_id"]
-                note = request.form["note"]
+                note_text = request.form["note"]
                 print(teacher_id)
-                notes_controller.edit_note(title=title, note_source=note_source, is_public=is_public,
-                                           teacher_id=teacher_id, category_id=category_id, note=note, note_id=note_id)
+                note_model.edit_note(title=title, note_source=note_source, is_public=is_public,
+                                     teacher_id=teacher_id, category_id=category_id, note=note_text, note_id=note_id)
             except Error as error:
                 print(error)
 
@@ -100,14 +102,17 @@ def edit_note():
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
     if "user" in session:
+        result = None
+        note_model = NoteModel()
         username = session["user"]
-        select_notes = NotesController.select_notes()
-        select_categories = CategoriesController.select_categories()
+        teacher_id = session["teacher_id"]
+        select_notes = NoteModel.select_notes(teacher_id=str(teacher_id))
+        select_categories = CategoryModel.select_categories()
         if request.method == "POST":
             try:
                 search_value = request.form["search_value"]
 
-                result = notes_controller.search_note(
+                result = note_model.search_note(
                     search_value=search_value)
                 print(search_value)
             except Error as error:
@@ -122,14 +127,17 @@ def search_note():
 @notes_page.route("/filter_notes", methods=["POST", "GET"])
 def filter_note():
     if "user" in session:
+        result = None
+        note_model = NoteModel()
         username = session["user"]
-        select_notes = NotesController.select_notes()
-        select_categories = CategoriesController.select_categories()
+        teacher_id = session["teacher_id"]
+        select_notes = NoteModel.select_notes(teacher_id=str(teacher_id))
+        select_categories = CategoryModel.select_categories()
         if request.method == "POST":
             try:
                 filter_value = request.form["filter_value"]
 
-                result = notes_controller.filter_notes(
+                result = note_model.filter_notes(
                     filter_value=filter_value)
                 print(filter_value)
             except Error as error:
@@ -143,10 +151,12 @@ def filter_note():
 @notes_page.route("/")
 def notes():
     if "user" in session:
+        note_model = NoteModel()
+        category_model = CategoryModel()
         username = session["user"]
         teacher_id = session["teacher_id"]
-        select_notes = NotesController.select_notes(teacher_id=str(teacher_id))
-        select_categories = CategoriesController.select_categories()
+        select_notes = note_model.select_notes(teacher_id=str(teacher_id))
+        select_categories = category_model.select_categories()
         return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories,
                                username=username)
     else:
@@ -156,7 +166,7 @@ def notes():
 @notes_page.route("/generate_question", methods=["POST"])
 def generate_question():
     if "user" in session:
-        question_controller = QuestionsController()
+        question_model = QuestionModel()
         if request.method == "POST":
             try:
                 selected_note = request.form["note"]
@@ -165,7 +175,7 @@ def generate_question():
                 test_gpt = TestGPT(api_key)
                 open_question = test_gpt.generate_open_question(selected_note)
                 print(open_question)
-                question_controller.insert_question(note_id=note_id, exam_question=open_question)
+                question_model.insert_question(note_id=note_id, exam_question=open_question)
                 return redirect(url_for("questions.questions"))
             except Error as error:
                 print(error)
