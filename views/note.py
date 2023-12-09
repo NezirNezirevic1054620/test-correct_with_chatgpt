@@ -144,7 +144,8 @@ def filter_note():
 def notes():
     if "user" in session:
         username = session["user"]
-        select_notes = NotesController.select_notes()
+        teacher_id = session["teacher_id"]
+        select_notes = NotesController.select_notes(teacher_id=str(teacher_id))
         select_categories = CategoriesController.select_categories()
         return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories,
                                username=username)

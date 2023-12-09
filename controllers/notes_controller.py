@@ -7,11 +7,11 @@ class NotesController(DatabaseConnector):
     cursor = database.connect().cursor()
 
     @staticmethod
-    def select_notes():
+    def select_notes(teacher_id):
         NotesController.database.connect()
         try:
-            NotesController.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = "
-                                           "categories.category_id")
+            NotesController.cursor.execute(
+                "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = " + teacher_id)
             NotesController.cursor.connection.commit()
             notes = NotesController.cursor.fetchall()
             print(notes)
