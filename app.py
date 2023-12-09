@@ -23,6 +23,8 @@ teacher_controller = TeacherController()
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.pop("user", None)
+    session.pop("teacher_id", None)
+    session.pop("is_admin", None)
     bcrypt = Bcrypt()
     if request.method == "POST":
         username = request.form["username"]
@@ -32,6 +34,7 @@ def login():
             if bcrypt.check_password_hash(result[0][3], password):
                 session["user"] = username
                 session["is_admin"] = result[0][5]
+                session["teacher_id"] = result[0][0]
                 return redirect(url_for("dashboard"))
             else:
                 return redirect(url_for("login"))
