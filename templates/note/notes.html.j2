@@ -150,7 +150,7 @@
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                                                {{ note.note }}
+                                                {{ note.note[:20] }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
                                                 <form action="{{ url_for('notes.note', note_id=note.note_id) }}" method="POST">

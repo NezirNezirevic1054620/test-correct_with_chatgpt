@@ -50,3 +50,4 @@ class NoteModel:
         cursor.execute("DELETE FROM notes WHERE note_id=(?)", [note_id])
         cursor.connection.commit()
         return cursor.fetchall()
+

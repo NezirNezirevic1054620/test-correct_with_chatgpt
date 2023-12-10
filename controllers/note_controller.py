@@ -170,23 +170,23 @@ def notes():
     else:
         return redirect(url_for("login"))
 
-# @notes_page.route("/generate_question", methods=["POST"])
-# def generate_question():
-#     if "user" in session:
-#         question_model = QuestionModel()
-#         if request.method == "POST":
-#             try:
-#                 selected_note = request.form["note"]
-#                 note_id = request.form["note_id"]
-#                 api_key = "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"
-#                 test_gpt = TestGPT(api_key)
-#                 open_question = test_gpt.generate_open_question(selected_note)
-#                 print(open_question)
-#                 question_model.insert_question(note_id=note_id, exam_question=open_question)
-#                 return redirect(url_for("questions.questions"))
-#             except Error as error:
-#                 print(error)
-#
-#         return render_template("note/note.html.j2")
-#     else:
-#         return redirect(url_for("login"))
+@notes_page.route("/generate_question", methods=["POST"])
+def generate_question():
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                selected_note = request.form["note"]
+                note_id = request.form["note_id"]
+                api_key = "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"
+                test_gpt = TestGPT(api_key)
+                open_question = test_gpt.generate_open_question(selected_note)
+                print(open_question)
+                question_model.insert_question(note_id=note_id, exam_question=open_question)
+                return redirect(url_for("questions.questions"))
+            except Error as error:
+                print(error)
+
+        return render_template("note/note.html.j2")
+    else:
+        return redirect(url_for("login"))
