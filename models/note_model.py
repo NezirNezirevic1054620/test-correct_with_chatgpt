@@ -1,92 +1,52 @@
-from sqlite3 import Error
-from models.database_connector import DatabaseConnector
+import sqlite3
+from pathlib import Path
 
 
-class NoteModel(DatabaseConnector):
-    database = DatabaseConnector()
-    cursor = database.connect().cursor()
+class NoteModel:
+    def __init__(self, database):
+        db_path = Path(database)
+        if not db_path.exists():
+            raise FileNotFoundError(f"Database file {database} does not exist")
+        self.dbpath = db_path
 
-    @staticmethod
-    def select_notes(teacher_id):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute(
-                "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = " + teacher_id)
-            NoteModel.cursor.connection.commit()
-            notes = NoteModel.cursor.fetchall()
-            print(notes)
-            return notes
-        except Error as error:
-            print(error)
+    def __get_cursor(self):
+        connection = sqlite3.connect(self.dbpath)
+        cursor = connection.cursor()
+        cursor.row_factory = sqlite3.Row
+        return cursor
 
-    @staticmethod
-    def insert_notes(title, note_source, is_public, teacher_id, category_id, note):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute("INSERT INTO notes(title, note_source, is_public, teacher_id, category_id, "
-                                           "note) VALUES(?, ?, ?, ?, ?, ?)", (title, note_source, is_public, teacher_id,
-                                                                              category_id, note))
-            NoteModel.cursor.connection.commit()
-            return NoteModel.cursor.lastrowid
-        except Error as error:
-            print(error)
+    def insert_note(self, title, note_source, is_public, teacher_id, category_id, note):
+        cursor = self.__get_cursor()
+        cursor.execute("INSERT INTO notes(title, note_source, is_public, teacher_id, category_id, "
+                       "note) VALUES(?, ?, ?, ?, ?, ?)", (title, note_source, is_public, teacher_id,
+                                                          category_id, note))
+        cursor.connection.commit()
+        return cursor.lastrowid
 
-    @staticmethod
-    def delete_note(note_id):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute("DELETE FROM notes WHERE note_id=" + note_id)
-            NoteModel.cursor.connection.commit()
+    def get_all_notes(self, teacher_id):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = " + teacher_id)
+        return cursor.fetchall()
 
-        except Error as error:
-            print(error)
+    def update_note(self, title, note_source, is_public, teacher_id, category_id, note, note_id):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "UPDATE notes SET title=(?), note_source=(?), is_public=(?), teacher_id=(?), category_id=(?), note=(?) WHERE note_id=(?)",
+            [title, note_source, is_public, teacher_id, category_id, note, note_id])
+        cursor.connection.commit()
+        return cursor.lastrowid
 
-    @staticmethod
-    def select_note(note_id):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute(
-                "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id INNER JOIN teachers ON notes.teacher_id = teachers.teacher_id WHERE note_id=" + note_id)
-            NoteModel.cursor.connection.commit()
-            return NoteModel.cursor.fetchall()
-        except Error as error:
-            print(error)
+    def select_note(self, note_id):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id INNER JOIN teachers ON notes.teacher_id = teachers.teacher_id WHERE note_id=(?)",
+            [note_id])
+        cursor.connection.commit()
+        return cursor.fetchall()
 
-    @staticmethod
-    def edit_note(title, note_source, is_public, teacher_id, category_id, note, note_id):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute(
-                "UPDATE notes SET title='" + title + "', note_source='" + note_source + "', is_public='" + is_public + "', teacher_id='" + teacher_id + "', category_id='" + category_id + "', is_public='" + is_public + "', note='" + note + "' WHERE note_id=" + note_id)
-
-            NoteModel.cursor.connection.commit()
-            return NoteModel.cursor.fetchall()
-        except Error as error:
-            print(error)
-
-    @staticmethod
-    def search_note(search_value):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = "
-                                           "categories.category_id WHERE title LIKE (?) OR note LIKE (?)",
-                                     ["%" + search_value + "%", "%" + search_value + "%"])
-            NoteModel.cursor.connection.commit()
-            note = NoteModel.cursor.fetchall()
-            print(note)
-            return note
-        except Error as error:
-            print(error)
-
-    @staticmethod
-    def filter_notes(filter_value):
-        NoteModel.database.connect()
-        try:
-            NoteModel.cursor.execute(
-                "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE notes.category_id = " + filter_value)
-            NoteModel.cursor.connection.commit()
-            note = NoteModel.cursor.fetchall()
-            print(note)
-            return note
-        except Error as error:
-            print(error)
+    def delete_note(self, note_id):
+        cursor = self.__get_cursor()
+        cursor.execute("DELETE FROM notes WHERE note_id=(?)", [note_id])
+        cursor.connection.commit()
+        return cursor.fetchall()
