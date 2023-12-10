@@ -1,7 +1,8 @@
 import sys
 from pathlib import Path
-from lib.testgpt.testgpt import TestGPT
 import pytest
+
+from lib.testgpt.testgpt import TestGPT
 
 sys.path.append(str(Path(__file__).parent.parent))
 

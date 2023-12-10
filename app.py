@@ -16,11 +16,13 @@ app.register_blueprint(category_page)
 app.register_blueprint(teachers_page)
 app.register_blueprint(questions_page)
 
+DATABASE_FILE = "databases/testgpt.db"
+
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    teacher_controller = TeacherModel()
+    teacher_controller = TeacherModel(DATABASE_FILE)
     session.pop("user", None)
     session.pop("teacher_id", None)
     session.pop("is_admin", None)
@@ -29,6 +31,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         result = teacher_controller.login(username=username)
+        print(result)
         if result:
             if bcrypt.check_password_hash(result[0][3], password):
                 session["user"] = username

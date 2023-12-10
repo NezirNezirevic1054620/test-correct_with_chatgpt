@@ -6,13 +6,15 @@ from forms.teacher_form import TeacherForm
 teachers_page = Blueprint("teachers", __name__, url_prefix="/teachers", template_folder="templates/teacher",
                           static_folder="static")
 
+DATABASE_FILE = "databases/testgpt.db"
+
 
 @teachers_page.route("/", methods=["GET", "POST"])
 def teachers():
     if session["is_admin"] == 1:
-        teacher_model = TeacherModel()
+        teacher_model = TeacherModel(DATABASE_FILE)
         username = session["user"]
-        select_teachers = teacher_model.select_teachers()
+        select_teachers = teacher_model.get_all_teachers()
 
         return render_template("teacher/teachers.html.j2", teachers=select_teachers, username=username)
     else:
@@ -22,7 +24,7 @@ def teachers():
 @teachers_page.route("/create_teacher", methods=["GET", "POST"])
 def create_teacher():
     if session["is_admin"] == 1:
-        teacher_model = TeacherModel()
+        teacher_model = TeacherModel(DATABASE_FILE)
         teacher_form = TeacherForm()
         bcrypt = Bcrypt()
         username = session["user"]

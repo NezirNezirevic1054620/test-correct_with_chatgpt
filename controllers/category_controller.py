@@ -7,13 +7,15 @@ from forms.category_form import CategoryForm
 category_page = Blueprint("category", __name__, url_prefix="/categories", template_folder="templates/category",
                           static_folder="static")
 
+DATABASE_FILE = "databases/testgpt.db"
+
 
 @category_page.route("/create_category", methods=["GET", "POST"])
 def create_category():
     if "user" in session:
         username = session["user"]
         category_form = CategoryForm()
-        category_model = CategoryModel()
+        category_model = CategoryModel(DATABASE_FILE)
         if category_form.validate_on_submit():
             omschrijving = category_form.omschrijving.data
             category_model.insert_category(omschrijving=omschrijving)
@@ -28,8 +30,9 @@ def create_category():
 @category_page.route("/")
 def categories():
     if "user" in session:
+        category_model = CategoryModel(DATABASE_FILE)
         username = session["user"]
-        select_categories = CategoryModel.select_categories()
+        select_categories = category_model.get_all_categories()
         return render_template("category/categories.html.j2", categories=select_categories, username=username)
     else:
         return redirect(url_for("login"))
@@ -38,7 +41,7 @@ def categories():
 @category_page.route("/delete_category", methods=["POST", "GET"])
 def delete_category():
     if "user" in session:
-        category_model = CategoryModel()
+        category_model = CategoryModel(DATABASE_FILE)
         if request.method == "POST":
             try:
                 category_id = request.form["category_id"]
@@ -54,17 +57,15 @@ def delete_category():
 @category_page.route("/category/<int:category_id>", methods=["POST", "GET"])
 def category(category_id):
     if "user" in session:
+        category_model = CategoryModel(DATABASE_FILE)
         username = session["user"]
-        select_category = None
-        category_model = CategoryModel()
         if request.method == "POST":
             try:
                 category_id = request.form["category_id"]
-                select_category = category_model.select_category(category_id=category_id)
-                print(category)
+                selected_category = category_model.select_category(category_id=category_id)
             except Error as error:
                 print(error)
-        return render_template("category/category.html.j2", category=select_category, category_id=category_id,
+        return render_template("category/category.html.j2", category=selected_category, category_id=category_id,
                                username=username)
     else:
         return redirect(url_for("login"))
@@ -74,7 +75,7 @@ def category(category_id):
 def update_category():
     if "user" in session:
         username = session["user"]
-        category_model = CategoryModel()
+        category_model = CategoryModel(DATABASE_FILE)
         if request.method == "POST":
             try:
                 category_id = request.form["category_id"]
@@ -93,14 +94,14 @@ def update_category():
 def search_category():
     if "user" in session:
         result = None
-        category_model = CategoryModel()
+        category_model = CategoryModel(DATABASE_FILE)
         username = session["user"]
-        select_categories = CategoryModel.select_categories()
+        select_categories = category_model.get_all_categories()
         if request.method == "POST":
             try:
                 search_value = request.form["search_value"]
 
-                result = category_model.search_category(search_value=search_value)
+                result = category_model.search_categories(search_value=search_value)
                 print(search_value)
             except Error as error:
                 print(error)

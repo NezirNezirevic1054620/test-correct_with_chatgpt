@@ -9,7 +9,7 @@
                     <label for="omschrijving" class="block font-medium leading-6 text-gray-900">Omschrijving</label>
                     <div class="mt-2">
                         <label>
-                        <input type="text" name="omschrijving" value="{{ category[1] }}"  class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input type="text" name="omschrijving" value="{{ category.omschrijving }}"  class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </label>
                     </div>
                 </div>
@@ -17,12 +17,12 @@
                     <label for="date_created" class="block font-medium leading-6 text-gray-900">Created At</label>
                     <div class="mt-2">
                         <label>
-                        <input type="text" name="date_created" disabled value="{{ category[2] }}"  class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <input type="text" name="date_created" disabled value="{{ category.date_created }}"  class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         </label>
                     </div>
                 </div>
                 <label>
-                <input type="hidden" name="category_id" value="{{ category[0] }}" >
+                <input type="hidden" name="category_id" value="{{ category.category_id }}" >
                 </label>
             </div>
         </div>

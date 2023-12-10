@@ -1,75 +1,52 @@
-from sqlite3 import Error
-from models.database_connector import DatabaseConnector
+import sqlite3
+from pathlib import Path
 
 
-class CategoryModel(DatabaseConnector):
-    database = DatabaseConnector()
-    cursor = database.connect().cursor()
+class CategoryModel:
 
-    @staticmethod
-    def select_categories():
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute("SELECT * FROM categories")
-            CategoryModel.cursor.connection.commit()
-            categories = CategoryModel.cursor.fetchall()
-            print(categories)
-            return categories
-        except Error as error:
-            print(error)
+    def __init__(self, database):
+        db_path = Path(database)
+        if not db_path.exists():
+            raise FileNotFoundError(f"Database file {database} does not exist")
+        self.dbpath = db_path
 
-    @staticmethod
-    def insert_category(omschrijving):
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute(
-                "INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
-            CategoryModel.cursor.connection.commit()
-            return CategoryModel.cursor.lastrowid
-        except Error as error:
-            print(error)
+    def __get_cursor(self):
+        connection = sqlite3.connect(self.dbpath)
+        cursor = connection.cursor()
+        cursor.row_factory = sqlite3.Row
+        return cursor
 
-    @staticmethod
-    def delete_category(category_id):
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute(
-                "DELETE FROM categories WHERE category_id=" + category_id)
-            CategoryModel.cursor.connection.commit()
-        except Error as error:
-            print(error)
+    def insert_category(self, omschrijving):
+        cursor = self.__get_cursor()
+        cursor.execute("INSERT INTO categories(omschrijving) VALUES(?)", [omschrijving])
+        cursor.connection.commit()
+        return cursor.lastrowid
 
-    @staticmethod
-    def select_category(category_id):
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute(
-                "SELECT * FROM categories WHERE category_id=" + category_id)
-            CategoryModel.cursor.connection.commit()
-            return CategoryModel.cursor.fetchall()
-        except Error as error:
-            print(error)
+    def get_all_categories(self):
+        cursor = self.__get_cursor()
+        cursor.execute("SELECT * FROM categories")
+        return cursor.fetchall()
 
-    @staticmethod
-    def update_category(category_id, omschrijving):
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute("UPDATE categories SET omschrijving = '" + omschrijving + "' WHERE " +
-                                                "category_id=" + category_id)
-            CategoryModel.cursor.connection.commit()
-            return CategoryModel.cursor.fetchone()
-        except Error as error:
-            print(error)
+    def update_category(self, omschrijving, category_id):
+        cursor = self.__get_cursor()
+        cursor.execute("UPDATE categories SET omschrijving = (?) WHERE category_id = (?)", [omschrijving, category_id])
+        cursor.connection.commit()
+        return cursor.lastrowid
 
-    @staticmethod
-    def search_category(search_value):
-        CategoryModel.database.connect()
-        try:
-            CategoryModel.cursor.execute(
-                "SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
-            CategoryModel.cursor.connection.commit()
-            category = CategoryModel.cursor.fetchall()
-            print(category)
-            return category
-        except Error as error:
-            print(error)
+    def select_category(self, category_id):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM categories WHERE category_id = (?)", [category_id])
+        cursor.connection.commit()
+        return cursor.fetchall()
+
+    def delete_category(self, category_id):
+        cursor = self.__get_cursor()
+        cursor.execute("DELETE FROM categories WHERE category_id = (?)", [category_id])
+        cursor.connection.commit()
+        return cursor.lastrowid
+
+    def search_categories(self, search_value):
+        cursor = self.__get_cursor()
+        cursor.execute("SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
+        return cursor.fetchall()
