@@ -1,9 +1,11 @@
+""" Testing QuestionModel """
 from models.question_model import QuestionModel
 
 DATABASE_FILE = "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
 
 
 def test_get_all_questions():
+    """ Method checks if the output is a dictionary """
     question = None
     mydict = {}
     question_model = QuestionModel(DATABASE_FILE)
@@ -13,6 +15,12 @@ def test_get_all_questions():
             "questions_id": question[0],
             'note_id': question[1],
             'exam_question': question[2],
-            'date_created': question[3]
+            'date_created': question[3],
+            'title': question[5],
+            'note_source': question[6],
+            'is_public': question[7],
+            'teacher_id': question[8],
+            'category_id': question[9],
+            'note': question[10]
         }
     assert dict(question) == mydict
