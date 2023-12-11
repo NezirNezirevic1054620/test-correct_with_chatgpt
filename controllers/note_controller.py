@@ -107,53 +107,78 @@ def edit_note():
 
 #
 #
-# @notes_page.route("/search_note", methods=["POST", "GET"])
-# def search_note():
-#     if "user" in session:
-#         result = None
-#         note_model = NoteModel()
-#         username = session["user"]
-#         teacher_id = session["teacher_id"]
-#         select_notes = NoteModel.select_notes(teacher_id=str(teacher_id))
-#         select_categories = CategoryModel.select_categories()
-#         if request.method == "POST":
-#             try:
-#                 search_value = request.form["search_value"]
-#
-#                 result = note_model.search_note(
-#                     search_value=search_value)
-#                 print(search_value)
-#             except Error as error:
-#                 print(error)
-#
-#         return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
-#                                username=username)
-#     else:
-#         return redirect(url_for("login"))
-#
-#
-# @notes_page.route("/filter_notes", methods=["POST", "GET"])
-# def filter_note():
-#     if "user" in session:
-#         result = None
-#         note_model = NoteModel()
-#         username = session["user"]
-#         teacher_id = session["teacher_id"]
-#         select_notes = NoteModel.select_notes(teacher_id=str(teacher_id))
-#         select_categories = CategoryModel.select_categories()
-#         if request.method == "POST":
-#             try:
-#                 filter_value = request.form["filter_value"]
-#
-#                 result = note_model.filter_notes(
-#                     filter_value=filter_value)
-#                 print(filter_value)
-#             except Error as error:
-#                 print(error)
-#         return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
-#                                username=username)
-#     else:
-#         return redirect(url_for("login"))
+@notes_page.route("/search_note", methods=["POST", "GET"])
+def search_note():
+    if "user" in session:
+        result = None
+        note_model = NoteModel(DATABASE_FILE)
+        category_model = CategoryModel(DATABASE_FILE)
+        username = session["user"]
+        teacher_id = session["teacher_id"]
+        select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
+        select_categories = category_model.get_all_categories()
+        if request.method == "POST":
+            try:
+                search_value = request.form["search_value"]
+
+                result = note_model.search_note(
+                    teacher_id=str(teacher_id),
+                    search_value=str(search_value)
+                )
+                print(search_value)
+            except Error as error:
+                print(error)
+
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
+                               username=username)
+    else:
+        return redirect(url_for("login"))
+
+
+@notes_page.route("/filter_note_by_category", methods=["POST", "GET"])
+def filter_note_by_category():
+    if "user" in session:
+        result = None
+        note_model = NoteModel(DATABASE_FILE)
+        category_model = CategoryModel(DATABASE_FILE)
+        username = session["user"]
+        teacher_id = session["teacher_id"]
+        select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
+        select_categories = category_model.get_all_categories()
+        if request.method == "POST":
+            try:
+                filter_value = request.form["filter_value"]
+
+                result = note_model.filter_note_by_category(
+                    teacher_id=str(teacher_id),
+                    filter_value=filter_value
+                )
+                print(filter_value)
+            except Error as error:
+                print(error)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes, categories=select_categories,
+                               username=username)
+    else:
+        return redirect(url_for("login"))
+
+
+@notes_page.route("/filter_note_by_teacher", methods=["POST", "GET"])
+def filter_note_by_teacher():
+    if "user" in session:
+        result = None
+        note_model = NoteModel(DATABASE_FILE)
+        username = session["user"]
+        teacher_id = session["teacher_id"]
+        select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
+        if request.method == "POST":
+            try:
+                result = note_model.filter_note_by_teacher()
+            except Error as error:
+                print(error)
+        return render_template("note/notes.html.j2", result=result, notes=select_notes,
+                               username=username)
+    else:
+        return redirect(url_for("login"))
 
 
 @notes_page.route("/")
@@ -170,23 +195,24 @@ def notes():
     else:
         return redirect(url_for("login"))
 
-# @notes_page.route("/generate_question", methods=["POST"])
-# def generate_question():
-#     if "user" in session:
-#         question_model = QuestionModel()
-#         if request.method == "POST":
-#             try:
-#                 selected_note = request.form["note"]
-#                 note_id = request.form["note_id"]
-#                 api_key = "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"
-#                 test_gpt = TestGPT(api_key)
-#                 open_question = test_gpt.generate_open_question(selected_note)
-#                 print(open_question)
-#                 question_model.insert_question(note_id=note_id, exam_question=open_question)
-#                 return redirect(url_for("questions.questions"))
-#             except Error as error:
-#                 print(error)
-#
-#         return render_template("note/note.html.j2")
-#     else:
-#         return redirect(url_for("login"))
+
+@notes_page.route("/generate_question", methods=["POST"])
+def generate_question():
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                selected_note = request.form["note"]
+                note_id = request.form["note_id"]
+                api_key = "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"
+                test_gpt = TestGPT(api_key)
+                open_question = test_gpt.generate_open_question(selected_note)
+                print(open_question)
+                question_model.insert_question(note_id=note_id, exam_question=open_question)
+                return redirect(url_for("questions.questions"))
+            except Error as error:
+                print(error)
+
+        return render_template("note/note.html.j2")
+    else:
+        return redirect(url_for("login"))

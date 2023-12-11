@@ -50,3 +50,23 @@ class NoteModel:
         cursor.execute("DELETE FROM notes WHERE note_id=(?)", [note_id])
         cursor.connection.commit()
         return cursor.fetchall()
+
+    def search_note(self, teacher_id, search_value):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = (?) AND title LIKE (?) OR teacher_id = (?) AND note LIKE (?)",
+            [teacher_id, f'%{search_value}%', teacher_id, f'%{search_value}%'])
+        cursor.connection.commit()
+        return cursor.fetchall()
+
+    def filter_note_by_category(self, teacher_id, filter_value):
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = (?) AND notes.category_id = (?)",
+            [teacher_id, filter_value])
+        return cursor.fetchall()
+
+    def filter_note_by_teacher(self):
+        cursor = self.__get_cursor()
+        cursor.execute("SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE is_public = 1")
+        return cursor.fetchall()

@@ -9,4 +9,4 @@ class NoteForm(FlaskForm):
     is_public = IntegerField('is_public')
     teacher_id = IntegerField('teacher_id', validators=[DataRequired()])
     category_id = IntegerField('category_id', validators=[DataRequired()])
-    note = TextAreaField('note', validators=[DataRequired(), Length(min=10, max=500)])
+    note = StringField('note', validators=[DataRequired(), Length(min=10, max=500)])
