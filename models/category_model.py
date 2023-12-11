@@ -3,7 +3,6 @@ from pathlib import Path
 
 
 class CategoryModel:
-
     def __init__(self, database):
         db_path = Path(database)
         if not db_path.exists():
@@ -29,14 +28,18 @@ class CategoryModel:
 
     def update_category(self, omschrijving, category_id):
         cursor = self.__get_cursor()
-        cursor.execute("UPDATE categories SET omschrijving = (?) WHERE category_id = (?)", [omschrijving, category_id])
+        cursor.execute(
+            "UPDATE categories SET omschrijving = (?) WHERE category_id = (?)",
+            [omschrijving, category_id],
+        )
         cursor.connection.commit()
         return cursor.lastrowid
 
     def select_category(self, category_id):
         cursor = self.__get_cursor()
         cursor.execute(
-            "SELECT * FROM categories WHERE category_id = (?)", [category_id])
+            "SELECT * FROM categories WHERE category_id = (?)", [category_id]
+        )
         cursor.connection.commit()
         return cursor.fetchall()
 
@@ -48,5 +51,8 @@ class CategoryModel:
 
     def search_categories(self, search_value):
         cursor = self.__get_cursor()
-        cursor.execute("SELECT * FROM categories WHERE categories.omschrijving LIKE (?)", ['%' + search_value + '%'])
+        cursor.execute(
+            "SELECT * FROM categories WHERE categories.omschrijving LIKE (?)",
+            ["%" + search_value + "%"],
+        )
         return cursor.fetchall()

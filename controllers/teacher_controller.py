@@ -3,8 +3,13 @@ from flask_bcrypt import Bcrypt
 from models.teacher_model import TeacherModel
 from forms.teacher_form import TeacherForm
 
-teachers_page = Blueprint("teachers", __name__, url_prefix="/teachers", template_folder="templates/teacher",
-                          static_folder="static")
+teachers_page = Blueprint(
+    "teachers",
+    __name__,
+    url_prefix="/teachers",
+    template_folder="templates/teacher",
+    static_folder="static",
+)
 
 DATABASE_FILE = "databases/testgpt.db"
 
@@ -16,7 +21,9 @@ def teachers():
         username = session["user"]
         select_teachers = teacher_model.get_all_teachers()
 
-        return render_template("teacher/teachers.html.j2", teachers=select_teachers, username=username)
+        return render_template(
+            "teacher/teachers.html.j2", teachers=select_teachers, username=username
+        )
     else:
         return redirect(url_for("dashboard"))
 
@@ -36,12 +43,18 @@ def create_teacher():
 
             hashed_password = bcrypt.generate_password_hash(teacher_password)
 
-            teacher_model.insert_teacher(display_name=display_name, username=username,
-                                         teacher_password=hashed_password, is_admin=is_admin)
+            teacher_model.insert_teacher(
+                display_name=display_name,
+                username=username,
+                teacher_password=hashed_password,
+                is_admin=is_admin,
+            )
 
             return redirect(url_for("teachers.teachers"))
         else:
             print(teacher_form.errors)
-        return render_template("teacher/create_teacher.html.j2", username=username, form=teacher_form)
+        return render_template(
+            "teacher/create_teacher.html.j2", username=username, form=teacher_form
+        )
     else:
         return redirect(url_for("dashboard"))
