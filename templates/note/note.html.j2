@@ -84,13 +84,13 @@
     </div>
 </form>
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-{#    <form action="{{ url_for('notes.generate_question') }}" method="POST">#}
-{#        <input type="hidden" name="note_id" value="{{ note[0] }}">#}
-{#        <input type="hidden" name="note" value="{{ note[6] }}">#}
+    <form action="{{ url_for('notes.generate_question') }}" method="POST">
+        <input type="hidden" name="note_id" value="{{ note.note_id }}">
+        <input type="hidden" name="note" value="{{ note.note }}">
         <div class="mt-6 flex items-center justify-between">
             <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Generate open question</button>
         </div>
-{#    </form>#}
+    </form>
     </div>
 {% endfor %}
 {% endblock %}

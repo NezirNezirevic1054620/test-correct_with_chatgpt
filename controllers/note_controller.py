@@ -8,8 +8,13 @@ from models.question_model import QuestionModel
 from forms.note_form import NoteForm
 from lib.testgpt.testgpt import TestGPT
 
-notes_page = Blueprint("notes", __name__, url_prefix="/notes",
-                       template_folder="templates/note", static_folder="static")
+notes_page = Blueprint(
+    "notes",
+    __name__,
+    url_prefix="/notes",
+    template_folder="templates/note",
+    static_folder="static",
+)
 
 DATABASE_FILE = "databases/testgpt.db"
 
@@ -32,11 +37,22 @@ def create_note():
             category_id = note_form.category_id.data
             note_text = note_form.note.data
 
-            note_model.insert_note(title=title, note_source=note_source, is_public=is_public,
-                                   teacher_id=teacher_id, category_id=category_id, note=note_text)
-            return redirect(url_for('notes.notes'))
-        return render_template("note/create_note.html.j2", categories=select_categories, teachers=select_teachers,
-                               form=note_form, username=username)
+            note_model.insert_note(
+                title=title,
+                note_source=note_source,
+                is_public=is_public,
+                teacher_id=teacher_id,
+                category_id=category_id,
+                note=note_text,
+            )
+            return redirect(url_for("notes.notes"))
+        return render_template(
+            "note/create_note.html.j2",
+            categories=select_categories,
+            teachers=select_teachers,
+            form=note_form,
+            username=username,
+        )
     else:
         return redirect(url_for("login"))
 
@@ -53,7 +69,7 @@ def delete_note():
             except Error as error:
                 print(error)
 
-        return redirect(url_for('notes.notes'))
+        return redirect(url_for("notes.notes"))
     else:
         return redirect(url_for("login"))
 
@@ -74,9 +90,14 @@ def note(note_id):
                 select_note = note_model.select_note(note_id=note_id)
             except Error as error:
                 print(error)
-        return render_template("note/note.html.j2", note=select_note, teachers=select_teachers,
-                               categories=select_categories, note_id=note_id, username=username,
-                               )
+        return render_template(
+            "note/note.html.j2",
+            note=select_note,
+            teachers=select_teachers,
+            categories=select_categories,
+            note_id=note_id,
+            username=username,
+        )
     else:
         return redirect(url_for("login"))
 
@@ -95,12 +116,19 @@ def edit_note():
                 note_id = request.form["note_id"]
                 note_text = request.form["note"]
                 print(teacher_id)
-                note_model.update_note(title=title, note_source=note_source, is_public=is_public,
-                                       teacher_id=teacher_id, category_id=category_id, note=note_text, note_id=note_id)
+                note_model.update_note(
+                    title=title,
+                    note_source=note_source,
+                    is_public=is_public,
+                    teacher_id=teacher_id,
+                    category_id=category_id,
+                    note=note_text,
+                    note_id=note_id,
+                )
             except Error as error:
                 print(error)
 
-        return redirect(url_for('notes.notes'))
+        return redirect(url_for("notes.notes"))
     else:
         return redirect(url_for("login"))
 
@@ -165,28 +193,35 @@ def notes():
         teacher_id = session["teacher_id"]
         select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
         select_categories = category_model.get_all_categories()
-        return render_template("note/notes.html.j2", notes=select_notes, categories=select_categories,
-                               username=username)
+        return render_template(
+            "note/notes.html.j2",
+            notes=select_notes,
+            categories=select_categories,
+            username=username,
+        )
     else:
         return redirect(url_for("login"))
 
-# @notes_page.route("/generate_question", methods=["POST"])
-# def generate_question():
-#     if "user" in session:
-#         question_model = QuestionModel()
-#         if request.method == "POST":
-#             try:
-#                 selected_note = request.form["note"]
-#                 note_id = request.form["note_id"]
-#                 api_key = "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"
-#                 test_gpt = TestGPT(api_key)
-#                 open_question = test_gpt.generate_open_question(selected_note)
-#                 print(open_question)
-#                 question_model.insert_question(note_id=note_id, exam_question=open_question)
-#                 return redirect(url_for("questions.questions"))
-#             except Error as error:
-#                 print(error)
-#
-#         return render_template("note/note.html.j2")
-#     else:
-#         return redirect(url_for("login"))
+
+@notes_page.route("/generate_question", methods=["POST"])
+def generate_question():
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                selected_note = request.form["note"]
+                note_id = request.form["note_id"]
+                api_key = "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"
+                test_gpt = TestGPT(api_key)
+                open_question = test_gpt.generate_open_question(selected_note)
+                print(open_question)
+                question_model.insert_question(
+                    note_id=note_id, exam_question=open_question
+                )
+                return redirect(url_for("questions.questions"))
+            except Error as error:
+                print(error)
+
+        return render_template("note/note.html.j2")
+    else:
+        return redirect(url_for("login"))
