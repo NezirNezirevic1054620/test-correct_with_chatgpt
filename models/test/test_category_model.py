@@ -1,4 +1,4 @@
-""" Testing NoteModel """
+""" Tests for the CategoryModel """
 from models.category_model import CategoryModel
 
 DATABASE_FILE = (

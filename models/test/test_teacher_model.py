@@ -1,4 +1,4 @@
-""" Testing TeacherModel """
+"""Tests for the TeacherModel"""
 from models.teacher_model import TeacherModel
 
 DATABASE_FILE = (

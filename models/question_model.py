@@ -1,8 +1,11 @@
+"""Question Model with all its SQL queries"""
 import sqlite3
 from pathlib import Path
 
 
 class QuestionModel:
+    """QuestionModel class with all its methods"""
+
     def __init__(self, database):
         db_path = Path(database)
         if not db_path.exists():
@@ -10,12 +13,14 @@ class QuestionModel:
         self.dbpath = db_path
 
     def __get_cursor(self):
+        """Connection with database is made and cursor object gets returned"""
         connection = sqlite3.connect(self.dbpath)
         cursor = connection.cursor()
         cursor.row_factory = sqlite3.Row
         return cursor
 
     def get_all_questions(self):
+        """Selects all the questions connected to the note_id from the database"""
         cursor = self.__get_cursor()
         cursor.execute(
             "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id"
@@ -23,6 +28,7 @@ class QuestionModel:
         return cursor.fetchall()
 
     def insert_question(self, note_id, exam_question):
+        """Inserts a question row into the database"""
         cursor = self.__get_cursor()
         cursor.execute(
             "INSERT INTO questions (note_id, exam_question) VALUES(?,?)",
