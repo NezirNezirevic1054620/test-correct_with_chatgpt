@@ -59,15 +59,15 @@
                         </svg>
                     </div>
                     <span class="h-full absolute inset-y-0 right-0 flex items-center">
-                            <button
-                                type="submit"
-                                class="hover:bg-gray-100 bg-white rounded-s-none rounded-e-none text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
-                                >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"></path>
-                                </svg>
-                            </button>
-                        </span>
+                        <button
+                            type="submit"
+                            class="hover:bg-gray-100 bg-white rounded-s-none rounded-e-none text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"></path>
+                            </svg>
+                        </button>
+                    </span>
                 </div>
             </div>
             <div class="block relative">
@@ -92,7 +92,9 @@
             </div>
             <div class="block relative">
                 <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-{#                    <form action="{{ url_for('notes.create_note') }}">#}
+                    {#
+                    <form action="{{ url_for('notes.create_note') }}">
+                        #}
                         <button
                             type="submit"
                             class="border-green-500 bg-green-500 text-white rounded-md px-3 py-1.5 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
@@ -104,16 +106,20 @@
                     </form>
                 </span>
             </div>
-        </div>
-        <div class="block relative">
-                <form action="{{ url_for('questions.generate_csv') }}" method="POST">
-                    <button
-                        type="submit"
-                        class="hover:bg-gray-100 bg-white rounded-s-none rounded-e-none text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
-                    >
-                        Save to CSV file
-                    </button>
-                </form>
+            <div class="block relative">
+                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-16">
+                    <form action="{{ url_for('questions.generate_csv') }}" method="POST">
+                        <button
+                            type="submit"
+                            class="border-green-500 bg-green-500 text-white rounded-md px-3 py-1.5 m-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </span>
+            </div>
         </div>
         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -155,16 +161,19 @@
                                                 {{ question.date_created }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
-{#                                                <form action="{{ url_for('notes.note', note_id=note.note_id) }}" method="POST">#}
-{#                                                    <input type="hidden" name="note_id" value="{{ note.note_id }}" >#}
-                                                <button type="submit" class="hover:bg-gray-100 border text-gray-700 py-2 px-3 rounded-s-lg rounded-e-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
-                                                    </svg>
-                                                </button>
+                                                {#
+                                                <form action="{{ url_for('notes.note', note_id=note.note_id) }}" method="POST">
+                                                    #}
+                                                    {#                                                    <input type="hidden" name="note_id" value="{{ note.note_id }}" >#}
+                                                    <button type="submit" class="hover:bg-gray-100 border text-gray-700 py-2 px-3 rounded-s-lg rounded-e-lg">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"></path>
+                                                        </svg>
+                                                    </button>
                                                 </form>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
+
                                                 <form action="{{ url_for('questions.delete_question', question_id=question.question_id) }}" method="POST">
                                                 <input type="hidden" value="{{ question.questions_id }}" name="questions_id">
                                                 <button type="submit" class="hover:bg-gray-100 border text-gray-700 py-2 px-3 rounded-s-lg rounded-e-lg">
@@ -172,6 +181,17 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
                                                     </svg>
                                                 </button>
+
+                                                {#
+                                                <form action="{{ url_for('notes.delete_note', note_id=note.note_id) }}" method="POST">
+                                                    #}
+                                                    {#                                                <input type="hidden" value="{{ note.note_id }}" name="note_id">#}
+                                                    <button type="submit" class="hover:bg-gray-100 border text-gray-700 py-2 px-3 rounded-s-lg rounded-e-lg">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                                                        </svg>
+                                                    </button>
+
                                                 </form>
                                             </td>
                                         </tr>

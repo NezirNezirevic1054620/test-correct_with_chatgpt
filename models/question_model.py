@@ -42,7 +42,8 @@ class QuestionModel:
         """Selects a question connected to the note_id"""
         cursor = self.__get_cursor()
         cursor.execute(
-            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id INNER JOIN teachers ON teachers.teacher_id = notes.teacher_id WHERE notes.note_id = (?)", [note_id]
+            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id INNER JOIN teachers ON teachers.teacher_id = notes.teacher_id WHERE notes.note_id = (?)",
+            [note_id],
         )
         return cursor.fetchall()
 
@@ -53,4 +54,3 @@ class QuestionModel:
         cursor.execute("DELETE FROM questions WHERE questions_id=(?)", [questions_id])
         cursor.connection.commit()
         return cursor.fetchall()
-

@@ -30,6 +30,7 @@ def questions():
         redirect(url_for("login"))
 
 
+
 @questions_page.route("/delete_questions", methods=["GET", "POST"])
 def delete_question():
     if "user" in session:
@@ -47,19 +48,26 @@ def delete_question():
         return redirect(url_for("login"))
 
 
+
 @questions_page.route("/generate_csv", methods=["POST"])
 def generate_csv():
     question_controller = QuestionModel(DATABASE_FILE)
-    questions = question_controller.get_all_questions()
+    select_questions = question_controller.get_all_questions()
 
     csv_data = StringIO()
     csv_writer = csv.writer(csv_data)
-    csv_writer.writerow(['Note', 'Question', 'Created at'])
+    csv_writer.writerow(["Note", "Question", "Created at"])
 
-    for question_row in questions:
-        csv_writer.writerow([question_row['note'], question_row['exam_question'], question_row['date_created']])
+    for question_row in select_questions:
+        csv_writer.writerow(
+            [
+                question_row["note"],
+                question_row["exam_question"],
+                question_row["date_created"],
+            ]
+        )
 
-    response = Response(csv_data.getvalue(), content_type='text/csv')
-    response.headers['Content-Disposition'] = 'attachment; filename=exam_questions.csv'
+    response = Response(csv_data.getvalue(), content_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=exam_questions.csv"
 
     return response
