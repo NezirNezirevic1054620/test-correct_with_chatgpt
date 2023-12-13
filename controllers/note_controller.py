@@ -80,14 +80,17 @@ def note(note_id):
         note_model = NoteModel(DATABASE_FILE)
         teacher_model = TeacherModel(DATABASE_FILE)
         category_model = CategoryModel(DATABASE_FILE)
+        question_model = QuestionModel(DATABASE_FILE)
         username = session["user"]
         select_note = None
+        select_question = None
         select_categories = category_model.get_all_categories()
         select_teachers = teacher_model.get_all_teachers()
         if request.method == "POST":
             try:
                 note_id = request.form["note_id"]
                 select_note = note_model.select_note(note_id=note_id)
+                select_question = question_model.select_question_by_note(note_id=note_id)
             except Error as error:
                 print(error)
         return render_template(
@@ -95,6 +98,7 @@ def note(note_id):
             note=select_note,
             teachers=select_teachers,
             categories=select_categories,
+            questions=select_question,
             note_id=note_id,
             username=username,
         )
