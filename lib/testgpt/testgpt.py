@@ -14,7 +14,8 @@ class TestGPT:
         self.config_file = config_file
         if not hasattr(openai, "chat"):
             raise Exception(
-                "Old version of the openai library, please upgrade to the latest version using the 'pip install openai --upgrade' command"
+                "Old version of the openai library, please upgrade to the latest version using the 'pip install "
+                "openai --upgrade' command"
             )
 
         self.initial_parameters = self.get_initial_parameters()
@@ -36,8 +37,7 @@ class TestGPT:
                 f"Question type {question_type} not found in config file {self.config_file}"
             )
         if not note:
-            raise ValueError(
-                "The given note was empty, we can't ask empty questions")
+            raise ValueError("The given note was empty, we can't ask empty questions")
         parameters = {
             "model": self.initial_parameters["model"],
             "messages": self.initial_parameters["prompts"][question_type]["messages"],

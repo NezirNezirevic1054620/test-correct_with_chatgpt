@@ -1,25 +1,11 @@
-# Test-Correct met OpenAI integratie
+""" Testing NoteModel """
+from models.note_model import NoteModel
 
-## Installation
+DATABASE_FILE = (
+    "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
+)
 
-#### Clone the repository
-```git
-git clone https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl.git
-```
 
-#### Install all the packages
-```python
-pip install -r requirements.txt
-```
-
-## Testing
-
-#### Run the tests with this command
-```python
-python -m pytest models/test/
-```
-
-```python
 def test_get_all_notes():
     """Method checks if the output is a dictionary"""
     note = None
@@ -40,8 +26,3 @@ def test_get_all_notes():
             "omschrijving": note[9],
         }
     assert dict(note) == mydict
-```
-
-
-
-
