@@ -36,3 +36,10 @@ class QuestionModel:
         )
         cursor.connection.commit()
         return cursor.lastrowid
+
+    def delete_question(self, questions_id):
+        """"deletes a specific question"""
+        cursor = self.__get_cursor()
+        cursor.execute("DELETE FROM questions WHERE questions_id=(?)", [questions_id])
+        cursor.connection.commit()
+        return cursor.fetchall()

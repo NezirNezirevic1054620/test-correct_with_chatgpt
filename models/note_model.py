@@ -64,7 +64,7 @@ class NoteModel:
         return cursor.fetchall()
 
     def delete_note(self, note_id):
-        """Deletes a speicifc note where note_id is connected to"""
+        """Deletes a specific note where note_id is connected to"""
         cursor = self.__get_cursor()
         cursor.execute("DELETE FROM notes WHERE note_id=(?)", [note_id])
         cursor.connection.commit()
