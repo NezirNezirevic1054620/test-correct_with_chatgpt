@@ -40,3 +40,22 @@ class TeacherModel:
         cursor = self.__get_cursor()
         cursor.execute("SELECT * FROM teachers WHERE username = (?)", [username])
         return cursor.fetchall()
+
+
+    def delete_teacher(self, teacher_id):
+        """Deletes a teacher where teacher_id is connected to teacher_id"""
+        cursor = self.__get_cursor()
+        cursor.execute("DELETE FROM teachers WHERE teacher_id=(?)", [teacher_id])
+        cursor.connection.commit()
+        return cursor.fetchall()
+
+    def update_teacher(self, display_name, username, teacher_password, is_admin):
+        """Updates teacher details where teacher_id is connected to teacher_id"""
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "UPDATE teachers SET display_name=(?), username=(?), teacher_password=(?), is_admin=(?) "
+            "WHERE teacher_id=(?)",
+            [display_name, username, teacher_password, is_admin],
+        )
+        cursor.connection.commit()
+        return cursor.lastrowid
