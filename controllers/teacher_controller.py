@@ -60,6 +60,7 @@ def create_teacher():
     else:
         return redirect(url_for("dashboard"))
 
+
 @teachers_page.route("/delete_teacher", methods=["GET", "POST"])
 def delete_teacher():
     if "user" in session:

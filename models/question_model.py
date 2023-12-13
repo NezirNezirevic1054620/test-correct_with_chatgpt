@@ -37,7 +37,6 @@ class QuestionModel:
         cursor.connection.commit()
         return cursor.lastrowid
 
-
     def select_question_by_note(self, note_id):
         """Selects a question connected to the note_id"""
         cursor = self.__get_cursor()
@@ -47,9 +46,8 @@ class QuestionModel:
         )
         return cursor.fetchall()
 
-
     def delete_question(self, questions_id):
-        """"deletes a specific question"""
+        """ "deletes a specific question"""
         cursor = self.__get_cursor()
         cursor.execute("DELETE FROM questions WHERE questions_id=(?)", [questions_id])
         cursor.connection.commit()
