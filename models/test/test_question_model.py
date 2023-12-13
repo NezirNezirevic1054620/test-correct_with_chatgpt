@@ -1,4 +1,4 @@
-""" Testing QuestionModel """
+"""Tests for the QuestionModel"""
 from models.question_model import QuestionModel
 
 DATABASE_FILE = (

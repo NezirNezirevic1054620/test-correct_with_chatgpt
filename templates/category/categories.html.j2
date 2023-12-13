@@ -6,50 +6,16 @@
             <h2 class="text-2xl font-semibold leading-tight">Categories</h2>
         </div>
         <div class="my-2 flex sm:flex-row flex-col">
-            <div class="flex flex-row mb-1 sm:mb-0">
-                <div class="relative">
-                    <label>
-                        <select
-                            class="appearance-none h-full rounded-s-lg border block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
-                    </label>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="relative">
-                    <label>
-                        <select
-                            class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-200 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                            <option>All</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
-                        </select>
-                    </label>
-                    <div
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
             <div class="block relative">
                 <form action="{{ url_for('category.search_category') }}" method="POST">
                     <label>
                     <input placeholder="Search"
-                        name="search_value" class="appearance-none rounded-e-lg rounded-s-none border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                        name="search_value" class="appearance-none rounded-e-lg rounded-s-lg border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                     </label>
                     <span class="h-full absolute inset-y-0 right-0 flex items-center pl-2">
                         <button
                             type="submit"
-                            class="hover:bg-gray-100  rounded-s-none rounded-e-lg text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
+                            class="hover:bg-gray-100 rounded-s-none rounded-e-lg text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
                             >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
@@ -95,7 +61,7 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         {% if result | length != 0 %}
                         {% for category in result %}
-                        <tr class="hover:bg-gray-100">
+                        <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-gray-700">
                                 {{ category.omschrijving }}
                             </td>
