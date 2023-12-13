@@ -4,11 +4,9 @@ from wtforms.validators import Optional, DataRequired, Length
 
 
 class NoteForm(FlaskForm):
-    title = StringField("title", validators=[Optional()])
-    note_source = StringField(
-        "note_source", validators=[DataRequired(), Length(min=10, max=40)]
-    )
-    is_public = IntegerField("is_public")
-    teacher_id = IntegerField("teacher_id", validators=[DataRequired()])
-    category_id = IntegerField("category_id", validators=[DataRequired()])
-    note = TextAreaField("note", validators=[DataRequired(), Length(min=10, max=500)])
+    title = StringField('title', validators=[Optional()])
+    note_source = StringField('note_source', validators=[DataRequired(), Length(min=10, max=40)])
+    is_public = IntegerField('is_public')
+    teacher_id = IntegerField('teacher_id', validators=[DataRequired()])
+    category_id = IntegerField('category_id', validators=[DataRequired()])
+    note = StringField('note', validators=[DataRequired(), Length(min=10, max=500)])
