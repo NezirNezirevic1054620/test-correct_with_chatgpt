@@ -1,4 +1,5 @@
-from flask import Blueprint, session, render_template, redirect, url_for
+from flask import Blueprint, session, render_template, redirect, url_for, request
+from sqlite3 import Error
 from flask_bcrypt import Bcrypt
 from models.teacher_model import TeacherModel
 from forms.teacher_form import TeacherForm
@@ -56,5 +57,21 @@ def create_teacher():
         return render_template(
             "teacher/create_teacher.html.j2", username=username, form=teacher_form
         )
+    else:
+        return redirect(url_for("dashboard"))
+
+@teachers_page.route("/delete_teacher", methods=["GET", "POST"])
+def delete_teacher():
+    if "user" in session:
+        teacher_model = TeacherModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                teacher_id = request.form["teacher_id"]
+                teacher_model.delete_teacher(teacher_id=teacher_id)
+
+            except Error as error:
+                print(error)
+
+        return redirect(url_for("teachers.teachers"))
     else:
         return redirect(url_for("dashboard"))

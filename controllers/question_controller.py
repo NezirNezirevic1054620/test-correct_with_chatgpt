@@ -1,4 +1,5 @@
-from flask import Blueprint, session, render_template, redirect, url_for, Response
+from flask import Blueprint, session, render_template, redirect, url_for, Response, request
+from sqlite3 import Error
 
 from models.question_model import QuestionModel
 import csv
@@ -27,6 +28,25 @@ def questions():
         )
     else:
         redirect(url_for("login"))
+
+
+
+@questions_page.route("/delete_questions", methods=["GET", "POST"])
+def delete_question():
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                questions_id = request.form["questions_id"]
+                question_model.delete_question(questions_id=questions_id)
+
+            except Error as error:
+                print(error)
+
+        return redirect(url_for("questions.questions"))
+    else:
+        return redirect(url_for("login"))
+
 
 
 @questions_page.route("/generate_csv", methods=["POST"])
