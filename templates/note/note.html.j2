@@ -80,7 +80,7 @@
         </div>
         <div class="mt-6 flex items-center justify-end gap-x-6">
             <a href="{{ url_for('notes.notes') }}" class="href">
-                <button type="button" class="border rounded-lg text-red-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Cancel</button>
+            <button type="button" class="border rounded-lg text-red-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Cancel</button>
             </a>
             <button type="submit" class="rounded-lg bg-green-500 text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Save</button>
         </div>
@@ -105,23 +105,30 @@
             </div>
         </form>
     </div>
-<ul role="list" class="">
-    <div class="mt-4">
-        <h2 class="text-2xl font-semibold leading-tight">Questions</h2>
-    </div>
-  <li class="flex justify-between gap-x-6 py-4 border rounded-lg px-4 mt-4">
-    <div class="flex min-w-0 gap-x-4">
-      <div class="min-w-0 flex-auto">
-        <p class="text-sm font-semibold leading-6 text-gray-900">Leslie Alexander</p>
-        <p class="mt-1 truncate text-xs leading-5 text-gray-500">leslie.alexander@example.com</p>
-      </div>
-    </div>
-    <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-      <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-      <p class="mt-1 text-xs leading-5 text-gray-500">Last seen <time datetime="2023-01-23T13:23Z">3h ago</time></p>
-    </div>
-  </li>
-</ul>
+    <ul role="list" class="">
+        {% if questions | length != 0 %}
+        <div class="mt-4">
+            <h2 class="text-2xl font-semibold leading-tight">Questions</h2>
+        </div>
+        {% for question in questions %}
+        <li class="flex justify-between gap-x-6 py-4 border rounded-lg px-4 mt-4">
+            <div class="flex min-w-0 gap-x-4">
+                <div class="min-w-0 flex-auto">
+                    <p class="text-sm font-semibold leading-6 text-gray-900">{{ question.exam_question }}</p>
+                    <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ question.note }}</p>
+                </div>
+            </div>
+            <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                <p class="text-sm leading-6 text-gray-900">
+                    Made by: {{ question.display_name }}
+                </p>
+                <p class="mt-1 text-xs leading-5 text-gray-500">Added at: {{ question.date_created }}</p>
+            </div>
+        </li>
+        {% endfor %}
+        {% else %}
+        {% endif %}
+    </ul>
 </div>
 {% endfor %}
 {% endblock %}
