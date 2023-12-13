@@ -105,6 +105,16 @@
                 </span>
             </div>
         </div>
+        <div class="block relative">
+                <form action="{{ url_for('questions.generate_csv') }}" method="POST">
+                    <button
+                        type="submit"
+                        class="hover:bg-gray-100 bg-white rounded-s-none rounded-e-none text-gray-700 rounded-md px-3 py-1.5 transition duration-500 ease select-none hover:bg-gray-200 focus:outline-none focus:shadow-outline"
+                    >
+                        Save to CSV file
+                    </button>
+                </form>
+        </div>
         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                 <!-- This example requires Tailwind CSS v2.0+ -->
