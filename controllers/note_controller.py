@@ -7,6 +7,7 @@ from models.teacher_model import TeacherModel
 from models.question_model import QuestionModel
 from forms.note_form import NoteForm
 from lib.testgpt.testgpt import TestGPT
+import os
 
 notes_page = Blueprint(
     "notes",
@@ -90,7 +91,9 @@ def note(note_id):
             try:
                 note_id = request.form["note_id"]
                 select_note = note_model.select_note(note_id=note_id)
-                select_question = question_model.select_question_by_note(note_id=note_id)
+                select_question = question_model.select_question_by_note(
+                    note_id=note_id
+                )
             except Error as error:
                 print(error)
         return render_template(
@@ -249,7 +252,7 @@ def generate_question():
             try:
                 selected_note = request.form["note"]
                 note_id = request.form["note_id"]
-                api_key = "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"
+                api_key = os.getenv("API_KEY")
                 test_gpt = TestGPT(api_key)
                 open_question = test_gpt.generate_open_question(selected_note)
                 print(open_question)

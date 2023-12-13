@@ -8,7 +8,9 @@ from models.teacher_model import TeacherModel
 from controllers.question_controller import questions_page
 from controllers.teacher_controller import teachers_page
 
-SECRET_KEY = "babababa"
+import os
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.register_blueprint(notes_page)
@@ -31,7 +33,6 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         result = teacher_controller.login(username=username)
-        print(result)
         if result:
             if bcrypt.check_password_hash(result[0][3], password):
                 session["user"] = username
