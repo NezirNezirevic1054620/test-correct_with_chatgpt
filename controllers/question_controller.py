@@ -1,4 +1,12 @@
-from flask import Blueprint, session, render_template, redirect, url_for, Response, request
+from flask import (
+    Blueprint,
+    session,
+    render_template,
+    redirect,
+    url_for,
+    Response,
+    request,
+)
 from sqlite3 import Error
 
 from models.question_model import QuestionModel
@@ -30,7 +38,6 @@ def questions():
         redirect(url_for("login"))
 
 
-
 @questions_page.route("/delete_questions", methods=["GET", "POST"])
 def delete_question():
     if "user" in session:
@@ -46,7 +53,6 @@ def delete_question():
         return redirect(url_for("questions.questions"))
     else:
         return redirect(url_for("login"))
-
 
 
 @questions_page.route("/generate_csv", methods=["POST"])

@@ -41,7 +41,6 @@ class TeacherModel:
         cursor.execute("SELECT * FROM teachers WHERE username = (?)", [username])
         return cursor.fetchall()
 
-
     def delete_teacher(self, teacher_id):
         """Deletes a teacher where teacher_id is connected to teacher_id"""
         cursor = self.__get_cursor()
