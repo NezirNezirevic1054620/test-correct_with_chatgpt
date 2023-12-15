@@ -1,3 +1,7 @@
+"""Question controller with all its routes"""
+from sqlite3 import Error
+import csv
+from io import StringIO
 from flask import (
     Blueprint,
     session,
@@ -7,11 +11,8 @@ from flask import (
     Response,
     request,
 )
-from sqlite3 import Error
 
 from models.question_model import QuestionModel
-import csv
-from io import StringIO
 
 questions_page = Blueprint(
     "questions",
@@ -26,6 +27,7 @@ DATABASE_FILE = "databases/testgpt.db"
 
 @questions_page.route("/", methods=["GET", "POST"])
 def questions():
+    """Questions route that displays all the questions from the database"""
     if "user" in session:
         username = session["user"]
         question_controller = QuestionModel(DATABASE_FILE)
@@ -34,12 +36,12 @@ def questions():
         return render_template(
             "question/questions.html.j2", questions=get_questions, username=username
         )
-    else:
-        redirect(url_for("login"))
+    return redirect(url_for("login"))
 
 
 @questions_page.route("/delete_questions", methods=["GET", "POST"])
 def delete_question():
+    """Delete question route that deletes a specific question from the database"""
     if "user" in session:
         question_model = QuestionModel(DATABASE_FILE)
         if request.method == "POST":
@@ -51,12 +53,13 @@ def delete_question():
                 print(error)
 
         return redirect(url_for("questions.questions"))
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @questions_page.route("/generate_csv", methods=["POST"])
 def generate_csv():
+    """Generate CSV route that generates a csv file with all the questions from the database"""
     question_controller = QuestionModel(DATABASE_FILE)
     select_questions = question_controller.get_all_questions()
 

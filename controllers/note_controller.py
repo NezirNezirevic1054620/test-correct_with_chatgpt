@@ -1,5 +1,8 @@
-from flask import Blueprint, request, render_template, redirect, url_for, session
+"""Note controller with all its routes"""
 from sqlite3 import Error
+import os
+
+from flask import Blueprint, request, render_template, redirect, url_for, session
 
 from models.category_model import CategoryModel
 from models.note_model import NoteModel
@@ -7,7 +10,6 @@ from models.teacher_model import TeacherModel
 from models.question_model import QuestionModel
 from forms.note_form import NoteForm
 from lib.testgpt.testgpt import TestGPT
-import os
 
 notes_page = Blueprint(
     "notes",
@@ -22,6 +24,7 @@ DATABASE_FILE = "databases/testgpt.db"
 
 @notes_page.route("/create_note", methods=["POST", "GET"])
 def create_note():
+    """Create note route that creates a new note and inserts it into the database"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         teacher_model = TeacherModel(DATABASE_FILE)
@@ -54,12 +57,13 @@ def create_note():
             form=note_form,
             username=username,
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/delete_note", methods=["GET", "POST"])
 def delete_note():
+    """Delete note route that deletes a specific note from the database"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         if request.method == "POST":
@@ -71,12 +75,13 @@ def delete_note():
                 print(error)
 
         return redirect(url_for("notes.notes"))
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/note/<int:note_id>", methods=["POST", "GET"])
 def note(note_id):
+    """Note route that displays a sepcific note from the database"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         teacher_model = TeacherModel(DATABASE_FILE)
@@ -105,12 +110,13 @@ def note(note_id):
             note_id=note_id,
             username=username,
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/edit_note", methods=["POST", "GET"])
 def edit_note():
+    """Edit note route that updates the changed fields from the note into the database"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         if request.method == "POST":
@@ -136,14 +142,14 @@ def edit_note():
                 print(error)
 
         return redirect(url_for("notes.notes"))
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
-#
-#
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
+    """Search note route that searches all the notes that align with the search input
+    from the database"""
     if "user" in session:
         result = None
         note_model = NoteModel(DATABASE_FILE)
@@ -170,12 +176,13 @@ def search_note():
             categories=select_categories,
             username=username,
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/filter_note_by_category", methods=["POST", "GET"])
 def filter_note_by_category():
+    """Filter note route that filters the notes based on category that they belong to"""
     if "user" in session:
         result = None
         note_model = NoteModel(DATABASE_FILE)
@@ -201,12 +208,13 @@ def filter_note_by_category():
             categories=select_categories,
             username=username,
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/filter_note_by_teacher", methods=["POST", "GET"])
 def filter_note_by_teacher():
+    """Filter note route that filters notes to display all notes"""
     if "user" in session:
         result = None
         note_model = NoteModel(DATABASE_FILE)
@@ -221,12 +229,13 @@ def filter_note_by_teacher():
         return render_template(
             "note/notes.html.j2", result=result, notes=select_notes, username=username
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/")
 def notes():
+    """Note route which displays all the notes made by the user"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         category_model = CategoryModel(DATABASE_FILE)
@@ -240,12 +249,14 @@ def notes():
             categories=select_categories,
             username=username,
         )
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
 
 
 @notes_page.route("/generate_question", methods=["POST"])
 def generate_question():
+    """Generate question route which connects to the OpenAI API and takes the note as paramater
+    and generates a question and then inserts it into the database"""
     if "user" in session:
         question_model = QuestionModel(DATABASE_FILE)
         if request.method == "POST":
@@ -264,5 +275,5 @@ def generate_question():
                 print(error)
 
         return render_template("note/note.html.j2")
-    else:
-        return redirect(url_for("login"))
+
+    return redirect(url_for("login"))
