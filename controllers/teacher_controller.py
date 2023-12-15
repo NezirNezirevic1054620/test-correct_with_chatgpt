@@ -1,5 +1,6 @@
-from flask import Blueprint, session, render_template, redirect, url_for, request
+"""Teacher controller with all its routes"""
 from sqlite3 import Error
+from flask import Blueprint, session, render_template, redirect, url_for, request
 from flask_bcrypt import Bcrypt
 from models.teacher_model import TeacherModel
 from forms.teacher_form import TeacherForm
@@ -17,6 +18,7 @@ DATABASE_FILE = "databases/testgpt.db"
 
 @teachers_page.route("/", methods=["GET", "POST"])
 def teachers():
+    """Teachers route which shows all the teachers from the database"""
     if session["is_admin"] == 1:
         teacher_model = TeacherModel(DATABASE_FILE)
         username = session["user"]
@@ -25,12 +27,12 @@ def teachers():
         return render_template(
             "teacher/teachers.html.j2", teachers=select_teachers, username=username
         )
-    else:
-        return redirect(url_for("dashboard"))
+    return redirect(url_for("dashboard"))
 
 
 @teachers_page.route("/create_teacher", methods=["GET", "POST"])
 def create_teacher():
+    """Create teacher route that creates a teacher and inserts it into the database"""
     if session["is_admin"] == 1:
         teacher_model = TeacherModel(DATABASE_FILE)
         teacher_form = TeacherForm()
@@ -52,17 +54,15 @@ def create_teacher():
             )
 
             return redirect(url_for("teachers.teachers"))
-        else:
-            print(teacher_form.errors)
         return render_template(
             "teacher/create_teacher.html.j2", username=username, form=teacher_form
         )
-    else:
-        return redirect(url_for("dashboard"))
+    return redirect(url_for("dashboard"))
 
 
 @teachers_page.route("/delete_teacher", methods=["GET", "POST"])
 def delete_teacher():
+    """Delete teacher route that deletes a specific teacher from the database"""
     if "user" in session:
         teacher_model = TeacherModel(DATABASE_FILE)
         if request.method == "POST":
@@ -74,5 +74,5 @@ def delete_teacher():
                 print(error)
 
         return redirect(url_for("teachers.teachers"))
-    else:
-        return redirect(url_for("dashboard"))
+
+    return redirect(url_for("dashboard"))
