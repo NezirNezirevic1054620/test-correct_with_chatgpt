@@ -8,7 +8,7 @@
         <div class="my-2 flex sm:flex-row flex-col">
             <div class="flex flex-row mb-1 sm:mb-0">
                 <div class="relative">
-                    <form action="{{ url_for('notes.filter_note_by_category') }}" method="POST">
+                    <form action="{{ url_for('notes.filter_note_by_category', page=page) }}" method="POST">
                         <label>
                             <select
                                 name="filter_value"
@@ -38,7 +38,7 @@
                     </form>
                 </div>
                 <div class="relative">
-                    <form action="{{ url_for('notes.filter_note_by_teacher') }}" method="POST">
+                    <form action="{{ url_for('notes.filter_note_by_teacher', page=page) }}" method="POST">
                         <label>
                             <select
                                 class="appearance-none text-decoration rounded-e-none rounded-s-none border border-gray-200 border-b block pl-8 pr-20 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="block relative">
-                <form action="{{ url_for('notes.search_note') }}" method="POST">
+                <form action="{{ url_for('notes.search_note', page=page) }}" method="POST">
                     <label>
                     <input placeholder="Search"
                         name="search_value" class="appearance-none rounded-e-lg rounded-s-none border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
