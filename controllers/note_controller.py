@@ -235,19 +235,36 @@ def filter_note_by_teacher():
 
 @notes_page.route("/")
 def notes():
-    """Note route which displays all the notes made by the user"""
+    """Note route which displays paginated notes made by the user"""
     if "user" in session:
         note_model = NoteModel(DATABASE_FILE)
         category_model = CategoryModel(DATABASE_FILE)
         username = session["user"]
         teacher_id = session["teacher_id"]
-        select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
+
+        # Get the page number from the query parameters, default to 1 if not present
+        page = request.args.get("page", default=1, type=int)
+
+        # Set the number of entries per page
+        entries_per_page = 20
+
+        # Calculate the offset based on the page number
+        offset = (page - 1) * entries_per_page
+
+        # Get paginated notes
+        select_notes = note_model.get_paginated_notes(teacher_id=str(teacher_id), offset=offset, limit=entries_per_page)
+        total_entries = note_model.get_total_entries(teacher_id=str(teacher_id))
+
+
         select_categories = category_model.get_all_categories()
         return render_template(
             "note/notes.html.j2",
             notes=select_notes,
             categories=select_categories,
             username=username,
+            page=page,
+            entries_per_page=entries_per_page, 
+            total_entries=total_entries,
         )
 
     return redirect(url_for("login"))
