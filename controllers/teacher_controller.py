@@ -111,6 +111,11 @@ def profile():
         display_name = session["display_name"]
         username = session["user"]
 
-        return render_template("teacher/profile.html.j2", display_name=display_name, username=username, admin=admin)
+        return render_template(
+            "teacher/profile.html.j2",
+            display_name=display_name,
+            username=username,
+            admin=admin,
+        )
 
     return redirect(url_for("login"))
