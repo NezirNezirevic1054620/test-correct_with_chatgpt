@@ -148,8 +148,6 @@ def edit_note():
 
 @notes_page.route("/search_note", methods=["POST", "GET"])
 def search_note():
-    """Search note route that searches all the notes that align with the search input
-    from the database"""
     if "user" in session:
         result = None
         note_model = NoteModel(DATABASE_FILE)
@@ -158,14 +156,34 @@ def search_note():
         teacher_id = session["teacher_id"]
         select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
         select_categories = category_model.get_all_categories()
+
         if request.method == "POST":
             try:
                 search_value = request.form["search_value"]
+                page = request.args.get("page", default=1, type=int)
+                entries_per_page = 20
+                offset = (page - 1) * entries_per_page
 
                 result = note_model.search_note(
-                    teacher_id=str(teacher_id), search_value=str(search_value)
+                    teacher_id=str(teacher_id),
+                    search_value=str(search_value),
+                    offset=offset,
+                    limit=entries_per_page,
                 )
-                print(search_value)
+
+                total_entries = len(result) if result else len(select_notes)
+
+                return render_template(
+                    "note/notes.html.j2",
+                    result=result,
+                    notes=select_notes,
+                    categories=select_categories,
+                    username=username,
+                    page=page,
+                    entries_per_page=entries_per_page,
+                    total_entries=total_entries,
+                )
+
             except Error as error:
                 print(error)
 
@@ -175,6 +193,9 @@ def search_note():
             notes=select_notes,
             categories=select_categories,
             username=username,
+            page=1,
+            entries_per_page=20,
+            total_entries=len(result) if result else len(select_notes),
         )
 
     return redirect(url_for("login"))
@@ -194,19 +215,42 @@ def filter_note_by_category():
         if request.method == "POST":
             try:
                 filter_value = request.form["filter_value"]
+                page = request.args.get("page", default=1, type=int)
+                entries_per_page = 20
+                offset = (page - 1) * entries_per_page
 
                 result = note_model.filter_note_by_category(
-                    teacher_id=str(teacher_id), filter_value=filter_value
+                    teacher_id=str(teacher_id),
+                    filter_value=filter_value,
+                    offset=offset,
+                    limit=entries_per_page,
                 )
-                print(filter_value)
+
+                total_entries = len(result) if result else len(select_notes)
+
+                return render_template(
+                    "note/notes.html.j2",
+                    result=result,
+                    notes=select_notes,
+                    categories=select_categories,
+                    username=username,
+                    page=page,
+                    entries_per_page=entries_per_page,
+                    total_entries=total_entries,
+                )
+
             except Error as error:
                 print(error)
+
         return render_template(
             "note/notes.html.j2",
             result=result,
             notes=select_notes,
             categories=select_categories,
             username=username,
+            page=1,
+            entries_per_page=20,
+            total_entries=len(result) if result else len(select_notes),
         )
 
     return redirect(url_for("login"))
@@ -214,20 +258,44 @@ def filter_note_by_category():
 
 @notes_page.route("/filter_note_by_teacher", methods=["POST", "GET"])
 def filter_note_by_teacher():
-    """Filter note route that filters notes to display all notes"""
     if "user" in session:
         result = None
         note_model = NoteModel(DATABASE_FILE)
         username = session["user"]
         teacher_id = session["teacher_id"]
         select_notes = note_model.get_all_notes(teacher_id=str(teacher_id))
+
         if request.method == "POST":
             try:
-                result = note_model.filter_note_by_teacher()
+                page = request.args.get("page", default=1, type=int)
+                entries_per_page = 20
+                offset = (page - 1) * entries_per_page
+
+                result = note_model.filter_note_by_teacher(offset=offset, limit=entries_per_page)
+
+                total_entries = len(result) if result else len(select_notes)
+
+                return render_template(
+                    "note/notes.html.j2",
+                    result=result,
+                    notes=select_notes,
+                    username=username,
+                    page=page,
+                    entries_per_page=entries_per_page,
+                    total_entries=total_entries,
+                )
+
             except Error as error:
                 print(error)
+
         return render_template(
-            "note/notes.html.j2", result=result, notes=select_notes, username=username
+            "note/notes.html.j2",
+            result=result,
+            notes=select_notes,
+            username=username,
+            page=1,
+            entries_per_page=20,
+            total_entries=len(result) if result else len(select_notes),
         )
 
     return redirect(url_for("login"))
