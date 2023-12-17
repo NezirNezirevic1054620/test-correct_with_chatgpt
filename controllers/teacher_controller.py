@@ -102,3 +102,15 @@ def search_teacher():
         )
 
     return redirect(url_for("login"))
+
+
+@teachers_page.route("/profile", methods=["GET", "POST"])
+def profile():
+    if "user" in session:
+        admin = session["is_admin"]
+        display_name = session["display_name"]
+        username = session["user"]
+
+        return render_template("teacher/profile.html.j2", display_name=display_name, username=username, admin=admin)
+
+    return redirect(url_for("login"))
