@@ -64,7 +64,7 @@ def create_teacher():
 @teachers_page.route("/delete_teacher", methods=["GET", "POST"])
 def delete_teacher():
     """Delete teacher route that deletes a specific teacher from the database"""
-    if "user" in session:
+    if session["is_admin"] == 1:
         teacher_model = TeacherModel(DATABASE_FILE)
         if request.method == "POST":
             try:
@@ -81,16 +81,18 @@ def delete_teacher():
 
 @teachers_page.route("/search_teacher", methods=["GET", "POST"])
 def search_teacher():
+    """Searches for a specific teacher if the search value aligns with their name or username and
+    selects them from the database"""
     if session["is_admin"] == 1:
-        teacher_model = TeacherModel(DATABASE_FILE)
         result = None
+        teacher_model = TeacherModel(DATABASE_FILE)
         username = session["user"]
         select_teachers = teacher_model.get_all_teachers()
         if request.method == "POST":
             try:
                 search_value = request.form["search_value"]
 
-                result = teacher_model.search_teacher(search_value=str(search_value))
+                result = teacher_model.search_teacher(search_value=search_value)
                 print(search_value)
             except Error as error:
                 print(error)
@@ -101,12 +103,13 @@ def search_teacher():
             teachers=select_teachers,
             username=username,
         )
+    return redirect(url_for("login"))
 
 
 @teachers_page.route("/edit_teacher", methods=["POST", "GET"])
 def edit_teacher():
     """Edit teacher route that edits the changed fields from the teacher into the database"""
-    if "user" in session:
+    if session["is_admin"] == 1:
         bcrypt = Bcrypt()
         teacher_model = TeacherModel(DATABASE_FILE)
         if request.method == "POST":
@@ -150,11 +153,21 @@ def profile():
 
 @teachers_page.route("/teacher/<int:teacher_id>", methods=["POST", "GET"])
 def teacher(teacher_id):
-    if "user" in session:
+    if session["is_admin"] == 1:
+        selected_teacher = None
         teacher_model = TeacherModel(DATABASE_FILE)
+        username = session["user"]
         if request.method == "POST":
-            teacher_id = request.form["teacher_id"]
-            select_teacher = teacher_model.select_teacher(teacher_id)
-        return render_template("teacher/teacher.html.j2", teacher=select_teacher)
+            try:
+                teacher_id = request.form["teacher_id"]
+                selected_teacher = teacher_model.select_teacher(teacher_id=teacher_id)
+            except Error as error:
+                print(error)
+        return render_template(
+            "teacher/teacher.html.j2",
+            teacher=selected_teacher,
+            teacher_id=teacher_id,
+            username=username,
+        )
 
     return redirect(url_for("login"))

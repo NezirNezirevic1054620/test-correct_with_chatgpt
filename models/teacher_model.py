@@ -68,6 +68,7 @@ class TeacherModel:
             "SELECT * FROM teachers WHERE display_name LIKE (?) OR username LIKE (?)",
             [f"%{search_value}%", f"%{search_value}%"],
         )
+        return cursor.fetchall()
 
     def select_teacher(self, teacher_id):
         """ "Select teacher details where teacher_id is connected to teacher_id"""
