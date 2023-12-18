@@ -1,9 +1,7 @@
 """Tests for the QuestionModel"""
 from models.question_model import QuestionModel
 
-DATABASE_FILE = (
-    "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
-)
+DATABASE_FILE = "databases/testgpt.db"
 
 
 def test_get_all_questions():
@@ -26,3 +24,18 @@ def test_get_all_questions():
             "note": question[10],
         }
     assert dict(question) == mydict
+
+
+def test_insert_question():
+    """Test if the question gets inserted into the database"""
+    pass
+
+
+def test_update_question():
+    """Test if the question gets updated in the database"""
+    pass
+
+
+def test_delete_question():
+    """Test if the question gets deleted from the database"""
+    pass

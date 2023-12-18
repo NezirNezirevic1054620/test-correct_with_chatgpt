@@ -86,32 +86,42 @@ class NoteModel:
         cursor.connection.commit()
         return cursor.fetchall()
 
-    def search_note(self, teacher_id, search_value):
-        """Selects a specific note where teacher_id and search_value is related to"""
+    def search_note(self, teacher_id, search_value, offset, limit):
+        """Selects specific notes where teacher_id and search_value are related to"""
         cursor = self.__get_cursor()
-        cursor.execute(
-            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id "
-            "= (?) AND title LIKE (?) OR teacher_id = (?) AND note LIKE (?)",
-            [teacher_id, f"%{search_value}%", teacher_id, f"%{search_value}%"],
+        query = (
+            "SELECT * FROM notes "
+            "INNER JOIN categories ON notes.category_id = categories.category_id "
+            "WHERE teacher_id = ? AND (title LIKE ? OR note LIKE ?) "
+            "LIMIT ? OFFSET ?"
         )
-        cursor.connection.commit()
+        params = [teacher_id, f"%{search_value}%", f"%{search_value}%", limit, offset]
+        cursor.execute(query, params)
         return cursor.fetchall()
 
-    def filter_note_by_category(self, teacher_id, filter_value):
+    def filter_note_by_category(self, teacher_id, filter_value, offset, limit):
         """Selects specific notes where teacher_id and filter_value are connected to"""
         cursor = self.__get_cursor()
-        cursor.execute(
-            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id "
-            "= (?) AND notes.category_id = (?)",
-            [teacher_id, filter_value],
+        query = (
+            "SELECT * FROM notes "
+            "INNER JOIN categories ON notes.category_id = categories.category_id "
+            "WHERE teacher_id = ? AND notes.category_id = ? "
+            "LIMIT ? OFFSET ?"
         )
+        params = [teacher_id, filter_value, limit, offset]
+        cursor.execute(query, params)
         return cursor.fetchall()
 
-    def filter_note_by_teacher(self):
-        """Selects all notes which are public"""
+    def filter_note_by_teacher(self, offset, limit):
+        """Selects all notes which are public with pagination"""
         cursor = self.__get_cursor()
-        cursor.execute(
-            "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE "
-            "is_public = 1"
+        query = (
+            "SELECT * FROM notes "
+            "INNER JOIN categories ON notes.category_id = categories.category_id "
+            "WHERE is_public = 1 "
+            "LIMIT ? OFFSET ?"
         )
+        params = [limit, offset]
+        cursor.execute(query, params)
+
         return cursor.fetchall()

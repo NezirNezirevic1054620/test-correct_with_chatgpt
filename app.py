@@ -28,6 +28,7 @@ def login():
     session.pop("user", None)
     session.pop("teacher_id", None)
     session.pop("is_admin", None)
+    session.pop("display_name", None)
     bcrypt = Bcrypt()
     if request.method == "POST":
         username = request.form["username"]
@@ -38,6 +39,7 @@ def login():
                 session["user"] = username
                 session["is_admin"] = result[0][5]
                 session["teacher_id"] = result[0][0]
+                session["display_name"] = result[0][1]
                 return redirect(url_for("dashboard"))
             else:
                 return redirect(url_for("login"))

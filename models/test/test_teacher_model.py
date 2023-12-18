@@ -1,9 +1,7 @@
 """Tests for the TeacherModel"""
 from models.teacher_model import TeacherModel
 
-DATABASE_FILE = (
-    "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
-)
+DATABASE_FILE = "databases/testgpt.db"
 
 
 def test_get_all_teachers():
@@ -22,3 +20,18 @@ def test_get_all_teachers():
             "is_admin": teacher[5],
         }
     assert dict(teacher) == mydict
+
+
+def test_insert_teacher():
+    """Test if the teacher gets inserted into the database"""
+    pass
+
+
+def test_update_teacher():
+    """Test if the teacher gets updated in the database"""
+    pass
+
+
+def test_delete_teacher():
+    """Test if the teacher gets deleted from the database"""
+    pass

@@ -1,9 +1,7 @@
 """ Tests for the CategoryModel """
 from models.category_model import CategoryModel
 
-DATABASE_FILE = (
-    "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
-)
+DATABASE_FILE = "databases/testgpt.db"
 
 
 def test_get_all_categories():
@@ -19,3 +17,28 @@ def test_get_all_categories():
             "date_created": category[2],
         }
     assert dict(category) == mydict
+
+
+def test_insert_category():
+    """Test if the category gets inserted into the database"""
+    pass
+
+
+def test_update_category():
+    """Test if the category gets updated in the database"""
+    pass
+
+
+def test_delete_category():
+    """Test if the category gets deleted from the database"""
+    pass
+
+
+def test_search_category():
+    category_model = CategoryModel(DATABASE_FILE)
+    searched_category = category_model.search_categories(search_value="Onboarding")
+    if searched_category is not None:
+        for category in searched_category:
+            print(dict(category))
+    else:
+        print("No note")
