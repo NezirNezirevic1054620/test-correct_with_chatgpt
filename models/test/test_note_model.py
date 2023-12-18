@@ -2,7 +2,7 @@
 from models.note_model import NoteModel
 
 DATABASE_FILE = (
-    "/Users/nezirnezirevic/Desktop/wp2-2023-mvc-1e5-nlbl/databases/testgpt.db"
+    "databases/testgpt.db"
 )
 
 
