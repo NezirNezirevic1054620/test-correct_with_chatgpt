@@ -1,9 +1,7 @@
 """Tests for the TeacherModel"""
 from models.teacher_model import TeacherModel
 
-DATABASE_FILE = (
-    "databases/testgpt.db"
-)
+DATABASE_FILE = "databases/testgpt.db"
 
 
 def test_get_all_teachers():

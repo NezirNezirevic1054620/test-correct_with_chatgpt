@@ -1,9 +1,7 @@
 """Tests for the QuestionModel"""
 from models.question_model import QuestionModel
 
-DATABASE_FILE = (
-    "databases/testgpt.db"
-)
+DATABASE_FILE = "databases/testgpt.db"
 
 
 def test_get_all_questions():
