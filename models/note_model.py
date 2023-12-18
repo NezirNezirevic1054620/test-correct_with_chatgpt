@@ -38,24 +38,20 @@ class NoteModel:
             + teacher_id
         )
         return cursor.fetchall()
-    
+
     def get_total_entries(self, teacher_id):
         """Gets the total number of entries for a given teacher_id"""
         cursor = self.__get_cursor()
-        cursor.execute(
-            "SELECT COUNT(*) FROM notes WHERE teacher_id = ?",
-            (teacher_id,)
-        )
+        cursor.execute("SELECT COUNT(*) FROM notes WHERE teacher_id = ?", (teacher_id,))
         result = cursor.fetchone()
         return result[0] if result is not None else 0
-    
-    
+
     def get_paginated_notes(self, teacher_id, offset, limit):
         """Selects specific notes where teacher_id is connected with pagination"""
         cursor = self.__get_cursor()
         cursor.execute(
             "SELECT * FROM notes INNER JOIN categories ON notes.category_id = categories.category_id WHERE teacher_id = ? LIMIT ? OFFSET ?",
-            (teacher_id, limit, offset)
+            (teacher_id, limit, offset),
         )
         return cursor.fetchall()
 
@@ -127,8 +123,5 @@ class NoteModel:
         )
         params = [limit, offset]
         cursor.execute(query, params)
-        
-        return cursor.fetchall()
-    
 
-    
+        return cursor.fetchall()
