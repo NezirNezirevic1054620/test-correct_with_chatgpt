@@ -8,7 +8,7 @@
         <div class="my-2 flex sm:flex-row flex-col">
             <div class="flex flex-row mb-1 sm:mb-0">
                 <div class="relative">
-                    <form action="{{ url_for('notes.filter_note_by_category') }}" method="POST">
+                    <form action="{{ url_for('notes.filter_note_by_category', page=page) }}" method="POST">
                         <label>
                             <select
                                 name="filter_value"
@@ -38,7 +38,7 @@
                     </form>
                 </div>
                 <div class="relative">
-                    <form action="{{ url_for('notes.filter_note_by_teacher') }}" method="POST">
+                    <form action="{{ url_for('notes.filter_note_by_teacher', page=page) }}" method="POST">
                         <label>
                             <select
                                 class="appearance-none text-decoration rounded-e-none rounded-s-none border border-gray-200 border-b block pl-8 pr-20 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="block relative">
-                <form action="{{ url_for('notes.search_note') }}" method="POST">
+                <form action="{{ url_for('notes.search_note', page=page) }}" method="POST">
                     <label>
                     <input placeholder="Search"
                         name="search_value" class="appearance-none rounded-e-lg rounded-s-none border border-gray-200 border-b block pl-8 pr-6 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
@@ -214,20 +214,22 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+                <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
                     <span class="text-gray-900">
-                    Showing 1 to 4 of 50 Entries
+                        Showing {{ (page - 1) * entries_per_page + 1 }} to {{ ((page - 1) * entries_per_page + notes|length) if (page - 1) * entries_per_page + notes|length < total_entries else total_entries }} of {{ total_entries }} Entries
                     </span>
                     <div class="inline-flex mt-2 xs:mt-0">
-                        <button
-                            class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-s-lg">
-                        Previous
-                        </button>
-                        <button
-                            class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
-                        Next
-                        </button>
+                        {% if page > 1 %}
+                            <a href="{{ url_for('notes.notes', page=page-1) }}" class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-s-lg">
+                                Previous
+                            </a>
+                        {% endif %}
+                        
+                        {% if (page - 1) * entries_per_page + notes|length < total_entries %}
+                            <a href="{{ url_for('notes.notes', page=page+1) }}" class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
+                                Next
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
