@@ -3,8 +3,6 @@ from sqlite3 import Error
 from flask import Blueprint, session, render_template, redirect, url_for, request
 from flask_bcrypt import Bcrypt
 
-from models import teacher_model
-from models.note_model import NoteModel
 from models.teacher_model import TeacherModel
 from forms.teacher_form import TeacherForm
 
@@ -81,7 +79,6 @@ def delete_teacher():
     return redirect(url_for("dashboard"))
 
 
-
 @teachers_page.route("/search_teacher", methods=["GET", "POST"])
 def search_teacher():
     if session["is_admin"] == 1:
@@ -104,6 +101,7 @@ def search_teacher():
             teachers=select_teachers,
             username=username,
         )
+
 
 @teachers_page.route("/edit_teacher", methods=["POST", "GET"])
 def edit_teacher():
@@ -131,10 +129,8 @@ def edit_teacher():
                 print(error)
 
         return redirect(url_for("teachers.teachers"))
- 
 
     return redirect(url_for("login"))
-
 
 
 @teachers_page.route("/profile", methods=["GET", "POST"])
