@@ -2,6 +2,9 @@
 from sqlite3 import Error
 from flask import Blueprint, session, render_template, redirect, url_for, request
 from flask_bcrypt import Bcrypt
+
+from models import teacher_model
+from models.note_model import NoteModel
 from models.teacher_model import TeacherModel
 from forms.teacher_form import TeacherForm
 
@@ -76,3 +79,44 @@ def delete_teacher():
         return redirect(url_for("teachers.teachers"))
 
     return redirect(url_for("dashboard"))
+
+
+@teachers_page.route("/edit_teacher", methods=["POST", "GET"])
+def edit_teacher():
+    """Edit teacher route that edits the changed fields from the teacher into the database"""
+    if "user" in session:
+        bcrypt = Bcrypt()
+        teacher_model = TeacherModel(DATABASE_FILE)
+        if request.method == "POST":
+            try:
+                display_name = request.form["display_name"]
+                username = request.form["username"]
+                teacher_password = request.form["teacher_password"]
+                is_admin = request.form["is_admin"]
+                teacher_id = request.form["teacher_id"]
+                print(teacher_id)
+                hashed_password = bcrypt.generate_password_hash(teacher_password)
+                teacher_model.update_teacher(
+                    display_name=display_name,
+                    username=username,
+                    teacher_password=hashed_password,
+                    is_admin=is_admin,
+                    teacher_id=teacher_id,
+                )
+            except Error as error:
+                print(error)
+
+        return redirect(url_for("teachers.teachers"))
+
+    return redirect(url_for("login"))
+
+
+@teachers_page.route("/teacher/<int:teacher_id>", methods=["POST", "GET"])
+def teacher(teacher_id):
+    if "user" in session:
+        teacher_model = TeacherModel(DATABASE_FILE)
+        if request.method == "POST":
+            teacher_id = request.form["teacher_id"]
+            select_teacher = teacher_model.select_teacher(teacher_id)
+        return render_template("teacher/teacher.html.j2", teacher=select_teacher)
+    return redirect(url_for("login"))

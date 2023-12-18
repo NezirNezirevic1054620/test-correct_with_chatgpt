@@ -1,0 +1,56 @@
+{% extends "index.html.j2" %}
+{% block content %}
+{% for teacher in teacher %}
+<form action="{{ url_for('teachers.edit_teacher') }}" method="POST">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="border-b border-gray-900/10 pb-12">
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="display_name" class="block font-medium leading-6 text-gray-900">Display Name</label>
+                    <div class="mt-2">
+                        <label>
+                        <input value={{ teacher.display_name }} type="text" id="display_name" name="display_name" placeholder="Diederik de Vries" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
+                    <div class="mt-2">
+                        <label>
+                        <input value={{ teacher.username }} type="text" name="username" placeholder="diederiknl" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <label for="teacher_password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                    <div class="mt-2">
+                        <label>
+                        <input value={{ teacher.teacher_password }} name="teacher_password" type="text" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" name="teacher_id" value="{{ teacher.teacher_id }}" >
+                <div class="sm:col-span-3">
+                    <label for="is_admin" class="block text-sm font-medium leading-6 text-gray-900">Admin</label>
+                    <div class="mt-2">
+                        <label>
+                            <select name="is_admin" class="block w-full pl-2 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-700 sm:text-sm sm:leading-6">
+                                <option value="{{ teacher.is_admin }}">{{ teacher.is_admin }}</option>
+                                <option value="1"> 1 </option>
+                                <option value="0"> 0 </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <a href="{{ url_for('teachers.teachers') }}" class="href">
+                <button type="button" class="border rounded-lg text-red-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Cancel</button>
+            </a>
+            <button type="submit" class="rounded-lg bg-green-500 text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">Save</button>
+        </div>
+    </div>
+</form>
+{% endfor %}
+{% endblock %}

@@ -252,9 +252,10 @@ def notes():
         offset = (page - 1) * entries_per_page
 
         # Get paginated notes
-        select_notes = note_model.get_paginated_notes(teacher_id=str(teacher_id), offset=offset, limit=entries_per_page)
+        select_notes = note_model.get_paginated_notes(
+            teacher_id=str(teacher_id), offset=offset, limit=entries_per_page
+        )
         total_entries = note_model.get_total_entries(teacher_id=str(teacher_id))
-
 
         select_categories = category_model.get_all_categories()
         return render_template(
@@ -263,7 +264,7 @@ def notes():
             categories=select_categories,
             username=username,
             page=page,
-            entries_per_page=entries_per_page, 
+            entries_per_page=entries_per_page,
             total_entries=total_entries,
         )
 
