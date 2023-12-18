@@ -27,6 +27,21 @@ def test_get_all_notes():
     assert dict(note) == mydict
 
 
+def test_insert_note():
+    """Test if the note gets inserted into the database"""
+    pass
+
+
+def test_update_note():
+    """Test if the note gets updated in the database"""
+    pass
+
+
+def test_delete_note():
+    """Test if the note gets deleted from the database"""
+    pass
+
+
 def test_search_note():
     """Tests if the search_note method returns something"""
     note_model = NoteModel(DATABASE_FILE)

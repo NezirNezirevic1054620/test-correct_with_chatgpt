@@ -19,3 +19,18 @@ def test_get_all_categories():
             "date_created": category[2],
         }
     assert dict(category) == mydict
+
+
+def test_insert_category():
+    """Test if the category gets inserted into the database"""
+    pass
+
+
+def test_update_category():
+    """Test if the category gets updated in the database"""
+    pass
+
+
+def test_delete_category():
+    """Test if the category gets deleted from the database"""
+    pass

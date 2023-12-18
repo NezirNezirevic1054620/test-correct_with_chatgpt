@@ -76,3 +76,46 @@ def delete_teacher():
         return redirect(url_for("teachers.teachers"))
 
     return redirect(url_for("dashboard"))
+
+
+@teachers_page.route("/search_teacher", methods=["GET", "POST"])
+def search_teacher():
+    if session["is_admin"] == 1:
+        teacher_model = TeacherModel(DATABASE_FILE)
+        result = None
+        username = session["user"]
+        select_teachers = teacher_model.get_all_teachers()
+        if request.method == "POST":
+            try:
+                search_value = request.form["search_value"]
+
+                result = teacher_model.search_teacher(search_value=str(search_value))
+                print(search_value)
+            except Error as error:
+                print(error)
+
+        return render_template(
+            "teacher/teachers.html.j2",
+            result=result,
+            teachers=select_teachers,
+            username=username,
+        )
+
+    return redirect(url_for("login"))
+
+
+@teachers_page.route("/profile", methods=["GET", "POST"])
+def profile():
+    if "user" in session:
+        admin = session["is_admin"]
+        display_name = session["display_name"]
+        username = session["user"]
+
+        return render_template(
+            "teacher/profile.html.j2",
+            display_name=display_name,
+            username=username,
+            admin=admin,
+        )
+
+    return redirect(url_for("login"))

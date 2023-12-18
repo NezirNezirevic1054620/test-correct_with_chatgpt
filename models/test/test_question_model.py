@@ -26,3 +26,18 @@ def test_get_all_questions():
             "note": question[10],
         }
     assert dict(question) == mydict
+
+
+def test_insert_question():
+    """Test if the question gets inserted into the database"""
+    pass
+
+
+def test_update_question():
+    """Test if the question gets updated in the database"""
+    pass
+
+
+def test_delete_question():
+    """Test if the question gets deleted from the database"""
+    pass

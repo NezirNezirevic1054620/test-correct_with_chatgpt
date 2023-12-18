@@ -58,3 +58,13 @@ class TeacherModel:
         )
         cursor.connection.commit()
         return cursor.lastrowid
+
+    def search_teacher(self, search_value):
+        """Selects a specific teacher where display_name and username are connected to search_value"""
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM teachers WHERE display_name LIKE (?) OR username LIKE (?)",
+            [f"%{search_value}%", f"%{search_value}%"],
+        )
+        cursor.connection.commit()
+        return cursor.fetchall()
