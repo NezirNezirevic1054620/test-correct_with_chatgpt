@@ -47,18 +47,19 @@ class QuestionModel:
         return cursor.fetchall()
 
     def delete_question(self, questions_id):
-        """ Deletes a specific question"""
+        """Deletes a specific question"""
         cursor = self.__get_cursor()
         cursor.execute("DELETE FROM questions WHERE questions_id=(?)", [questions_id])
         cursor.connection.commit()
         return cursor.fetchall()
 
-
     def search_question(self, search_value):
         """Searches for a specific question if the note or the exam question aligns
         with the search value"""
         cursor = self.__get_cursor()
-        cursor.execute("SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id WHERE note LIKE (?) OR exam_question LIKE (?)",
-                       [f"%{search_value}%", f"%{search_value}%"])
+        cursor.execute(
+            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id WHERE note LIKE (?) OR exam_question LIKE (?)",
+            [f"%{search_value}%", f"%{search_value}%"],
+        )
         cursor.connection.commit()
         return cursor.fetchall()

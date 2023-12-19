@@ -81,6 +81,7 @@ def generate_csv():
 
     return response
 
+
 @questions_page.route("/search_question", methods=["GET", "POST"])
 def search_question():
     if "user" in session:
@@ -93,10 +94,12 @@ def search_question():
 
                 result = question_model.search_question(search_value=search_value)
 
-                return render_template("question/questions.html.j2", username=username, result=result, questions=select_questions)
+                return render_template(
+                    "question/questions.html.j2",
+                    username=username,
+                    result=result,
+                    questions=select_questions,
+                )
             except Error as error:
                 print(error)
     return redirect(url_for("login"))
-
-
-
