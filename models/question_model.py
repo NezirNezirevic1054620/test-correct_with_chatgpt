@@ -65,14 +65,13 @@ class QuestionModel:
         cursor.connection.commit()
         return cursor.fetchall()
 
-
     def filter_questions_by_category(self, filter_value):
         """Filters the notes so that it only shows notes connected to the category_id"""
         cursor = self.__get_cursor()
         cursor.execute(
             "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id INNER JOIN categories ON "
-            "categories.category_id = notes.category_id WHERE notes.category_id = (?)", [filter_value]
+            "categories.category_id = notes.category_id WHERE notes.category_id = (?)",
+            [filter_value],
         )
         cursor.connection.commit()
         return cursor.fetchall()
-

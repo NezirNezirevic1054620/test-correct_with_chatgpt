@@ -37,7 +37,10 @@ def questions():
         select_categories = category_model.get_all_categories()
 
         return render_template(
-            "question/questions.html.j2", questions=get_questions, username=username, categories=select_categories
+            "question/questions.html.j2",
+            questions=get_questions,
+            username=username,
+            categories=select_categories,
         )
     return redirect(url_for("login"))
 
@@ -109,6 +112,7 @@ def search_question():
                 print(error)
     return redirect(url_for("login"))
 
+
 @questions_page.route("filter_questions_by_category", methods=["GET", "POST"])
 def filter_questions_by_category():
     """Filters for a specific question in the database"""
@@ -121,14 +125,18 @@ def filter_questions_by_category():
         if request.method == "POST":
             try:
                 filter_value = request.form["filter_value"]
-                result = question_model.filter_questions_by_category(filter_value=filter_value)
+                result = question_model.filter_questions_by_category(
+                    filter_value=filter_value
+                )
 
-                return render_template("question/questions.html.j2", result=result, questions=select_questions, username=username, categories=select_categories)
+                return render_template(
+                    "question/questions.html.j2",
+                    result=result,
+                    questions=select_questions,
+                    username=username,
+                    categories=select_categories,
+                )
             except Error as error:
                 print(error)
 
     return redirect(url_for("login"))
-
-
-
-
