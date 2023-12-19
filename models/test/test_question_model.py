@@ -18,6 +18,7 @@ def test_get_all_questions():
             "date_created": question[3],
             "title": question[5],
             "note_source": question[6],
+            "omschrijving": question[13],
             "is_public": question[7],
             "teacher_id": question[8],
             "category_id": question[9],
