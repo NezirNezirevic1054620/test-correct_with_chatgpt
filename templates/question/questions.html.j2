@@ -8,22 +8,15 @@
         <div class="my-2 flex sm:flex-row flex-col">
             <div class="flex flex-row mb-1 sm:mb-0">
                 <div class="relative">
-                    {#
-                    <form action="{{ url_for('notes.filter_note') }}" method="POST">
-                        #}
+                    <form action="{{ url_for('questions.filter_questions_by_category') }}" method="POST">
                         <label>
                             <select
                                 name="filter_value"
                                 class="appearance-none text-decoration rounded-e-none rounded-s-lg border border-gray-200 border-b block pl-8 pr-20 py-2 w-full bg-white placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none">
-                                {#
                                 <option value="{{ 0 }}">All Categories</option>
-                                #}
-                                {#                                {% for category in categories %}#}
-                                {#
-                                <option value="{{ category[0] }}">{{ category[1] }}</option>
-                                #}
-                                {#                                {% endfor %}#}
-                                <option>Programming Essentials</option>
+                                {% for category in categories %}
+                                <option value="{{ category.category_id }}">{{ category.omschrijving }}</option>
+                                {% endfor %}
                             </select>
                         </label>
                         <div
@@ -136,6 +129,9 @@
                                                 Question
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
+                                                Category
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
                                                 Created at
                                             </th>
                                             <th scope="col" class="relative px-6 py-3">
@@ -155,6 +151,11 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">{{ question.exam_question }}</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                {{ question.omschrijving }}
+                                                </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                                                 {{ question.date_created }}
@@ -191,6 +192,11 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">{{ question.exam_question }}</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                {{ question.omschrijving }}
+                                                </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                                                 {{ question.date_created }}
