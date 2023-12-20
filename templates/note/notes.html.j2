@@ -2,7 +2,7 @@
 {% block content %}
 <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="py-8">
-        <div>
+        <div class="mb-5">
             <h2 class="text-2xl font-semibold leading-tight">Notes</h2>
         </div>
         <div class="my-2 flex sm:flex-row flex-col">
@@ -144,7 +144,7 @@
                                                 </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                                                {{ note.note }}
+                                                {{ note.note[:20] }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right font-medium">
                                                 <form action="{{ url_for('notes.note', note_id=note.note_id) }}" method="POST">
@@ -226,7 +226,7 @@
                         {% endif %}
                         
                         {% if (page - 1) * entries_per_page + notes|length < total_entries %}
-                            <a href="{{ url_for('notes.notes', page=page+1) }}" class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
+                            <a href="{{ url_for('notes.notes', page=page + 1) }}" class="hover:bg-gray-100 border text-gray-700 py-2 px-4 rounded-e-lg">
                                 Next
                             </a>
                         {% endif %}
