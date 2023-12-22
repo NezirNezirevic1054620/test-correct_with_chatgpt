@@ -36,6 +36,7 @@ def test_delete_teacher():
     """Test if the teacher gets deleted from the database"""
     pass
 
+
 def test_search_teacher():
     """Test if the method searches for the teacher"""
     teacher_model = TeacherModel(DATABASE_FILE)

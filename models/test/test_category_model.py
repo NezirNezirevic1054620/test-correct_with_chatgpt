@@ -18,6 +18,7 @@ def test_get_all_categories():
         }
     assert dict(category) == mydict
 
+
 def test_insert_category():
     """Test if the category gets inserted into the database"""
     pass
