@@ -23,7 +23,8 @@ class QuestionModel:
         """Selects all the questions connected to the note_id from the database"""
         cursor = self.__get_cursor()
         cursor.execute(
-            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id"
+            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id INNER JOIN categories ON "
+            "categories.category_id = notes.category_id"
         )
         return cursor.fetchall()
 
@@ -47,8 +48,30 @@ class QuestionModel:
         return cursor.fetchall()
 
     def delete_question(self, questions_id):
-        """ "deletes a specific question"""
+        """Deletes a specific question"""
         cursor = self.__get_cursor()
         cursor.execute("DELETE FROM questions WHERE questions_id=(?)", [questions_id])
+        cursor.connection.commit()
+        return cursor.fetchall()
+
+    def search_question(self, search_value):
+        """Searches for a specific question if the note or the exam question aligns
+        with the search value"""
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id WHERE note LIKE (?) OR exam_question LIKE (?)",
+            [f"%{search_value}%", f"%{search_value}%"],
+        )
+        cursor.connection.commit()
+        return cursor.fetchall()
+
+    def filter_questions_by_category(self, filter_value):
+        """Filters the notes so that it only shows notes connected to the category_id"""
+        cursor = self.__get_cursor()
+        cursor.execute(
+            "SELECT * FROM questions INNER JOIN notes ON notes.note_id = questions.note_id INNER JOIN categories ON "
+            "categories.category_id = notes.category_id WHERE notes.category_id = (?)",
+            [filter_value],
+        )
         cursor.connection.commit()
         return cursor.fetchall()

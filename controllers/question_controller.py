@@ -12,6 +12,7 @@ from flask import (
     request,
 )
 
+from models.category_model import CategoryModel
 from models.question_model import QuestionModel
 
 questions_page = Blueprint(
@@ -30,11 +31,16 @@ def questions():
     """Questions route that displays all the questions from the database"""
     if "user" in session:
         username = session["user"]
-        question_controller = QuestionModel(DATABASE_FILE)
-        get_questions = question_controller.get_all_questions()
+        question_model = QuestionModel(DATABASE_FILE)
+        category_model = CategoryModel(DATABASE_FILE)
+        get_questions = question_model.get_all_questions()
+        select_categories = category_model.get_all_categories()
 
         return render_template(
-            "question/questions.html.j2", questions=get_questions, username=username
+            "question/questions.html.j2",
+            questions=get_questions,
+            username=username,
+            categories=select_categories,
         )
     return redirect(url_for("login"))
 
@@ -65,13 +71,14 @@ def generate_csv():
 
     csv_data = StringIO()
     csv_writer = csv.writer(csv_data)
-    csv_writer.writerow(["Note", "Question", "Created at"])
+    csv_writer.writerow(["Note", "Question", "Category", "Created at"])
 
     for question_row in select_questions:
         csv_writer.writerow(
             [
                 question_row["note"],
                 question_row["exam_question"],
+                question_row["omschrijving"],
                 question_row["date_created"],
             ]
         )
@@ -80,3 +87,56 @@ def generate_csv():
     response.headers["Content-Disposition"] = "attachment; filename=exam_questions.csv"
 
     return response
+
+
+@questions_page.route("/search_question", methods=["GET", "POST"])
+def search_question():
+    """Searches for a specific question in the database"""
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        username = session["user"]
+        select_questions = question_model.get_all_questions()
+        if request.method == "POST":
+            try:
+                search_value = request.form["search_value"]
+
+                result = question_model.search_question(search_value=search_value)
+
+                return render_template(
+                    "question/questions.html.j2",
+                    username=username,
+                    result=result,
+                    questions=select_questions,
+                )
+            except Error as error:
+                print(error)
+    return redirect(url_for("login"))
+
+
+@questions_page.route("filter_questions_by_category", methods=["GET", "POST"])
+def filter_questions_by_category():
+    """Filters for a specific question in the database"""
+    if "user" in session:
+        question_model = QuestionModel(DATABASE_FILE)
+        category_model = CategoryModel(DATABASE_FILE)
+        username = session["user"]
+        select_questions = question_model.get_all_questions()
+        select_categories = category_model.get_all_categories()
+        if request.method == "POST":
+            try:
+                filter_value = request.form["filter_value"]
+                result = question_model.filter_questions_by_category(
+                    filter_value=filter_value
+                )
+
+                return render_template(
+                    "question/questions.html.j2",
+                    result=result,
+                    questions=select_questions,
+                    username=username,
+                    categories=select_categories,
+                )
+            except Error as error:
+                print(error)
+
+    return redirect(url_for("login"))

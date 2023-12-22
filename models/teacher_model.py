@@ -48,13 +48,15 @@ class TeacherModel:
         cursor.connection.commit()
         return cursor.fetchall()
 
-    def update_teacher(self, display_name, username, teacher_password, is_admin):
+    def update_teacher(
+        self, display_name, username, teacher_password, is_admin, teacher_id
+    ):
         """Updates teacher details where teacher_id is connected to teacher_id"""
         cursor = self.__get_cursor()
         cursor.execute(
             "UPDATE teachers SET display_name=(?), username=(?), teacher_password=(?), is_admin=(?) "
             "WHERE teacher_id=(?)",
-            [display_name, username, teacher_password, is_admin],
+            [display_name, username, teacher_password, is_admin, teacher_id],
         )
         cursor.connection.commit()
         return cursor.lastrowid
@@ -66,5 +68,12 @@ class TeacherModel:
             "SELECT * FROM teachers WHERE display_name LIKE (?) OR username LIKE (?)",
             [f"%{search_value}%", f"%{search_value}%"],
         )
+        return cursor.fetchall()
+
+    def select_teacher(self, teacher_id):
+        """ "Select teacher details where teacher_id is connected to teacher_id"""
+        cursor = self.__get_cursor()
+        cursor.execute("SELECT * FROM teachers WHERE teacher_id=(?)", [teacher_id])
+
         cursor.connection.commit()
         return cursor.fetchall()
