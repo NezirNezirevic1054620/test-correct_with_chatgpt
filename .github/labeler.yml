@@ -13,7 +13,10 @@ Documentation:
   - any-glob-to-any-file: docs/**
 
 feature:
- - head-branch: ['^merge', 'merge']
+ - head-branch: ['^feature', 'feature']
+
+refactor_code:
+ - head-branch: ['^refactor', 'refactor']
 
 # Add 'release' label to any PR that is opened against the `main` branch
 release:
