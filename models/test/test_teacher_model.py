@@ -35,3 +35,13 @@ def test_update_teacher():
 def test_delete_teacher():
     """Test if the teacher gets deleted from the database"""
     pass
+
+def test_search_teacher():
+    """Test if the method searches for the teacher"""
+    teacher_model = TeacherModel(DATABASE_FILE)
+    searched_teacher = teacher_model.search_teacher(search_value="Nezir")
+    if searched_teacher is not None:
+        for teacher in searched_teacher:
+            print(dict(teacher))
+    else:
+        print("No teacher found")
