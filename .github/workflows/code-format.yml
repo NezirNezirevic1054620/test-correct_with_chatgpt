@@ -14,7 +14,7 @@ jobs:
       - name: Format code with black
         run: |
           pip install black
-          black .
+          black --line-length 100 .
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         with:
