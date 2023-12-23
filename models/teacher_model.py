@@ -48,9 +48,7 @@ class TeacherModel:
         cursor.connection.commit()
         return cursor.fetchall()
 
-    def update_teacher(
-        self, display_name, username, teacher_password, is_admin, teacher_id
-    ):
+    def update_teacher(self, display_name, username, teacher_password, is_admin, teacher_id):
         """Updates teacher details where teacher_id is connected to teacher_id"""
         cursor = self.__get_cursor()
         cursor.execute(

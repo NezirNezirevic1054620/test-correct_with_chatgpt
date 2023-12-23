@@ -45,9 +45,7 @@ class CategoryModel:
     def select_category(self, category_id):
         """Selects a specific row from the database connected to the category_id"""
         cursor = self.__get_cursor()
-        cursor.execute(
-            "SELECT * FROM categories WHERE category_id = (?)", [category_id]
-        )
+        cursor.execute("SELECT * FROM categories WHERE category_id = (?)", [category_id])
         cursor.connection.commit()
         return cursor.fetchall()
 

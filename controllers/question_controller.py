@@ -125,9 +125,7 @@ def filter_questions_by_category():
         if request.method == "POST":
             try:
                 filter_value = request.form["filter_value"]
-                result = question_model.filter_questions_by_category(
-                    filter_value=filter_value
-                )
+                result = question_model.filter_questions_by_category(filter_value=filter_value)
 
                 return render_template(
                     "question/questions.html.j2",

@@ -43,9 +43,7 @@ def test_delete_note():
 def test_search_note():
     """Tests if the search_note method returns something"""
     note_model = NoteModel(DATABASE_FILE)
-    seached_note = note_model.search_note(
-        teacher_id=5, search_value="python", limit=20, offset=20
-    )
+    seached_note = note_model.search_note(teacher_id=5, search_value="python", limit=20, offset=20)
     if seached_note is not None:
         for note in seached_note:
             print(dict(note))

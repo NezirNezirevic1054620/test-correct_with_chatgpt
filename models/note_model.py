@@ -55,9 +55,7 @@ class NoteModel:
         )
         return cursor.fetchall()
 
-    def update_note(
-        self, title, note_source, is_public, teacher_id, category_id, note, note_id
-    ):
+    def update_note(self, title, note_source, is_public, teacher_id, category_id, note, note_id):
         """Updates a specific note where note_id is connected to"""
         cursor = self.__get_cursor()
         cursor.execute(

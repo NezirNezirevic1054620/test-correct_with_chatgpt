@@ -100,9 +100,7 @@ class WP2DatabaseGenerator:
 
     # Transacties zijn duur, dat wil zeggen, ze kosten veel tijd en CPU kracht. Als je veel insert doet
     # bundel je ze in één transactie, of je gebruikt de SQLite executemany methode.
-    def __execute_many_transaction_statement(
-        self, create_statement, list_of_parameters=()
-    ):
+    def __execute_many_transaction_statement(self, create_statement, list_of_parameters=()):
         c = self.conn.cursor()
         c.executemany(create_statement, list_of_parameters)
         self.conn.commit()
@@ -114,9 +112,7 @@ class WP2DatabaseGenerator:
 
     def test_file_location(self):
         if not self.database_file.parent.exists():
-            raise ValueError(
-                f"Database file location {self.database_file.parent} does not exist"
-            )
+            raise ValueError(f"Database file location {self.database_file.parent} does not exist")
         if self.database_file.exists():
             if not self.database_overwrite:
                 raise ValueError(
@@ -143,7 +139,5 @@ if __name__ == "__main__":
     # om paden te maken. Dit is handig omdat je dan niet zelf hoeft te kijken of je
     # een / (mac) of een \ (windows) moet gebruiken.
     database_path = project_root / "databases" / "testgpt.db"
-    database_generator = WP2DatabaseGenerator(
-        database_path, overwrite=True, initial_data=True
-    )
+    database_generator = WP2DatabaseGenerator(database_path, overwrite=True, initial_data=True)
     database_generator.generate_database()

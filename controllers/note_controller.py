@@ -96,9 +96,7 @@ def note(note_id):
             try:
                 note_id = request.form["note_id"]
                 select_note = note_model.select_note(note_id=note_id)
-                select_question = question_model.select_question_by_note(
-                    note_id=note_id
-                )
+                select_question = question_model.select_question_by_note(note_id=note_id)
             except Error as error:
                 print(error)
         return render_template(
@@ -271,9 +269,7 @@ def filter_note_by_teacher():
                 entries_per_page = 20
                 offset = (page - 1) * entries_per_page
 
-                result = note_model.filter_note_by_teacher(
-                    offset=offset, limit=entries_per_page
-                )
+                result = note_model.filter_note_by_teacher(offset=offset, limit=entries_per_page)
 
                 total_entries = len(result) if result else len(select_notes)
 
@@ -355,9 +351,7 @@ def generate_question():
                 test_gpt = TestGPT(api_key)
                 open_question = test_gpt.generate_open_question(selected_note)
                 print(open_question)
-                question_model.insert_question(
-                    note_id=note_id, exam_question=open_question
-                )
+                question_model.insert_question(note_id=note_id, exam_question=open_question)
                 return redirect(url_for("questions.questions"))
             except Error as error:
                 print(error)

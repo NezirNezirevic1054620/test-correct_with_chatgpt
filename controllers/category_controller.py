@@ -75,9 +75,7 @@ def category(category_id):
         if request.method == "POST":
             try:
                 category_id = request.form["category_id"]
-                selected_category = category_model.select_category(
-                    category_id=category_id
-                )
+                selected_category = category_model.select_category(category_id=category_id)
             except Error as error:
                 print(error)
         return render_template(
@@ -100,9 +98,7 @@ def update_category():
                 category_id = request.form["category_id"]
                 omschrijving = request.form["omschrijving"]
 
-                category_model.update_category(
-                    category_id=category_id, omschrijving=omschrijving
-                )
+                category_model.update_category(category_id=category_id, omschrijving=omschrijving)
                 return redirect(url_for("category.categories"))
             except Error as error:
                 print(error)
