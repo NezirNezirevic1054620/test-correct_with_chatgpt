@@ -73,9 +73,14 @@ def dashboard():
         counted_teacher = len(select_teacher)
         counted_question = len(select_question)
         username = session["user"]
-        return render_template("beheer.html.j2", username=username, counted_categories=counted_categories,
-                               counted_question=counted_question, counted_teacher=counted_teacher,
-                               counted_note=counted_note)
+        return render_template(
+            "beheer.html.j2",
+            username=username,
+            counted_categories=counted_categories,
+            counted_question=counted_question,
+            counted_teacher=counted_teacher,
+            counted_note=counted_note,
+        )
     else:
         return redirect(url_for("login"))
 
