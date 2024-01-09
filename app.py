@@ -3,6 +3,9 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from controllers.category_controller import category_page
 from controllers.note_controller import notes_page
 from flask_bcrypt import Bcrypt
+from models.category_model import CategoryModel
+from models.note_model import NoteModel
+from models.question_model import QuestionModel
 
 from models.teacher_model import TeacherModel
 from controllers.question_controller import questions_page
@@ -56,8 +59,23 @@ def logout():
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
     if "user" in session:
+        teacher_id = session["teacher_id"]
+        category_model = CategoryModel(DATABASE_FILE)
+        note_model = NoteModel(DATABASE_FILE)
+        question_model = QuestionModel(DATABASE_FILE)
+        teacher_model = TeacherModel(DATABASE_FILE)
+        select_categories = category_model.get_all_categories()
+        select_note = note_model.get_all_notes(teacher_id=str(teacher_id))
+        select_teacher = teacher_model.get_all_teachers()
+        select_question = question_model.get_all_questions()
+        counted_categories = len(select_categories)
+        counted_note = len(select_note)
+        counted_teacher = len(select_teacher)
+        counted_question = len(select_question)
         username = session["user"]
-        return render_template("beheer.html.j2", username=username)
+        return render_template("beheer.html.j2", username=username, counted_categories=counted_categories,
+                               counted_question=counted_question, counted_teacher=counted_teacher,
+                               counted_note=counted_note)
     else:
         return redirect(url_for("login"))
 
