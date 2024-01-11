@@ -126,7 +126,6 @@ def edit_note():
                 category_id = request.form["category_id"]
                 note_id = request.form["note_id"]
                 note_text = request.form["note"]
-                print(teacher_id)
                 note_model.update_note(
                     title=title,
                     note_source=note_source,
@@ -350,7 +349,6 @@ def generate_question():
                 api_key = os.getenv("API_KEY")
                 test_gpt = TestGPT(api_key)
                 open_question = test_gpt.generate_open_question(selected_note)
-                print(open_question)
                 question_model.insert_question(note_id=note_id, exam_question=open_question)
                 return redirect(url_for("questions.questions"))
             except Error as error:

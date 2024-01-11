@@ -120,7 +120,6 @@ def search_category():
                 search_value = request.form["search_value"]
 
                 result = category_model.search_categories(search_value=search_value)
-                print(search_value)
             except Error as error:
                 print(error)
 

@@ -93,7 +93,6 @@ def search_teacher():
                 search_value = request.form["search_value"]
 
                 result = teacher_model.search_teacher(search_value=search_value)
-                print(search_value)
             except Error as error:
                 print(error)
 
@@ -119,7 +118,6 @@ def edit_teacher():
                 teacher_password = request.form["teacher_password"]
                 is_admin = request.form["is_admin"]
                 teacher_id = request.form["teacher_id"]
-                print(teacher_id)
                 hashed_password = bcrypt.generate_password_hash(teacher_password)
                 teacher_model.update_teacher(
                     display_name=display_name,
