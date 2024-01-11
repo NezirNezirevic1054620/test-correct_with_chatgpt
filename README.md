@@ -90,10 +90,10 @@ jobs:
           branch: ${{ github.ref }}
 ```
 
-Flake8 lint:
+Pylint lint:
 
 ```yml
-name: Lint with flake8
+name: Lint with pylint
 
 on:
   push:
@@ -118,14 +118,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pytest
+        pip install pylint
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
+    - name: Lint with pylint
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pylint $(git ls-files '*.py')
 ```
 
 Test met Pytest:
@@ -166,3 +163,15 @@ jobs:
 
 ## Bronvermelding
 
+Flask Bcrypt Docs. (n.d.). Flask-bcrypt — flask-bcrypt 1.0.1 documentation. Flask-Bcrypt — Flask-Bcrypt 1.0.1 documentation. https://flask-bcrypt.readthedocs.io/en/1.0.1/
+
+Flask WTF Docs. (n.d.). Flask-WTF — Flask-WTF documentation (1.2.x). Flask-WTF — Flask-WTF Documentation (1.2.x). https://flask-wtf.readthedocs.io/en/1.2.x/
+
+GeeksForGeeks. (n.d.). GeeksforGeeks. https://www.geeksforgeeks.org/
+
+Github. (n.d.). GitHub. https://github.com/
+
+Official Flask Docs Website. (n.d.). Welcome to flask — Flask documentation (3.0.x). Welcome to Flask — Flask Documentation (3.0.x). https://flask.palletsprojects.com/en/3.0.x/
+
+StackOverflow. (n.d.). Stack Overflow. https://stackoverflow.com/
+https://flask-wtf.readthedocs.io/en/1.2.x/
