@@ -55,6 +55,11 @@ API_KEY="<your_open_ai_api_key>"
 python -m flask run
 ```
 
+#### Login
+
+username: nezirnezirevic
+password: nezirnezirevic
+
 
 ## Github Actions
 
@@ -169,9 +174,14 @@ Flask WTF Docs. (n.d.). Flask-WTF — Flask-WTF documentation (1.2.x). Flask-WTF
 
 GeeksForGeeks. (n.d.). GeeksforGeeks. https://www.geeksforgeeks.org/
 
+Github Actions Documentation. (n.d.). GitHub actions documentation. GitHub Docs. https://docs.github.com/en/actions
+
 Github. (n.d.). GitHub. https://github.com/
+
+Grinberg, M. (2018). Flask web development: Developing web applications with Python (1st ed.). O'Reilly Media.
 
 Official Flask Docs Website. (n.d.). Welcome to flask — Flask documentation (3.0.x). Welcome to Flask — Flask Documentation (3.0.x). https://flask.palletsprojects.com/en/3.0.x/
 
+Solomon, F., Jayaram, P., & Saqqa, A. A. (2019). The SQL workshop. Packt.
+
 StackOverflow. (n.d.). Stack Overflow. https://stackoverflow.com/
-https://flask-wtf.readthedocs.io/en/1.2.x/
