@@ -1,5 +1,34 @@
 # Test-Correct met OpenAI integratie
 
+## Introductie
+
+We moesten voor ons werkplaats project een applicatie bouwen waarmee je notities kan aanmaken en vragen kan genereren van de notitie
+
+## Showcase
+
+#### Login
+![Screenshot 2024-01-12 at 21-18-33 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/4b993c42-39db-49a7-b799-72e1bd1bbc5a)
+
+#### Notities
+![Screenshot 2024-01-12 at 21-19-24 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/6829e456-8be7-43a7-b4a2-4fe42e96ea41)
+
+#### Vraag genereren
+![Screenshot 2024-01-12 at 21-20-03 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/789f29b8-d23e-43d7-92c6-c3e95cec3ff0)
+
+#### Categorieen
+![Screenshot 2024-01-12 at 21-20-21 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/d930b6b7-1b75-4512-8a13-5a807521269d)
+
+#### Leraren/Admins
+![Screenshot 2024-01-12 at 21-20-57 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/3b645cba-6b64-4f6b-b05f-ea6f904e4924)
+
+#### Vragen
+![Screenshot 2024-01-12 at 21-21-26 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/48999e17-d6ba-4a80-bab3-1e3448384be8)
+
+#### Profiel
+![Screenshot 2024-01-12 at 21-22-16 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/70d964eb-c649-484f-afab-2156aebb5476)
+
+
+
 ## Installatie en Setup
 
 #### Clone de repository
