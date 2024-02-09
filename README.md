@@ -7,7 +7,7 @@ We moesten voor ons werkplaats project een applicatie bouwen waarmee je notities
 ## Showcase
 
 #### Login
-![Screenshot 2024-01-12 at 21-18-33 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/4b993c42-39db-49a7-b799-72e1bd1bbc5a)
+![login](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/login.png?raw=true)
 
 #### Notities
 ![Screenshot 2024-01-12 at 21-19-24 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/6829e456-8be7-43a7-b4a2-4fe42e96ea41)
