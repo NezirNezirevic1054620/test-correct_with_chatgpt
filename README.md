@@ -10,22 +10,22 @@ We moesten voor ons werkplaats project een applicatie bouwen waarmee je notities
 ![login](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/login.png?raw=true)
 
 #### Notities
-![Screenshot 2024-01-12 at 21-19-24 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/6829e456-8be7-43a7-b4a2-4fe42e96ea41)
+![notities](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/notities.png?raw=true)
 
 #### Vraag genereren
-![Screenshot 2024-01-12 at 21-20-03 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/789f29b8-d23e-43d7-92c6-c3e95cec3ff0)
+![vragen](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/vraag.png?raw=true)
 
 #### Categorieen
-![Screenshot 2024-01-12 at 21-20-21 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/d930b6b7-1b75-4512-8a13-5a807521269d)
+![categorieen](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/categorieen.png?raw=true)
 
 #### Leraren/Admins
-![Screenshot 2024-01-12 at 21-20-57 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/3b645cba-6b64-4f6b-b05f-ea6f904e4924)
+![admins](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/admin.png?raw=true)
 
 #### Vragen
-![Screenshot 2024-01-12 at 21-21-26 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/48999e17-d6ba-4a80-bab3-1e3448384be8)
+![vragen](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/vragen.png?raw=true)
 
 #### Profiel
-![Screenshot 2024-01-12 at 21-22-16 Title](https://github.com/Rac-Software-Development/wp2-2023-mvc-1e5-nlbl/assets/124694040/70d964eb-c649-484f-afab-2156aebb5476)
+![profiel](https://github.com/NezirNezirevic1054620/test-correct_with_chatgpt/blob/main/docs/images/profiel.png?raw=true)
 
 
 
